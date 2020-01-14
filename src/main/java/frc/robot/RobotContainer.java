@@ -9,9 +9,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.*;
+import frc.robot.subsystems.ColorPanelSubsystem;
+import frc.robot.subsystems.HolonomicDrivetrain;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -21,18 +25,50 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
-
-
+  private final Command m_autoCommand = null;
+  private XboxController mXboxController;
+  private static RobotContainer theContainer;
+  private SwerveDriveSubsystem swerveDriveSubsystem;
+  private ColorPanelSubsystem colorPanelSubsystem;
+  private Limelight limelight; 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    theContainer = this;
     // Configure the button bindings
+    swerveDriveSubsystem = new SwerveDriveSubsystem();
+    swerveDriveSubsystem.zeroGyro();
+    colorPanelSubsystem = new ColorPanelSubsystem();
+    mXboxController = new XboxController(0);
+    limelight = new Limelight();
     configureButtonBindings();
+  }
+
+  public ColorPanelSubsystem getColorPanelSubsystem()
+  {
+    return colorPanelSubsystem;
+  }
+
+  public SwerveDriveSubsystem getHolonomicDrivetrain()
+  {
+    return swerveDriveSubsystem;
+  }
+
+  public XboxController getDriveController() {
+    return mXboxController;
+  }
+
+  
+  public static RobotContainer getContainer(){
+    return theContainer;
+
+  }
+
+  public Limelight getLimelight(){
+    return limelight;
   }
 
   /**
@@ -42,6 +78,14 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    JoystickButton buttonA = new JoystickButton(mXboxController, XboxController.Button.kA.value);
+     buttonA.whenPressed(new DriveForward(.2));
+     JoystickButton buttonB = new JoystickButton(mXboxController, XboxController.Button.kB.value);
+     buttonB.whenPressed(new DriveForwardDistance(3, .3));
+     JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
+     buttonX.whenPressed(new WheelsDriveForwardTest(-100, 0).withTimeout(5));
+     JoystickButton buttonY = new JoystickButton(mXboxController, XboxController.Button.kY.value);
+     buttonY.whenPressed(new ZeroNavX());
   }
 
 
