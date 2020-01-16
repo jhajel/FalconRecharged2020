@@ -56,21 +56,21 @@ public class WheelsDriveForwardTest extends CommandBase {
 
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    swerveDriveSystem.m0.getPIDController().setReference(pos1 + d1, ControlType.kPosition);
-    swerveDriveSystem.m1.getPIDController().setReference(pos2 + d1, ControlType.kPosition);
-    swerveDriveSystem.m2.getPIDController().setReference(pos3 + d1, ControlType.kPosition);
-    swerveDriveSystem.m3.getPIDController().setReference(pos4 + d1, ControlType.kPosition);
+    //swerveDriveSystem.m0.getPIDController().setReference(pos1 + d1, ControlType.kPosition);
+   // swerveDriveSystem.m1.getPIDController().setReference(pos2 + d1, ControlType.kPosition);
+    //swerveDriveSystem.m2.getPIDController().setReference(pos3 + d1, ControlType.kPosition);
+    //swerveDriveSystem.m3.getPIDController().setReference(pos4 + d1, ControlType.kPosition);
     System.out.println("Driving Wheels Forward");
   }
 
   // Called just before this Command runs the first time
   @Override
   public void initialize() {
-    pos1 = swerveDriveSystem.m0.getDriveMotor().getEncoder().getPosition();
-    curPos = swerveDriveSystem.m0.getDriveMotor().getEncoder().getPosition();
-    pos2 = swerveDriveSystem.m1.getDriveMotor().getEncoder().getPosition();
-    pos3 = swerveDriveSystem.m2.getDriveMotor().getEncoder().getPosition();
-    pos4 = swerveDriveSystem.m3.getDriveMotor().getEncoder().getPosition();
+    // pos1 = swerveDriveSystem.m0.getDriveMotor().getEncoder().getPosition();
+    // curPos = swerveDriveSystem.m0.getDriveMotor().getEncoder().getPosition();
+    // pos2 = swerveDriveSystem.m1.getDriveMotor().getEncoder().getPosition();
+    // pos3 = swerveDriveSystem.m2.getDriveMotor().getEncoder().getPosition();
+    // pos4 = swerveDriveSystem.m3.getDriveMotor().getEncoder().getPosition();
     startAngle = swerveDriveSystem.getNavX().getYaw();
     swerveDriveSystem.resetAllEncoders();
     //Robot.swerveDriveSubsystem.setFieldOriented(false);
@@ -80,7 +80,7 @@ public class WheelsDriveForwardTest extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    curPos = swerveDriveSystem.m0.getDriveMotor().getEncoder().getPosition();
+    //curPos = swerveDriveSystem.m0.getDriveMotor().getEncoder().getPosition();
     boolean ya = isFinished();
     System.out.println( "Target Pos: " + (targetPos+pos1) +  "Actual Pos: " + curPos + " Drive Ended: " + ya);
     // Robot.swerveDriveSubsystem.m1.setTargetAngle(startAngle);

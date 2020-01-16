@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
@@ -9,14 +11,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.commands.HolonomicDriveCommand;
 
-public class SwerveDriveSubsystem extends HolonomicDrivetrain {
-	private static final double WHEELBASE = 21.5;
-	private static final double TRACKWIDTH = 23;
+public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwise + is counter clockwise
+	private static final double WHEELBASE = 22.5; 
+	private static final double TRACKWIDTH = 22.5;
 	private static final double RATIO = Math.sqrt(Math.pow(WHEELBASE, 2) + Math.pow(TRACKWIDTH, 2));
-	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(12), new CANSparkMax(4, MotorType.kBrushless), 395); //real:390 practice: 212
-	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(13), new CANSparkMax(5, MotorType.kBrushless), 296); //real:293 practice: 59
-	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(10), new CANSparkMax(3, MotorType.kBrushless), 303); //real:298 practice: 56
-	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(11), new CANSparkMax(2, MotorType.kBrushless), 355); //real: 355 practice: 190
+	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(8), new TalonFX(2), 101); //real:390 practice: 212
+	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(6), new TalonFX(3), 330); //real:293 practice: 59
+	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(7), new TalonFX(1), 327); //real:298 practice: 56
+	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(5), new TalonFX(4), 53); //real: 355 practice: 190
 
 	/*
 	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(12), new CANSparkMax(4, MotorType.kBrushless), 370); //real:390 practice: 212
@@ -58,7 +60,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain {
 
 		//mSwerveModules[0].resetEncoder();
 		for(int i = 0; i < 4; i++) {
-			mSwerveModules[i].getDriveMotor().setIdleMode(IdleMode.kBrake);
+			mSwerveModules[i].getDriveMotor().setNeutralMode(NeutralMode.Brake);
 		}
 
 		setDefaultCommand(new HolonomicDriveCommand(this));
@@ -162,7 +164,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain {
 		targetPos = (targetPos * 8.5714)/(4*Math.PI); //inches to ticks
 		for (int i = 0; i < 4; i++) {
 				mSwerveModules[i].setTargetAngle(angle); //mSwerveModules[i].getTargetAngle());
-				mSwerveModules[i].setTargetDistance(targetPos+mSwerveModules[i].getDriveMotor().getEncoder().getPosition());
+				mSwerveModules[i].setTargetDistance(targetPos+mSwerveModules[i].getDriveMotor().getSelectedSensorPosition());
 			}
 			
 	} // 2/12/19 3:37 PM i want boba and a burrito so bad right now !!!!!!!!!
@@ -175,7 +177,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain {
 	}
 
 	public double calculateErrPos(double d1) {
-		return d1 - mSwerveModules[0].getDriveDistance();
+		return d1 - mSwerveModules[0].getInches(); //return d1 - mSwerveModules[0].getDriveDistance();
 	}
 
 }

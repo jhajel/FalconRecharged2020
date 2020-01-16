@@ -11,6 +11,9 @@ import com.revrobotics.CANEncoder;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -35,23 +38,16 @@ public class SwerveDriveModule extends SubsystemBase {
     private final int mModuleNumber;
 
     private final double mZeroOffset;
-
-    private final CANEncoder mDriveEncoder;
-    private final CANPIDController mPIDController;
     private final TalonSRX mAngleMotor;
-    public final CANSparkMax mDriveMotor;
+    public final TalonFX mDriveMotor;
 
-    private double zeroPos;
-
-    public SwerveDriveModule(int moduleNumber, TalonSRX angleMotor, CANSparkMax driveMotor, double zeroOffset) {
+    public SwerveDriveModule(int moduleNumber, TalonSRX angleMotor, TalonFX driveMotor, double zeroOffset) {
         mModuleNumber = moduleNumber;
 
         mAngleMotor = angleMotor;
         mDriveMotor = driveMotor;
-        mDriveEncoder = mDriveMotor.getEncoder();
-        mPIDController = mDriveMotor.getPIDController();
         mZeroOffset = zeroOffset;
-        zeroPos = mDriveEncoder.getPosition();
+        mDriveMotor.setSelectedSensorPosition(0);
 
         angleMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
         angleMotor.setSensorPhase(true);
@@ -64,10 +60,10 @@ public class SwerveDriveModule extends SubsystemBase {
         // driveMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
         // 0, 0); ADD TO CANSPARKMAX LATER***
 
-        driveMotor.setIdleMode(IdleMode.kBrake);
-        mPIDController.setP(0.02); // 0.00001 working value. we keep it.
-        mPIDController.setI(0.000001); // .0000001
-        mPIDController.setD(0.0065); //0.0065
+        driveMotor.setNeutralMode(NeutralMode.Brake);
+        driveMotor.config_kD(0, 0.02, 0); // 0.02
+        driveMotor.config_kD(0, 0.000001, 0); // 0.000001
+        driveMotor.config_kD(0, 0.0065, 0); //0.0065
 
         // Set amperage limits
         angleMotor.configContinuousCurrentLimit(30, 0);
@@ -75,9 +71,8 @@ public class SwerveDriveModule extends SubsystemBase {
         angleMotor.configPeakCurrentDuration(100, 0);
         angleMotor.enableCurrentLimit(true);
 
-        driveMotor.setSmartCurrentLimit(15);
-        driveMotor.setSecondaryCurrentLimit(15, 0);
-        driveMotor.setCANTimeout(0);
+        // driveMotor.setSmartCurrentLimit(15); No clue how to set Current Limit... 
+        // driveMotor.setSecondaryCurrentLimit(15, 0); //configSupplyCurrentLimit (SupplyCurrentLimitConfiguration currLimitCfg, int timeoutMs)? 
         // driveMotor.enableCurrentLimit(true); try using pheonix tuner
 
         setDefaultCommand(new SwerveModuleCommand(this));
@@ -109,7 +104,7 @@ public class SwerveDriveModule extends SubsystemBase {
         return angle;
     }
 
-    public CANSparkMax getDriveMotor() {
+    public TalonFX getDriveMotor() {
         return mDriveMotor;
     }
 
@@ -174,7 +169,7 @@ public class SwerveDriveModule extends SubsystemBase {
         mAngleMotor.set(ControlMode.Position, targetAngle);
     }
 
-    public void setTargetDistance(double distance) { // inches
+    public void setTargetDistance(double distance) { // inches NEED TO REIMPLEMENT
         // if(angleMotorJam) {
         // mDriveMotor.set(ControlMode.Disabled, 0);
         // return;
@@ -184,20 +179,16 @@ public class SwerveDriveModule extends SubsystemBase {
         // distance *= 80; // to encoder ticks
         // distance = inchesToEncoderTicks(distance);
         // SmartDashboard.putNumber("Module Ticks " + moduleNumber, distance);
-        mPIDController.setReference(distance, ControlType.kPosition);
+        //mPIDController.setReference(distance, ControlType.kPosition);
 
     }
 
     public void setTargetSpeed(double speed) {
-        mDriveMotor.set(speed);
+        mDriveMotor.set(TalonFXControlMode.PercentOutput, speed);
     }
 
     public void resetEncoder() {
-        zeroPos = mDriveEncoder.getPosition();
-    }
-
-    public double getEncoderDiff() {
-        return mDriveEncoder.getPosition() - zeroPos;
+        mDriveMotor.setSelectedSensorPosition(0);
     }
 
     public double getTargetAngle() {
@@ -213,20 +204,15 @@ public class SwerveDriveModule extends SubsystemBase {
     }
 
     public double getInches() {
-        return encoderTicksToInches(mDriveEncoder.getPosition());
+        return encoderTicksToInches(mDriveMotor.getSelectedSensorPosition());
     }
 
-    public double getDriveDistance() {
-        double ticks = mDriveEncoder.getPosition();
-        return encoderTicksToInches(ticks);
-    }
-
-    public CANPIDController getPIDController() {
-        return mPIDController;
-    }
-
+    // public double getDriveDistance() {
+    //     double ticks = mDriveEncoder.getPosition();
+    //     return encoderTicksToInches(ticks);
+    // }
     public void printTick() {
-        SmartDashboard.putNumber("Ticks" + mModuleNumber, mDriveEncoder.getPosition());
+        SmartDashboard.putNumber("Ticks" + mModuleNumber, mDriveMotor.getSelectedSensorPosition() );
     }
 
 }
