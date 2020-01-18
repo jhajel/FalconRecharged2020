@@ -84,12 +84,10 @@ public class RobotContainer {
      buttonB.whenPressed(new DriveForwardDistance(3, .3));
     //  JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
     //  buttonX.whenPressed(new WheelsDriveForwardTest(-100, 0).withTimeout(5));
-    //  JoystickButton buttonY = new JoystickButton(mXboxController, XboxController.Button.kY.value);
-    //  buttonY.whenPressed(new ZeroNavX());
-     JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
-     buttonX.whenPressed(new CameraMode(limelight));
      JoystickButton buttonY = new JoystickButton(mXboxController, XboxController.Button.kY.value);
-     buttonY.whenPressed(new LEDMode(limelight));
+     buttonY.whenPressed(new ZeroNavX());
+     JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
+     buttonX.whenPressed(new SwitchLimelightMode(limelight));
   }
 
 

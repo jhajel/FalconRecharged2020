@@ -7,26 +7,39 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Limelight;
 
-public class CameraMode extends CommandBase {
-  
+public class SwitchLimelightMode extends CommandBase {
+  /**
+   * Creates a new SwitchLimelightMode.
+   */
   private Limelight limelight;
-  private boolean finished = false;
-  public CameraMode(Limelight limelight) {
+  private boolean finished;
+  public SwitchLimelightMode(Limelight limelight) {
     this.limelight = limelight;
     addRequirements(limelight);
+    finished = false;
+
+  }
+
+  @Override
+  public void initialize() {
+    limelight.setCamMode();
+    finished = false;
+    
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    limelight.setCamMode(1);
+    limelight.switchLimeMode();
+
     finished = true;
   }
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }

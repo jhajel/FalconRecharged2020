@@ -31,7 +31,7 @@ public class ShowLimelight extends CommandBase {
   @Override
   public void execute() {
     limelight.printInfo();
-    limelight.setCamMode(1);
+    limelight.setCamMode();
   }
 
   // Called once the command ends or is interrupted.
