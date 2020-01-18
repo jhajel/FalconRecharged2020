@@ -11,7 +11,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.commands.HolonomicDriveCommand;
 
-public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwise + is counter clockwise
+public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwise + is counter clockwise test commit 2 electric bugaloo
 	private static final double WHEELBASE = 22.5; 
 	private static final double TRACKWIDTH = 22.5;
 	private static final double RATIO = Math.sqrt(Math.pow(WHEELBASE, 2) + Math.pow(TRACKWIDTH, 2));
