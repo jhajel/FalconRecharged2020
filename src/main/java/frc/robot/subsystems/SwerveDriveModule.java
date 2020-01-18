@@ -72,7 +72,7 @@ public class SwerveDriveModule extends SubsystemBase {
         angleMotor.enableCurrentLimit(true);
 
         // driveMotor.setSmartCurrentLimit(15); No clue how to set Current Limit... 
-        // driveMotor.setSecondaryCurrentLimit(15, 0); //configSupplyCurrentLimit (SupplyCurrentLimitConfiguration currLimitCfg, int timeoutMs)? 
+        // driveMotor.setSecondaryCurrentLimit(15, 0); //config`SupplyCurrentLimit (SupplyCurrentLimitConfiguration currLimitCfg, int timeoutMs)? 
         // driveMotor.enableCurrentLimit(true); try using pheonix tuner
 
         setDefaultCommand(new SwerveModuleCommand(this));

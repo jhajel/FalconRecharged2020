@@ -7,12 +7,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ColorPanelSubsystem;
+import frc.robot.subsystems.Conveyer;
 import frc.robot.subsystems.HolonomicDrivetrain;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -33,6 +35,7 @@ public class RobotContainer {
   private SwerveDriveSubsystem swerveDriveSubsystem;
   private ColorPanelSubsystem colorPanelSubsystem;
   private Limelight limelight; 
+  private Conveyer conveyer;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -44,6 +47,7 @@ public class RobotContainer {
     colorPanelSubsystem = new ColorPanelSubsystem();
     mXboxController = new XboxController(0);
     limelight = new Limelight();
+    conveyer = new Conveyer();
     configureButtonBindings();
   }
 
@@ -70,6 +74,9 @@ public class RobotContainer {
   public Limelight getLimelight(){
     return limelight;
   }
+  public Conveyer getConveyer(){
+    return conveyer;
+  }
 
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
@@ -86,8 +93,11 @@ public class RobotContainer {
     //  buttonX.whenPressed(new WheelsDriveForwardTest(-100, 0).withTimeout(5));
      JoystickButton buttonY = new JoystickButton(mXboxController, XboxController.Button.kY.value);
      buttonY.whenPressed(new ZeroNavX());
-     JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
-     buttonX.whenPressed(new SwitchLimelightMode(limelight));
+    //  JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
+    
+    JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
+    buttonX.whenPressed(new SwitchLimelightMode(limelight));
+    //buttonX.whenPressed(new PrintSensor());
   }
 
 
