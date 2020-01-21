@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ColorPanelSubsystem;
-import frc.robot.subsystems.Conveyer;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.HolonomicDrivetrain;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -35,7 +35,7 @@ public class RobotContainer {
   private SwerveDriveSubsystem swerveDriveSubsystem;
   private ColorPanelSubsystem colorPanelSubsystem;
   private Limelight limelight; 
-  private Conveyer conveyer;
+  private Conveyor conveyor;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -47,7 +47,7 @@ public class RobotContainer {
     colorPanelSubsystem = new ColorPanelSubsystem();
     mXboxController = new XboxController(0);
     limelight = new Limelight();
-    conveyer = new Conveyer();
+    conveyor = new Conveyor();
     configureButtonBindings();
   }
 
@@ -74,8 +74,9 @@ public class RobotContainer {
   public Limelight getLimelight(){
     return limelight;
   }
-  public Conveyer getConveyer(){
-    return conveyer;
+
+  public Conveyor getConveyor(){
+    return conveyor;
   }
 
   /**
@@ -86,18 +87,26 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     JoystickButton buttonA = new JoystickButton(mXboxController, XboxController.Button.kA.value);
-     buttonA.whenPressed(new DriveForward(.2));
-     JoystickButton buttonB = new JoystickButton(mXboxController, XboxController.Button.kB.value);
-     buttonB.whenPressed(new DriveForwardDistance(3, .3));
-    //  JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
-    //  buttonX.whenPressed(new WheelsDriveForwardTest(-100, 0).withTimeout(5));
-     JoystickButton buttonY = new JoystickButton(mXboxController, XboxController.Button.kY.value);
-     buttonY.whenPressed(new ZeroNavX());
-    //  JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
-    
     JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
-    buttonX.whenPressed(new SwitchLimelightMode(limelight));
+    JoystickButton buttonB = new JoystickButton(mXboxController, XboxController.Button.kB.value);
+    JoystickButton buttonY = new JoystickButton(mXboxController, XboxController.Button.kY.value);
+    //buttonA.whenPressed(new DriveForward(.2));
+     
+    //buttonB.whenPressed(new DriveForwardDistance(3, .3));
+    
+    //  buttonX.whenPressed(new WheelsDriveForwardTest(-100, 0).withTimeout(5));
+     
+    //buttonY.whenPressed(new ZeroNavX());
+    buttonX.whileHeld(new ConveyorSpeed(1));
+    buttonY.whileHeld(new ConveyorSpeed(-1));
+    buttonA.whenPressed(new MoveConveyorDistance(-5));
+
+    
+    //buttonX.whenPressed(new SwitchLimelightMode(limelight));
     //buttonX.whenPressed(new PrintSensor());
+    
+
+
   }
 
 
