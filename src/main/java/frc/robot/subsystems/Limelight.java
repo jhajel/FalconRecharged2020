@@ -9,11 +9,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
-import frc.robot.commands.ShowLimelight;
+import frc.robot.commands.SwitchLimelightMode;
 
 public class Limelight extends SubsystemBase {
   /**
@@ -22,18 +22,18 @@ public class Limelight extends SubsystemBase {
   public static double limelightx;
   public static double limelighty;
   public static double limelighta;
-  public NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  public NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-color");
   public NetworkTableEntry tx = table.getEntry("tx");
   public NetworkTableEntry ty = table.getEntry("ty");
   public NetworkTableEntry ta = table.getEntry("ta");
   public NetworkTableEntry tv = table.getEntry("tv");
-
+  private boolean isLEDMode;
   public Limelight() {
     limelightx = tx.getDouble(0.0);
     limelighty = ty.getDouble(0.0);
     limelighta = ta.getDouble(0.0);
-
-    setDefaultCommand(new ShowLimelight(this));
+    isLEDMode = false;
+    //setDefaultCommand(new ShowLimelight(this));
   }
 
   public void printInfo(){
@@ -42,6 +42,29 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putNumber("Limelight A", limelighta);
   }
 
+  public void setLEDMode() {
+    table.getEntry("ledMode").setDouble(3);
+    table.getEntry("camMode").setDouble(0);
+      SmartDashboard.putNumber("LEDMODE", 3);
+    } 
+  
+  public void setCamMode() {
+      table.getEntry("camMode").setDouble(1);
+      table.getEntry("ledMode").setDouble(1);
+      SmartDashboard.putNumber("CAMMODE", 1);
+  }
+
+    public void switchLimeMode(){
+
+      if(!isLEDMode){
+        setLEDMode();
+        isLEDMode = true;
+      }
+      else{
+        setCamMode();
+        isLEDMode = false;
+      }
+    }
   @Override
   public void periodic() {
     printInfo();
