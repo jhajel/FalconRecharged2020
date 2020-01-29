@@ -122,8 +122,12 @@ public class RobotContainer {
     //buttonY.whenPressed(new ZeroNavX());
     buttonX.whileHeld(new ConveyorSpeed(1));
     buttonY.whileHeld(new ConveyorSpeed(-1));
+<<<<<<< HEAD
     buttonA.whenPressed(new MoveConveyorDistance(-5));
     buttonB.whenPressed(new ShooterSwitchArmMode());
+=======
+    buttonA.whenPressed(new MoveConveyorDistance(5));
+>>>>>>> cdf10bd93272a04537075dce52317ecac5595cb8
 
     
     //buttonX.whenPressed(new SwitchLimelightMode(limelight));

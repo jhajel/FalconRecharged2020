@@ -156,7 +156,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwis
 		}
 	}
 
-	public void driveForwardDistance(double targetPos, double angle){ // inches
+	public void driveForwardDistance(double targetPos, double angle){ // inches & degrees
 		double angleError = ((angle - mNavX.getYaw()) / 180)*10;
 
 		angleError = Math.min(angleError, 1);

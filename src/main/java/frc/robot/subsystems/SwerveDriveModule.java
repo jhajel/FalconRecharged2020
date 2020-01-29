@@ -7,18 +7,12 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANEncoder;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.revrobotics.CANPIDController;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
-import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -149,38 +143,14 @@ public class SwerveDriveModule extends SubsystemBase {
         targetAngle += currentAngle - currentAngleMod;
 
         double currentError = mAngleMotor.getClosedLoopError(0);
-        // if (Math.abs(currentError - mLastError) < 7.5 &&
-        // Math.abs(currentAngle - targetAngle) > 5) {
-        // if (mStallTimeBegin == Long.MAX_VALUE) {
-        // mStallTimeBegin = System.currentTimeMillis();
-        // }
-        // if (System.currentTimeMillis() - mStallTimeBegin > STALL_TIMEOUT) {
-        // angleMotorJam = true;
-        // mAngleMotor.set(ControlMode.Disabled, 0);
-        // mDriveMotor.set(ControlMode.Disabled, 0);
-        // SmartDashboard.putBoolean("Motor Jammed" + moduleNumber, angleMotorJam);
-        // return;
-        // }
-        // } else {
-        // mStallTimeBegin = Long.MAX_VALUE;
-        // }
         mLastError = currentError;
         targetAngle *= 1024.0 / 360.0;
         mAngleMotor.set(ControlMode.Position, targetAngle);
     }
 
-    public void setTargetDistance(double distance) { // inches NEED TO REIMPLEMENT
-        // if(angleMotorJam) {
-        // mDriveMotor.set(ControlMode.Disabled, 0);
-        // return;
-        // }
-        // distance /= 2 * Math.PI * driveWheelRadius; // to wheel rotations
-        // distance *= driveGearRatio; // to encoder rotations
-        // distance *= 80; // to encoder ticks
-        // distance = inchesToEncoderTicks(distance);
-        // SmartDashboard.putNumber("Module Ticks " + moduleNumber, distance);
-        //mPIDController.setReference(distance, ControlType.kPosition);
-
+    public void setTargetDistance(double distance) { // inches NEED TO TEST
+         //TalonFX’s integrated sensor has a native resolution of 2048 units per rotation regardless of which class is used.
+        mDriveMotor.set(ControlMode.Position, distance);
     }
 
     public void setTargetSpeed(double speed) {
@@ -199,18 +169,15 @@ public class SwerveDriveModule extends SubsystemBase {
         return ticks / 35.6;
     }
 
-    public int inchesToEncoderTicks(double inches) {
-        return (int) Math.round(inches * 64);
+    public double getPosition()
+    {
+        return (double)mDriveMotor.getSelectedSensorPosition();
     }
 
     public double getInches() {
         return encoderTicksToInches(mDriveMotor.getSelectedSensorPosition());
     }
 
-    // public double getDriveDistance() {
-    //     double ticks = mDriveEncoder.getPosition();
-    //     return encoderTicksToInches(ticks);
-    // }
     public void printTick() {
         SmartDashboard.putNumber("Ticks" + mModuleNumber, mDriveMotor.getSelectedSensorPosition() );
     }
