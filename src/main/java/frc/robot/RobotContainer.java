@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -16,7 +17,9 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.ColorPanelSubsystem;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.HolonomicDrivetrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
 /**
@@ -36,6 +39,9 @@ public class RobotContainer {
   private ColorPanelSubsystem colorPanelSubsystem;
   private Limelight limelight; 
   private Conveyor conveyor;
+  private Intake intake;
+  private Shooter shooter;
+  private Compressor compressor;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -48,6 +54,10 @@ public class RobotContainer {
     mXboxController = new XboxController(0);
     limelight = new Limelight();
     conveyor = new Conveyor();
+    intake = new Intake();
+    shooter = new Shooter();
+    compressor = new Compressor();
+
     configureButtonBindings();
   }
 
@@ -79,6 +89,19 @@ public class RobotContainer {
     return conveyor;
   }
 
+  public Intake getIntake(){
+    return intake;
+  }
+
+  public Shooter getShooter(){
+    return shooter;
+  }
+
+  public Compressor getCompressor(){
+    return compressor;
+  }
+
+  
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -100,6 +123,7 @@ public class RobotContainer {
     buttonX.whileHeld(new ConveyorSpeed(1));
     buttonY.whileHeld(new ConveyorSpeed(-1));
     buttonA.whenPressed(new MoveConveyorDistance(-5));
+    buttonB.whenPressed(new ShooterSwitchArmMode());
 
     
     //buttonX.whenPressed(new SwitchLimelightMode(limelight));

@@ -39,7 +39,7 @@ public class Conveyor extends SubsystemBase {
   public void periodic() {
     printStatus();
     printTicks();
-    setDefaultCommand(new SenseCell());
+    //setDefaultCommand(new SenseCell());
   }
 
   public boolean getStatus(){
