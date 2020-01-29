@@ -27,7 +27,7 @@ public class Conveyor extends SubsystemBase {
   
   public Conveyor() {
     sensor = new DigitalInput(0);
-    indexer = new CANSparkMax(17,MotorType.kBrushless);// not correct
+    indexer = new CANSparkMax(31, MotorType.kBrushless);// not correct
     encoder = indexer.getEncoder();
     pidController = indexer.getPIDController();
     pidController.setP(.2);
@@ -39,7 +39,7 @@ public class Conveyor extends SubsystemBase {
   public void periodic() {
     printStatus();
     printTicks();
-    setDefaultCommand(new SenseCell());
+    //setDefaultCommand(new SenseCell());
   }
 
   public boolean getStatus(){
