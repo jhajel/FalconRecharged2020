@@ -20,26 +20,26 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   private CANSparkMax intakeController;
-  private DoubleSolenoid piston;
+  private DoubleSolenoid intakeSolenoid;
 
   public Intake() {
     intakeController = new CANSparkMax(Constants.INTAKE_SPARK, MotorType.kBrushless);
-    //piston = new DoubleSolenoid(0, 0);
+    intakeSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID, Constants.INTAKEREVERSE_SOLENOID);
   }
 
   public void setSpeed(double speed){
     intakeController.set(speed);
   }
 
-  public void switchPistonMode(){
-    if(piston.get() == (DoubleSolenoid.Value.kForward)){
-      piston.set(DoubleSolenoid.Value.kReverse);
+  public void switchintakeSolenoidMode(){
+    if(intakeSolenoid.get() == (DoubleSolenoid.Value.kForward)){
+      intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
-    else if(piston.get() == (DoubleSolenoid.Value.kReverse)){
-      piston.set(DoubleSolenoid.Value.kForward);
+    else if(intakeSolenoid.get() == (DoubleSolenoid.Value.kReverse)){
+      intakeSolenoid.set(DoubleSolenoid.Value.kForward);
     }
     else{
-      piston.set(DoubleSolenoid.Value.kReverse);
+      intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
   }
 

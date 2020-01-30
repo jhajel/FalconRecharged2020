@@ -29,4 +29,10 @@ public final class Constants {
     public static final int DRIVE3_TALON = -1;
     public static final int DRIVE4_TALON = -1;
     public static final int SPINNER_SPARK = 17;
+    public static final int INTAKEFORWARD_SOLENOID = 0;
+    public static final int INTAKEREVERSE_SOLENOID = 1;
+    public static final int CLIMBERFORWARD_SOLENOID = 2;
+    public static final int CLIMBERREVERSE_SOLENOID = 3;
+    public static final int COLORPANELFORWARD_SOLENOID = 4;
+    public static final int COLORPANELREVERSE_SOLENOID = 5;
 }

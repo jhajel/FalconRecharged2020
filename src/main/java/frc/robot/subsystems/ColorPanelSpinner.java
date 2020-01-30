@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -20,9 +21,11 @@ public class ColorPanelSpinner extends SubsystemBase {
     public static double mPIDControllerP = 0.15;
     public static double mPIDControllerI = 0.0000001;
     public static double mPIDControllerD = 0.01;
+    public static DoubleSolenoid colorPanelSolenoid;
 
     public ColorPanelSpinner() {
         moto1 = new CANSparkMax(Constants.SPINNER_SPARK, MotorType.kBrushless);
+        colorPanelSolenoid = new DoubleSolenoid(Constants.COLORPANELFORWARD_SOLENOID, Constants.COLORPANELREVERSE_SOLENOID);
         moto1.setIdleMode(IdleMode.kBrake);
         encoder = moto1.getEncoder();
         mPIDController = moto1.getPIDController();
