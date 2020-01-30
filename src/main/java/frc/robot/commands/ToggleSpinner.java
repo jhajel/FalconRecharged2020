@@ -8,31 +8,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.ColorPanelSpinner;
 
-public class IntakeSwitchArmMode extends CommandBase {
+public class ToggleSpinner extends CommandBase {
   /**
-   * Creates a new IntakeSwitchArmMode.
+   * Creates a new ToggleSpinner.
    */
- 
-  public IntakeSwitchArmMode() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    
+  private ColorPanelSpinner colorPanelSpinner;
+  public ToggleSpinner(ColorPanelSpinner colorPanelSpinner) {
+    addRequirements(colorPanelSpinner);
+    this.colorPanelSpinner = colorPanelSpinner;
   }
 
   // Called when the command is initially scheduled.
-  @Override 
+  @Override
   public void initialize() {
-    RobotContainer.getContainer().getIntake().switchPistonMode();
-    RobotContainer.getContainer().getIntake().switchPistonMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.getContainer().getIntake().switchPistonMode();
-    RobotContainer.getContainer().getIntake().switchPistonMode();
+      colorPanelSpinner.toggleSpinner();
   }
 
   // Called once the command ends or is interrupted.

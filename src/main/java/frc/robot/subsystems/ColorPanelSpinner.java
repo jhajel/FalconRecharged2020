@@ -8,6 +8,7 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -78,8 +79,25 @@ public class ColorPanelSpinner extends SubsystemBase {
         SmartDashboard.putNumber("Spinner Pos", getPosition());
     }
 
+    public void toggleSpinner() {
+        if(colorPanelSolenoid.get() == Value.kReverse)
+        {
+            colorPanelSolenoid.set(Value.kForward);
+        }
+        else {
+            colorPanelSolenoid.set(Value.kReverse);
+        }
+    }
+
+    public void retractSpinner() {
+        colorPanelSolenoid.set(Value.kReverse);
+    }
+
+    public void deploySpinner() {
+        colorPanelSolenoid.set(Value.kForward);
+    }
 }
 
 // 2pi*18 = circumference of control panel
 /// 12.57 = circumference of wheel
-// 9 rotations = 1 control panel rotationss
+// 8 rotations = 1 control panel rotationss

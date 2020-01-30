@@ -31,11 +31,8 @@ public class Intake extends SubsystemBase {
     intakeController.set(speed);
   }
 
-  public void switchintakeSolenoidMode(){
-    if(intakeSolenoid.get() == (DoubleSolenoid.Value.kForward)){
-      intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
-    }
-    else if(intakeSolenoid.get() == (DoubleSolenoid.Value.kReverse)){
+  public void toggleIntakeSolenoidMode(){
+    if(intakeSolenoid.get() == (DoubleSolenoid.Value.kReverse)){
       intakeSolenoid.set(DoubleSolenoid.Value.kForward);
     }
     else{

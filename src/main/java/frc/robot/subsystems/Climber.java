@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -26,6 +27,16 @@ public class Climber extends SubsystemBase {
     motorController1 = new CANSparkMax(Constants.CLIMBER1_SPARK,MotorType.kBrushless);
     motorController2 = new CANSparkMax(Constants.CLIMBER2_SPARK,MotorType.kBrushless);
     climberGearLock = new DoubleSolenoid(Constants.CLIMBERFORWARD_SOLENOID,Constants.CLIMBERREVERSE_SOLENOID);
+  }
+
+  public void toggleClimberGearLock() {
+    if(climberGearLock.get() == Value.kReverse)
+    {
+      climberGearLock.set(Value.kForward);
+    }
+    else {
+      climberGearLock.set(Value.kReverse);
+    }
   }
 
   @Override
