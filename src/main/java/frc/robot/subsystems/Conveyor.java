@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.commands.SenseCell;
 
 import com.revrobotics.CANEncoder;
@@ -27,7 +28,7 @@ public class Conveyor extends SubsystemBase {
   
   public Conveyor() {
     sensor = new DigitalInput(0);
-    indexer = new CANSparkMax(31, MotorType.kBrushless);// not correct
+    indexer = new CANSparkMax(Constants.CONVEYOR_SPARK, MotorType.kBrushless);// not correct
     encoder = indexer.getEncoder();
     pidController = indexer.getPIDController();
     pidController.setP(.2);

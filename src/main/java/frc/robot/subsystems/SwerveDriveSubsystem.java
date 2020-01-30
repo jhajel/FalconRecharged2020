@@ -9,16 +9,17 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SPI;
+import frc.robot.Constants;
 import frc.robot.commands.HolonomicDriveCommand;
 
 public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwise + is counter clockwise test commit 2 electric bugaloo
 	private static final double WHEELBASE = 22.5; 
 	private static final double TRACKWIDTH = 22.5;
 	private static final double RATIO = Math.sqrt(Math.pow(WHEELBASE, 2) + Math.pow(TRACKWIDTH, 2));
-	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(8), new TalonFX(2), 101); //real:390 practice: 212
-	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(6), new TalonFX(3), 330); //real:293 practice: 59
-	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(7), new TalonFX(1), 327); //real:298 practice: 56
-	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(5), new TalonFX(4), 53); //real: 355 practice: 190
+	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 101); //real:390 practice: 212
+	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 330); //real:293 practice: 59
+	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), 327); //real:298 practice: 56
+	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 53); //real: 355 practice: 190
 
 	/*
 	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(12), new CANSparkMax(4, MotorType.kBrushless), 370); //real:390 practice: 212

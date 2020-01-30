@@ -9,6 +9,8 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class ColorPanelSpinner extends SubsystemBase {
@@ -20,7 +22,7 @@ public class ColorPanelSpinner extends SubsystemBase {
     public static double mPIDControllerD = 0.01;
 
     public ColorPanelSpinner() {
-        moto1 = new CANSparkMax(29, MotorType.kBrushless);
+        moto1 = new CANSparkMax(Constants.SPINNER_SPARK, MotorType.kBrushless);
         moto1.setIdleMode(IdleMode.kBrake);
         encoder = moto1.getEncoder();
         mPIDController = moto1.getPIDController();

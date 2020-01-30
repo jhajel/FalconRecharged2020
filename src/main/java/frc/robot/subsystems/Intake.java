@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.commands.IntakeSpeed;
 
 public class Intake extends SubsystemBase {
@@ -19,18 +20,15 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   private CANSparkMax intakeController;
-  private CANSparkMax intake2;
   private DoubleSolenoid piston;
 
   public Intake() {
-    intakeController = new CANSparkMax(15, MotorType.kBrushless); //change ID
-    intake2 = new CANSparkMax(12, MotorType.kBrushless); //change ID
+    intakeController = new CANSparkMax(Constants.INTAKE_SPARK, MotorType.kBrushless);
     //piston = new DoubleSolenoid(0, 0);
   }
 
   public void setSpeed(double speed){
     intakeController.set(speed);
-    intake2.set(speed);
   }
 
   public void switchPistonMode(){
