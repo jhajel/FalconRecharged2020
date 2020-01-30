@@ -23,6 +23,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.ShooterMotor;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -46,6 +47,7 @@ public class RobotContainer {
   private Shooter shooter;
   private Compressor compressor;
   private Climber climber;
+  private ShooterMotor shooterMotor;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -64,7 +66,7 @@ public class RobotContainer {
     shooter = new Shooter();
     compressor = new Compressor();
     climber = new Climber();
-
+    shooterMotor = new ShooterMotor();
     configureButtonBindings();
   }
 
@@ -118,6 +120,10 @@ public class RobotContainer {
     return compressor;
   }
 
+  public ShooterMotor getShooterMotor(){
+    return shooterMotor;
+  }
+
   
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
@@ -137,14 +143,14 @@ public class RobotContainer {
     //  buttonX.whenPressed(new WheelsDriveForwardTest(-100, 0).withTimeout(5));
      
     //buttonY.whenPressed(new ZeroNavX());
-    buttonX.whileHeld(new ConveyorSpeed(1));
-    buttonY.whileHeld(new ConveyorSpeed(-1));
-    buttonA.whenPressed(new MoveConveyorDistance(-5));
-    buttonB.whenPressed(new ShooterSwitchArmMode());
+    //buttonX.whileHeld(new ConveyorSpeed(1));
+    //buttonY.whileHeld(new ConveyorSpeed(-1));
+    //buttonA.whenPressed(new MoveConveyorDistance(-5));
+    //buttonB.whenPressed(new ShooterSwitchArmMode());
 
-    
     //buttonX.whenPressed(new SwitchLimelightMode(limelight));
     //buttonX.whenPressed(new PrintSensor());
+    
     
 
 
