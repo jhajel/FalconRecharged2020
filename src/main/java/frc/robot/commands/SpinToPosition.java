@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.Map;
 import java.util.HashMap;
 
-public class SpinByColor extends CommandBase {
+public class SpinToPosition extends CommandBase {
     private String startColor;
     private int colorCount;
     private String previousColor;
@@ -24,7 +24,7 @@ public class SpinByColor extends CommandBase {
     private Map<String,Integer> colorDictionary;
     private String color;
 
-    public SpinByColor() {
+    public SpinToPosition() {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
     }
 
