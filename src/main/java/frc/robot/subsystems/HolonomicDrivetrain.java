@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import frc.robot.commands.HolonomicDriveCommand;
-
 public abstract class HolonomicDrivetrain extends Drivetrain {
 
 	private double mAdjustmentAngle = 0;

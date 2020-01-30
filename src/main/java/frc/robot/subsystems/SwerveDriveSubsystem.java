@@ -4,9 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
@@ -22,23 +20,12 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwis
 	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 53); //real: 355 practice: 190
 
 	/*
-	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(12), new CANSparkMax(4, MotorType.kBrushless), 370); //real:390 practice: 212
-	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(13), new CANSparkMax(5, MotorType.kBrushless), 293); //real:293 practice: 59
-	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(10), new CANSparkMax(3, MotorType.kBrushless), 248); //real:298 practice: 56
-	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(11), new CANSparkMax(2, MotorType.kBrushless), 355); //real: 355 practice: 190
-	*/
-
-	/*
 	 * 0 is Front Right
 	 * 1 is Front Left
 	 * 2 is Back Left
 	 * 3 is Back Right
 	 */
 	private SwerveDriveModule[] mSwerveModules = new SwerveDriveModule[] {                            
-		//new SwerveDriveModule(0, new TalonSRX(12), new CANSparkMax(4, MotorType.kBrushless), 390), //real:390 practice: 212
-		//new SwerveDriveModule(1, new TalonSRX(13), new CANSparkMax(5, MotorType.kBrushless), 293), //real:293 practice: 59
-		//new SwerveDriveModule(2, new TalonSRX(10), new CANSparkMax(3, MotorType.kBrushless), 298), //real:298 practice: 56
-		//new SwerveDriveModule(3, new TalonSRX(11), new CANSparkMax(2, MotorType.kBrushless), 355) //real: 355 practice: 190
 		m0,m1,m2,m3
 	};
 
