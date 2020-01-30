@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
-import frc.robot.subsystems.ColorPanelSubsystem;
+import frc.robot.subsystems.ColorSensor;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ColorPanelSpinner;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.HolonomicDrivetrain;
 import frc.robot.subsystems.Intake;
@@ -36,12 +38,15 @@ public class RobotContainer {
   private XboxController mXboxController;
   private static RobotContainer theContainer;
   private SwerveDriveSubsystem swerveDriveSubsystem;
-  private ColorPanelSubsystem colorPanelSubsystem;
+  private ColorSensor colorSensor;
+  private ColorPanelSpinner colorPanelSpinner;
   private Limelight limelight; 
   private Conveyor conveyor;
   private Intake intake;
   private Shooter shooter;
   private Compressor compressor;
+  private Climber climber;
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -50,20 +55,32 @@ public class RobotContainer {
     // Configure the button bindings
     swerveDriveSubsystem = new SwerveDriveSubsystem();
     swerveDriveSubsystem.zeroGyro();
-    colorPanelSubsystem = new ColorPanelSubsystem();
+    colorSensor = new ColorSensor();
+    colorPanelSpinner = new ColorPanelSpinner();
     mXboxController = new XboxController(0);
     limelight = new Limelight();
     conveyor = new Conveyor();
     intake = new Intake();
     shooter = new Shooter();
     compressor = new Compressor();
+    climber = new Climber();
 
     configureButtonBindings();
   }
 
-  public ColorPanelSubsystem getColorPanelSubsystem()
+  public Climber getClimber()
   {
-    return colorPanelSubsystem;
+    return climber;
+  }
+
+  public ColorPanelSpinner getColorPanelSpinner()
+  {
+    return colorPanelSpinner;
+  }
+
+  public ColorSensor getColorSensor()
+  {
+    return colorSensor;
   }
 
   public SwerveDriveSubsystem getHolonomicDrivetrain()
