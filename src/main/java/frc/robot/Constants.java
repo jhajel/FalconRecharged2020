@@ -35,4 +35,10 @@ public final class Constants {
     public static final int CLIMBERREVERSE_SOLENOID = 3;
     public static final int COLORPANELFORWARD_SOLENOID = 4;
     public static final int COLORPANELREVERSE_SOLENOID = 5;
+    public static final int SHOOTER1_TALON = 35; //ID number to do
+    public static final int SHOOTER2_TALON = 36; //ID number to do
+    public static final int SHOOTER_FORWARD_SOLENOID = 6; //ID number to do
+    public static final int SHOOTER_REVERSE_SOLENOID = 7; //ID number to do
+    public static final int SHOOTER2_FORWARD_SOLENOID = 8; //ID number to do
+    public static final int SHOOTER2_REVERSE_SOLENOID = 9; //ID number to do
 }

@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.commands.SpinShooterMotor;
 
 public class ShooterMotor extends SubsystemBase {
@@ -21,9 +22,9 @@ public class ShooterMotor extends SubsystemBase {
   private TalonFX motor2; 
 
   public ShooterMotor() {
-    motor1  = new TalonFX(35); // ID NUMBER to do
-    motor2 = new TalonFX(36); // ID NUMBER to do
-    motor2.set(ControlMode.Follower, 35);
+    motor1 = new TalonFX(Constants.SHOOTER1_TALON);
+    motor2 = new TalonFX(Constants.SHOOTER2_TALON);
+    motor2.set(ControlMode.Follower, Constants.SHOOTER1_TALON);
     motor2.setInverted(true);
   }
 
