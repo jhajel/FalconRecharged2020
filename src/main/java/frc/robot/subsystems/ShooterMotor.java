@@ -12,7 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.SpinShooterMotor;
+
 
 public class ShooterMotor extends SubsystemBase {
   /**
@@ -24,21 +24,33 @@ public class ShooterMotor extends SubsystemBase {
   public ShooterMotor() {
     motor1 = new TalonFX(Constants.SHOOTER1_TALON);
     motor2 = new TalonFX(Constants.SHOOTER2_TALON);
+    motor1.config_kP(0, 0, 0);
+    motor1.config_kI(0, 0, 0);
+    motor1.config_kD(0, 0, 0);
     motor2.set(ControlMode.Follower, Constants.SHOOTER1_TALON);
-    motor2.setInverted(true);
+    motor1.setInverted(true);
   }
+
+
 
   public void spin(double speed)
   {
-    motor1.set(ControlMode.PercentOutput, -speed);
+    motor1.set(ControlMode.PercentOutput, speed);
     //motor2.set(ControlMode.PercentOutput, speed);
     
     //motor1.set(ControlMode.MotionMagic, targetPos, DemandType.ArbitraryFeedForward, feedforward);
 
   }
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    setDefaultCommand(new SpinShooterMotor());
+
+  public void setSpeed(double speed)
+  {
+    motor1.set(ControlMode.Velocity, speed); // Velocity based
   }
+
+  public double getSpeed()
+  {
+    return motor1.getSelectedSensorVelocity();
+  }
+
+
 }
