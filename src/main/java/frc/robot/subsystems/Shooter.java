@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
   /**
@@ -20,8 +21,8 @@ public class Shooter extends SubsystemBase {
   private boolean isRetracted;
 
   public Shooter() {
-    piston = new DoubleSolenoid(0,1);// change values
-    piston2 = new DoubleSolenoid(2,3);// change values
+    piston = new DoubleSolenoid(Constants.SHOOTER_FORWARD_SOLENOID, Constants.SHOOTER_REVERSE_SOLENOID);
+    piston2 = new DoubleSolenoid(Constants.SHOOTER2_FORWARD_SOLENOID, Constants.SHOOTER2_REVERSE_SOLENOID);
     isRetracted = true;
     piston.set(DoubleSolenoid.Value.kReverse);
     piston2.set(DoubleSolenoid.Value.kReverse);

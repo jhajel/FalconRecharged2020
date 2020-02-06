@@ -7,34 +7,28 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.Intake;
 
-public class SpinShooterMotor extends CommandBase {
-  private XboxController mXboxController;
+public class ToggleIntakeArmMode extends CommandBase {
   /**
-   * Creates a new SpinShooterMotor.
+   * Creates a new IntaketoggleArmMode.
    */
-
-  public SpinShooterMotor(XboxController xboxController) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    mXboxController = xboxController;
-    addRequirements(RobotContainer.getContainer().getShooterMotor()); 
+  private Intake intake;
+  public ToggleIntakeArmMode(Intake intake) {
+    addRequirements(intake);
+    this.intake = intake;
   }
 
   // Called when the command is initially scheduled.
-  @Override
+  @Override 
   public void initialize() {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    double forward = mXboxController.getY(Hand.kRight); //real: positive
-    RobotContainer.getContainer().getShooterMotor().spin(forward);
+    intake.toggleIntakeSolenoidMode();
   }
 
   // Called once the command ends or is interrupted.
@@ -45,6 +39,6 @@ public class SpinShooterMotor extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

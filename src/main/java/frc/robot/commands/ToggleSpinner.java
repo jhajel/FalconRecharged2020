@@ -7,21 +7,17 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.ColorPanelSpinner;
 
-public class SpinShooterMotor extends CommandBase {
-  private XboxController mXboxController;
+public class ToggleSpinner extends CommandBase {
   /**
-   * Creates a new SpinShooterMotor.
+   * Creates a new ToggleSpinner.
    */
-
-  public SpinShooterMotor(XboxController xboxController) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    mXboxController = xboxController;
-    addRequirements(RobotContainer.getContainer().getShooterMotor()); 
+  private ColorPanelSpinner colorPanelSpinner;
+  public ToggleSpinner(ColorPanelSpinner colorPanelSpinner) {
+    addRequirements(colorPanelSpinner);
+    this.colorPanelSpinner = colorPanelSpinner;
   }
 
   // Called when the command is initially scheduled.
@@ -32,9 +28,7 @@ public class SpinShooterMotor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    double forward = mXboxController.getY(Hand.kRight); //real: positive
-    RobotContainer.getContainer().getShooterMotor().spin(forward);
+      colorPanelSpinner.toggleSpinner();
   }
 
   // Called once the command ends or is interrupted.
@@ -45,6 +39,6 @@ public class SpinShooterMotor extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

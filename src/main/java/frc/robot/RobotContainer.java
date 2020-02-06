@@ -136,6 +136,10 @@ public class RobotContainer {
     JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
     JoystickButton buttonB = new JoystickButton(mXboxController, XboxController.Button.kB.value);
     JoystickButton buttonY = new JoystickButton(mXboxController, XboxController.Button.kY.value);
+    
+
+
+    buttonX.whenHeld(new SetShooterSpeed(60*3.4133));
     //buttonA.whenPressed(new DriveForward(.2));
      
     //buttonB.whenPressed(new DriveForwardDistance(3, .3));

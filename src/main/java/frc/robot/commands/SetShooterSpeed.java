@@ -7,39 +7,43 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.ShooterMotor;
 
-public class SpinShooterMotor extends CommandBase {
-  private XboxController mXboxController;
+public class SetShooterSpeed extends CommandBase {
   /**
-   * Creates a new SpinShooterMotor.
+   * Creates a new SetShooterSpeed.
    */
+  private double speed; 
+  private ShooterMotor shooterMotor;
 
-  public SpinShooterMotor(XboxController xboxController) {
+  public SetShooterSpeed(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    mXboxController = xboxController;
-    addRequirements(RobotContainer.getContainer().getShooterMotor()); 
+    this.speed = speed;
+    shooterMotor = RobotContainer.getContainer().getShooterMotor();
+    addRequirements(shooterMotor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    shooterMotor.setSpeed(speed);  //ticks per 100ms??
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    double forward = mXboxController.getY(Hand.kRight); //real: positive
-    RobotContainer.getContainer().getShooterMotor().spin(forward);
+    System.out.println("Current Speed: "+ shooterMotor.getSpeed() + " Desired Speed: " + speed + " Difference: "+(speed - shooterMotor.getSpeed()));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    shooterMotor.setSpeed(0);
   }
 
   // Returns true when the command should end.
