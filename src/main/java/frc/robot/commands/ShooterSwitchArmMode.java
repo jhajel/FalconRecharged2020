@@ -36,7 +36,7 @@ public class ShooterSwitchArmMode extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(timer.get() >= 1)
+    if(timer.get() >= .25)
     {
       RobotContainer.getContainer().getShooter().switchPistonMode();
       counter++;
@@ -61,6 +61,6 @@ public class ShooterSwitchArmMode extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return counter == 8;
+    return counter == 4;
   }
 }
