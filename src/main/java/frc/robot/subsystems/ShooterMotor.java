@@ -26,6 +26,8 @@ public class ShooterMotor extends SubsystemBase {
     motor2 = new TalonFX(Constants.SHOOTER2_TALON);
     motor2.set(ControlMode.Follower, Constants.SHOOTER1_TALON);
     motor2.setInverted(true);
+    setDefaultCommand(new SpinShooterMotor());
+
   }
 
   public void spin(double speed)
@@ -39,6 +41,5 @@ public class ShooterMotor extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    setDefaultCommand(new SpinShooterMotor());
   }
 }

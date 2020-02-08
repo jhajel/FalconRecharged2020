@@ -25,6 +25,8 @@ public class Intake extends SubsystemBase {
   public Intake() {
     intakeController = new CANSparkMax(Constants.INTAKE_SPARK, MotorType.kBrushless);
     intakeSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID, Constants.INTAKEREVERSE_SOLENOID);
+    setDefaultCommand(new IntakeSpeed(-.5));
+
   }
 
   public void setSpeed(double speed){
@@ -43,6 +45,5 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    setDefaultCommand(new IntakeSpeed(-.5));
   }
 }

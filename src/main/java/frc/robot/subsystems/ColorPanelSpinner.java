@@ -4,6 +4,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
@@ -17,7 +19,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class ColorPanelSpinner extends SubsystemBase {
     private CANEncoder encoder;
-    private CANSparkMax moto1;
+    private TalonSRX moto1;
     public static CANPIDController mPIDController;
     public static double mPIDControllerP = 0.15;
     public static double mPIDControllerI = 0.0000001;
@@ -25,11 +27,11 @@ public class ColorPanelSpinner extends SubsystemBase {
     public static DoubleSolenoid colorPanelSolenoid;
 
     public ColorPanelSpinner() {
-        moto1 = new CANSparkMax(Constants.SPINNER_SPARK, MotorType.kBrushless);
+        moto1 = new TalonSRX(Constants.SPINNER_TALON);
         colorPanelSolenoid = new DoubleSolenoid(Constants.COLORPANELFORWARD_SOLENOID, Constants.COLORPANELREVERSE_SOLENOID);
-        moto1.setIdleMode(IdleMode.kBrake);
-        encoder = moto1.getEncoder();
-        mPIDController = moto1.getPIDController();
+        //moto1.setNeutralMode(IdleMode.kBrake);
+        //encoder = moto1.getEncoder();
+        //mPIDController = moto1.getPIDController();
         // mPIDControllerP = 0.0;
         mPIDController.setP(mPIDControllerP); // 0.00001 working value. we keep it.
         mPIDController.setI(mPIDControllerI); // .0000001
@@ -38,11 +40,11 @@ public class ColorPanelSpinner extends SubsystemBase {
     }
 
     public void setMotorSpeed (double speed){
-        moto1.set(speed);
+        moto1.set(ControlMode.PercentOutput, speed);
     }
 
     public void spin(double speed) {
-        moto1.set(speed);
+        moto1.set(ControlMode.PercentOutput, speed);
     }
 
     public int inchesToEncoderTicks(double inches) {

@@ -26,7 +26,6 @@ public class SpinToColor extends CommandBase {
     private Map<String,Integer> colorDictionary;
     private String gameData;
     private String color;
-
     
     public SpinToColor(String data) {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
@@ -45,7 +44,7 @@ public class SpinToColor extends CommandBase {
     @Override
     public void initialize() {
         color = RobotContainer.getContainer().getColorSensor().getColor();
-        gameData =  DriverStation.getInstance().getGameSpecificMessage();
+        //gameData =  DriverStation.getInstance().getGameSpecificMessage();
         targetColorArray = new String[]{"Yellow", "Red", "Green", "Blue"};
         arraySize = targetColorArray.length;
      

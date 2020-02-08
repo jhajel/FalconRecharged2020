@@ -28,7 +28,7 @@ public final class Constants {
     public static final int DRIVE2_TALON = -1;
     public static final int DRIVE3_TALON = -1;
     public static final int DRIVE4_TALON = -1;
-    public static final int SPINNER_SPARK = 17;
+    public static final int SPINNER_TALON = 7;
     public static final int INTAKEFORWARD_SOLENOID = 0;
     public static final int INTAKEREVERSE_SOLENOID = 1;
     public static final int CLIMBERFORWARD_SOLENOID = 2;
