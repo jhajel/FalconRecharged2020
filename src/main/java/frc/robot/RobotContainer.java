@@ -9,18 +9,22 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
-import frc.robot.subsystems.ColorPanelSubsystem;
+import frc.robot.subsystems.ColorPanelSpinner;
+import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.HolonomicDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterMotor;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+//import sun.java2d.cmm.ColorTransform;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -36,34 +40,52 @@ public class RobotContainer {
   private XboxController mXboxController;
   private static RobotContainer theContainer;
   private SwerveDriveSubsystem swerveDriveSubsystem;
-  private ColorPanelSubsystem colorPanelSubsystem;
+  private ColorPanelSpinner colorPanelSpinner;
+  private ColorSensor colorSensor;
   private Limelight limelight; 
   private Conveyor conveyor;
   private Intake intake;
   private Shooter shooter;
+  private ShooterMotor shooterMotor;
   private Compressor compressor;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {
+  public RobotContainer() { 
     theContainer = this;
     // Configure the button bindings
     swerveDriveSubsystem = new SwerveDriveSubsystem();
     swerveDriveSubsystem.zeroGyro();
-    colorPanelSubsystem = new ColorPanelSubsystem();
+    colorPanelSpinner = new ColorPanelSpinner();
+    colorSensor = new ColorSensor();
+
     mXboxController = new XboxController(0);
     limelight = new Limelight();
     conveyor = new Conveyor();
     intake = new Intake();
     shooter = new Shooter();
+    shooterMotor = new ShooterMotor();
     compressor = new Compressor();
+
+    intake.setDefaultCommand(new IntakeSpeed(-.5));
+    shooterMotor.setDefaultCommand(new SpinShooterMotor());
 
     configureButtonBindings();
   }
 
-  public ColorPanelSubsystem getColorPanelSubsystem()
+  public ShooterMotor getShooterMotor()
   {
-    return colorPanelSubsystem;
+    return shooterMotor;
+  }
+
+  public ColorPanelSpinner getColorPanelSpinner()
+  {
+    return colorPanelSpinner;
+  }
+
+  public ColorSensor getColorSensor()
+  {
+    return colorSensor;
   }
 
   public SwerveDriveSubsystem getHolonomicDrivetrain()
@@ -120,11 +142,12 @@ public class RobotContainer {
     //  buttonX.whenPressed(new WheelsDriveForwardTest(-100, 0).withTimeout(5));
      
     //buttonY.whenPressed(new ZeroNavX());
-    buttonX.whileHeld(new ConveyorSpeed(1));
-    buttonY.whileHeld(new ConveyorSpeed(-1));
-    buttonA.whenPressed(new MoveConveyorDistance(-5));
-    buttonB.whenPressed(new ShooterSwitchArmMode());
-
+    //buttonX.whileHeld(new ConveyorSpeed(1));
+    //buttonY.whileHeld(new ConveyorSpeed(-1));
+    //buttonA.whenPressed(new MoveConveyorDistance(-5));
+    //buttonB.whenPressed(new ShooterSwitchArmMode());
+    buttonX.whenPressed(new SpinToPosition());
+    buttonY.whenPressed(new SpinToColor(DriverStation.getInstance().getGameSpecificMessage()));
     
     //buttonX.whenPressed(new SwitchLimelightMode(limelight));
     //buttonX.whenPressed(new PrintSensor());

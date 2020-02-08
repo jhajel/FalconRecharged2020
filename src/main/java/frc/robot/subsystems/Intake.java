@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.commands.IntakeSpeed;
 
 public class Intake extends SubsystemBase {
@@ -19,35 +20,30 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   private CANSparkMax intakeController;
-  private CANSparkMax intake2;
-  private DoubleSolenoid piston;
+  private DoubleSolenoid intakeSolenoid;
 
   public Intake() {
-    intakeController = new CANSparkMax(15, MotorType.kBrushless); //change ID
-    intake2 = new CANSparkMax(12, MotorType.kBrushless); //change ID
-    //piston = new DoubleSolenoid(0, 0);
+    intakeController = new CANSparkMax(Constants.INTAKE_SPARK, MotorType.kBrushless);
+    intakeSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID, Constants.INTAKEREVERSE_SOLENOID);
+
+
   }
 
   public void setSpeed(double speed){
     intakeController.set(speed);
-    intake2.set(speed);
   }
 
-  public void switchPistonMode(){
-    if(piston.get() == (DoubleSolenoid.Value.kForward)){
-      piston.set(DoubleSolenoid.Value.kReverse);
-    }
-    else if(piston.get() == (DoubleSolenoid.Value.kReverse)){
-      piston.set(DoubleSolenoid.Value.kForward);
+  public void toggleIntakeSolenoidMode(){
+    if(intakeSolenoid.get() == (DoubleSolenoid.Value.kReverse)){
+      intakeSolenoid.set(DoubleSolenoid.Value.kForward);
     }
     else{
-      piston.set(DoubleSolenoid.Value.kReverse);
+      intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    setDefaultCommand(new IntakeSpeed(-.5));
   }
 }

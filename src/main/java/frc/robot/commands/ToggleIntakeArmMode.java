@@ -8,44 +8,37 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
 
-public class IntakeSpeed extends CommandBase {
+public class ToggleIntakeArmMode extends CommandBase {
   /**
-   * Creates a new IntakeSpeed.
+   * Creates a new IntaketoggleArmMode.
    */
-  private double speed;
-  public IntakeSpeed(double speed) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getIntake());
-    this.speed = speed;
+  private Intake intake;
+  public ToggleIntakeArmMode(Intake intake) {
+    addRequirements(intake);
+    this.intake = intake;
   }
 
   // Called when the command is initially scheduled.
-  @Override
+  @Override 
   public void initialize() {
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.getContainer().getIntake().setSpeed(speed);
-
-   // intake.setSpeed(speed);
+    intake.toggleIntakeSolenoidMode();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //intake.setSpeed(0);
-    RobotContainer.getContainer().getIntake().setSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

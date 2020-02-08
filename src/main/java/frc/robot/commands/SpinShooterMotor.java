@@ -7,40 +7,37 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Intake;
 
-public class IntakeSpeed extends CommandBase {
+public class SpinShooterMotor extends CommandBase {
+  private XboxController mXboxController;
   /**
-   * Creates a new IntakeSpeed.
+   * Creates a new SpinShooterMotot.
    */
-  private double speed;
-  public IntakeSpeed(double speed) {
+  public SpinShooterMotor() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getIntake());
-    this.speed = speed;
+    addRequirements(RobotContainer.getContainer().getShooterMotor()); 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.getContainer().getIntake().setSpeed(speed);
-
-   // intake.setSpeed(speed);
+    mXboxController = RobotContainer.getContainer().getDriveController();
+    double forward = mXboxController.getY(Hand.kRight); //real: positive
+    RobotContainer.getContainer().getShooterMotor().spin(forward);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //intake.setSpeed(0);
-    RobotContainer.getContainer().getIntake().setSpeed(0);
   }
 
   // Returns true when the command should end.

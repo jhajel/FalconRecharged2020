@@ -8,31 +8,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Climber;
 
-public class IntakeSwitchArmMode extends CommandBase {
+public class ToggleClimberGearLock extends CommandBase {
   /**
-   * Creates a new IntakeSwitchArmMode.
+   * Creates a new ToggleClimberGearLock.
    */
- 
-  public IntakeSwitchArmMode() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    
+  private Climber climber;
+  public ToggleClimberGearLock(Climber climber) {
+    addRequirements(climber);
+    this.climber = climber;
   }
 
   // Called when the command is initially scheduled.
-  @Override 
+  @Override
   public void initialize() {
-    RobotContainer.getContainer().getIntake().switchPistonMode();
-    RobotContainer.getContainer().getIntake().switchPistonMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.getContainer().getIntake().switchPistonMode();
-    RobotContainer.getContainer().getIntake().switchPistonMode();
+    climber.toggleClimberGearLock();
   }
 
   // Called once the command ends or is interrupted.
