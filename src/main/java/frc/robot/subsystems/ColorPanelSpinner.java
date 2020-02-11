@@ -19,7 +19,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class ColorPanelSpinner extends SubsystemBase {
     private CANEncoder encoder;
-    private TalonSRX moto1;
+    //private TalonSRX moto1;
+    private CANSparkMax moto1;
     public static CANPIDController mPIDController;
     public static double mPIDControllerP = 0.15;
     public static double mPIDControllerI = 0.0000001;
@@ -27,7 +28,8 @@ public class ColorPanelSpinner extends SubsystemBase {
     public static DoubleSolenoid colorPanelSolenoid;
 
     public ColorPanelSpinner() {
-        moto1 = new TalonSRX(Constants.SPINNER_TALON);
+       // moto1 = new TalonSRX(Constants.SPINNER_TALON);
+        moto1 = new CANSparkMax(0,MotorType.kBrushed);
         colorPanelSolenoid = new DoubleSolenoid(Constants.COLORPANELFORWARD_SOLENOID, Constants.COLORPANELREVERSE_SOLENOID);
         //moto1.setNeutralMode(IdleMode.kBrake);
         //encoder = moto1.getEncoder();
@@ -40,11 +42,13 @@ public class ColorPanelSpinner extends SubsystemBase {
     }
 
     public void setMotorSpeed (double speed){
-        moto1.set(ControlMode.PercentOutput, speed);
+        //moto1.set(ControlMode.PercentOutput, speed);
+        moto1.set(speed);
     }
 
     public void spin(double speed) {
-        moto1.set(ControlMode.PercentOutput, speed);
+       // moto1.set(ControlMode.PercentOutput, speed);
+       moto1.set(speed);
     }
 
     public int inchesToEncoderTicks(double inches) {
