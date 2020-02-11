@@ -25,7 +25,7 @@ public class Intake extends SubsystemBase {
   public Intake() {
     intakeController = new CANSparkMax(Constants.INTAKE_SPARK, MotorType.kBrushless);
     intakeSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID, Constants.INTAKEREVERSE_SOLENOID);
-    setDefaultCommand(new IntakeSpeed(-.5));
+
 
   }
 

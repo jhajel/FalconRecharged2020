@@ -25,7 +25,7 @@ public class ColorPanelSpinner extends SubsystemBase {
     public static double mPIDControllerP = 0.15;
     public static double mPIDControllerI = 0.0000001;
     public static double mPIDControllerD = 0.01;
-    public static DoubleSolenoid colorPanelSolenoid;
+    public DoubleSolenoid colorPanelSolenoid;
 
     public ColorPanelSpinner() {
        // moto1 = new TalonSRX(Constants.SPINNER_TALON);
@@ -33,11 +33,11 @@ public class ColorPanelSpinner extends SubsystemBase {
         colorPanelSolenoid = new DoubleSolenoid(Constants.COLORPANELFORWARD_SOLENOID, Constants.COLORPANELREVERSE_SOLENOID);
         //moto1.setNeutralMode(IdleMode.kBrake);
         //encoder = moto1.getEncoder();
-        //mPIDController = moto1.getPIDController();
-        // mPIDControllerP = 0.0;
-        mPIDController.setP(mPIDControllerP); // 0.00001 working value. we keep it.
-        mPIDController.setI(mPIDControllerI); // .0000001
-        mPIDController.setD(mPIDControllerD); // 0.0065
+        // mPIDController = moto1.getPIDController();
+        // // mPIDControllerP = 0.0;
+        // mPIDController.setP(mPIDControllerP); // 0.00001 working value. we keep it.
+        // mPIDController.setI(mPIDControllerI); // .0000001
+        // mPIDController.setD(mPIDControllerD); // 0.0065
 
     }
 
