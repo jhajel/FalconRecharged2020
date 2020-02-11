@@ -7,7 +7,9 @@ import com.revrobotics.CANSparkMax;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.ControlType;
+import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -28,11 +30,13 @@ public class ColorPanelSpinner extends SubsystemBase {
     public DoubleSolenoid colorPanelSolenoid;
 
     public ColorPanelSpinner() {
-       // moto1 = new TalonSRX(Constants.SPINNER_TALON);
-        moto1 = new CANSparkMax(0,MotorType.kBrushed);
+        //moto1 = new TalonSRX(Constants.SPINNER_TALON);
+        moto1 = new CANSparkMax(51,MotorType.kBrushed);
+        encoder = new CANEncoder(moto1, EncoderType.kQuadrature,8192);
         colorPanelSolenoid = new DoubleSolenoid(Constants.COLORPANELFORWARD_SOLENOID, Constants.COLORPANELREVERSE_SOLENOID);
         //moto1.setNeutralMode(IdleMode.kBrake);
-        //encoder = moto1.getEncoder();
+       // encoder = moto1.getEncoder();
+
         // mPIDController = moto1.getPIDController();
         // // mPIDControllerP = 0.0;
         // mPIDController.setP(mPIDControllerP); // 0.00001 working value. we keep it.
@@ -44,11 +48,13 @@ public class ColorPanelSpinner extends SubsystemBase {
     public void setMotorSpeed (double speed){
         //moto1.set(ControlMode.PercentOutput, speed);
         moto1.set(speed);
+    
     }
 
     public void spin(double speed) {
        // moto1.set(ControlMode.PercentOutput, speed);
        moto1.set(speed);
+       //position_encoder.setPosition(position_encoder.getPosition() + 5);
     }
 
     public int inchesToEncoderTicks(double inches) {
@@ -83,6 +89,7 @@ public class ColorPanelSpinner extends SubsystemBase {
 
     public void printPosition() {
         SmartDashboard.putNumber("Spinner Pos", getPosition());
+        System.out.println("spinner pos: " + getPosition());
     }
 
     public void toggleSpinner() {
