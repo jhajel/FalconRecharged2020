@@ -24,9 +24,9 @@ public class ColorPanelSpinner extends SubsystemBase {
     //private TalonSRX moto1;
     private CANSparkMax moto1;
     public static CANPIDController mPIDController;
-    public static double mPIDControllerP = 0.15;
-    public static double mPIDControllerI = 0.0000001;
-    public static double mPIDControllerD = 0.01;
+    public static double mPIDControllerP = 0.17; //0.15
+    public static double mPIDControllerI = 0.0002; //0.0000001
+    public static double mPIDControllerD = 0.1; //0.01
     public DoubleSolenoid colorPanelSolenoid;
 
     public ColorPanelSpinner() {
@@ -37,11 +37,14 @@ public class ColorPanelSpinner extends SubsystemBase {
         //moto1.setNeutralMode(IdleMode.kBrake);
        // encoder = moto1.getEncoder();
 
-        // mPIDController = moto1.getPIDController();
+        mPIDController = moto1.getPIDController();
         // // mPIDControllerP = 0.0;
-        // mPIDController.setP(mPIDControllerP); // 0.00001 working value. we keep it.
-        // mPIDController.setI(mPIDControllerI); // .0000001
-        // mPIDController.setD(mPIDControllerD); // 0.0065
+        mPIDController.setP(mPIDControllerP); // 0.00001 working value. we keep it.
+        mPIDController.setI(mPIDControllerI); // .0000001
+        mPIDController.setD(mPIDControllerD); // 0.0065
+
+        // moto1.setInverted(false);
+        // encoder.setInverted(true);
 
     }
 
@@ -77,6 +80,7 @@ public class ColorPanelSpinner extends SubsystemBase {
          */
         double ticks = degrees / 360.0;
         SmartDashboard.putNumber("Module Ticks ", ticks);
+        
     }
 
     public CANPIDController getPIDController() {
@@ -90,6 +94,10 @@ public class ColorPanelSpinner extends SubsystemBase {
     public void printPosition() {
         SmartDashboard.putNumber("Spinner Pos", getPosition());
         System.out.println("spinner pos: " + getPosition());
+    }
+
+    public void resetEncoder() {
+        encoder.setPosition(0);
     }
 
     public void toggleSpinner() {

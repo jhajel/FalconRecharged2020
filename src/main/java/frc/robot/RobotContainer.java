@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.sql.Driver;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -146,8 +148,10 @@ public class RobotContainer {
     //buttonY.whileHeld(new ConveyorSpeed(-1));
     //buttonA.whenPressed(new MoveConveyorDistance(-5));
     //buttonB.whenPressed(new ShooterSwitchArmMode());
+    
     buttonX.whenPressed(new SpinToPosition());
-    buttonY.whenPressed(new SpinToColor(DriverStation.getInstance().getGameSpecificMessage()));
+    //buttonX.whenPressed(new SpinToPosition());
+    buttonY.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
     
     //buttonX.whenPressed(new SwitchLimelightMode(limelight));
     //buttonX.whenPressed(new PrintSensor());

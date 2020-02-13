@@ -43,6 +43,7 @@ public class SpinToColor extends CommandBase {
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
+
         color = RobotContainer.getContainer().getColorSensor().getColor();
         //gameData =  DriverStation.getInstance().getGameSpecificMessage();
         targetColorArray = new String[]{"Yellow", "Red", "Green", "Blue"};
@@ -55,12 +56,14 @@ public class SpinToColor extends CommandBase {
         colorDictionary.put("Green", Integer.valueOf(2));
         colorDictionary.put("Blue", Integer.valueOf(3));
 
+
+
         startColor = color;
         currentColor = color;
         int prevIndex = (colorDictionary.get(startColor) - 1) > 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
         previousColor = targetColorArray[prevIndex]; 
         if(gameData.length()>0){//sets target color based on game data(stage 3 control panel color)
-    
+
             if(gameData.charAt(0) == 'G'){
                 targetColor = "Yellow";
             }
@@ -76,14 +79,17 @@ public class SpinToColor extends CommandBase {
             else{
                 targetColor = "Unknown";
             }
-        }    
+        }   
+        
+  
         
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        RobotContainer.getContainer().getColorPanelSpinner().spin(0.05); //change the speed
+  
+        RobotContainer.getContainer().getColorPanelSpinner().spin(0.2); //change the speed
         currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
 
 
@@ -95,7 +101,7 @@ public class SpinToColor extends CommandBase {
     
 
         previousColor = currentColor;
-
+    
     }
 
 
