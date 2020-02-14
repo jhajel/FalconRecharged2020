@@ -14,6 +14,8 @@ import frc.robot.RobotContainer;
 
 public class SpinShooterMotor extends CommandBase {
   private XboxController mXboxController;
+  private double speed;
+  private boolean speedControl;
   /**
    * Creates a new SpinShooterMotor.
    */
@@ -22,6 +24,15 @@ public class SpinShooterMotor extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     mXboxController = xboxController;
     addRequirements(RobotContainer.getContainer().getShooterMotor()); 
+    speedControl = false;
+  }
+
+  public SpinShooterMotor(XboxController xboxController, double speed) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    mXboxController = xboxController;
+    addRequirements(RobotContainer.getContainer().getShooterMotor()); 
+    this.speed = speed;
+    speedControl = true;
   }
 
   // Called when the command is initially scheduled.
@@ -32,14 +43,22 @@ public class SpinShooterMotor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(speedControl)
+    {
+      RobotContainer.getContainer().getShooterMotor().spin(speed);
+    }
+    else
+    {
+      //double forward = mXboxController.getY(Hand.kRight); //real: positive
+      //RobotContainer.getContainer().getShooterMotor().spin(forward);
+    }
     
-    double forward = mXboxController.getY(Hand.kRight); //real: positive
-    RobotContainer.getContainer().getShooterMotor().spin(forward);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.getContainer().getShooterMotor().spin(0);
   }
 
   // Returns true when the command should end.

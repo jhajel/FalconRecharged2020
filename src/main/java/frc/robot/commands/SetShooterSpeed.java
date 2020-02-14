@@ -9,9 +9,14 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterMotor;
+
 
 public class SetShooterSpeed extends CommandBase {
   /**
@@ -19,24 +24,64 @@ public class SetShooterSpeed extends CommandBase {
    */
   private double speed; 
   private ShooterMotor shooterMotor;
+  private XboxController mXboxController;
+  private double pidF;
+  private double pidP;
+  private double pidI;
+  private double pidD;
 
-  public SetShooterSpeed(double speed) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.speed = speed;
+
+  public SetShooterSpeed(XboxController controller) {    
+    
+    SmartDashboard.putNumber("Current Shooter RPM", 0);
+    SmartDashboard.putNumber("Input Shooter RPM", SmartDashboard.getNumber("Input Shooter RPM", 3750));
+    SmartDashboard.putNumber("Input pidF", SmartDashboard.getNumber("Input pidF", 0));
+    SmartDashboard.putNumber("Input pidP", SmartDashboard.getNumber("Input pidP", 0));
+    SmartDashboard.putNumber("Input pidI", SmartDashboard.getNumber("Input pidI", 0));
+    SmartDashboard.putNumber("Input pidD", SmartDashboard.getNumber("Input pidD", 0));
     shooterMotor = RobotContainer.getContainer().getShooterMotor();
+    mXboxController = controller;
     addRequirements(shooterMotor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooterMotor.setSpeed(speed);  //ticks per 100ms??
+
+    shooterMotor.setSpeed(-speed);
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //shooterMotor.setSpeed(mXboxController.getY(Hand.kRight));
+    if(RobotContainer.getContainer().getDriveController().getAButtonPressed())
+    {
+      this.speed = SmartDashboard.getNumber("Input Shooter RPM", 3750);
+      shooterMotor.setSpeed(-speed);
+      this.pidF = SmartDashboard.getNumber("Input pidF", 0);
+      this.pidP = SmartDashboard.getNumber("Input pidP", 0);
+      this.pidI = SmartDashboard.getNumber("Input pidI", 0);
+      this.pidD = SmartDashboard.getNumber("Input pidD", 0);
+      shooterMotor.getmotor1().config_kF(0, this.pidF, 0);
+      shooterMotor.getmotor2().config_kF(0, this.pidF, 0);
+
+      shooterMotor.getmotor1().config_kP(0, this.pidP, 0);
+      shooterMotor.getmotor2().config_kP(0, this.pidP, 0);
+
+      shooterMotor.getmotor1().config_kI(0, this.pidI, 0);
+      shooterMotor.getmotor2().config_kI(0, this.pidI, 0);
+
+      shooterMotor.getmotor1().config_kD(0, this.pidD, 0);
+      shooterMotor.getmotor2().config_kD(0, this.pidD, 0);
+
+    }
+    SmartDashboard.putNumber("Current Shooter RPM", -shooterMotor.getSpeed());
+    SmartDashboard.putNumber("pidF", this.pidF);
+    SmartDashboard.putNumber("pidP", this.pidP);
+    SmartDashboard.putNumber("pidI", this.pidI);
+    SmartDashboard.putNumber("pidD", this.pidD);
     System.out.println("Current Speed: "+ shooterMotor.getSpeed() + " Desired Speed: " + speed + " Difference: "+(speed - shooterMotor.getSpeed()));
   }
 

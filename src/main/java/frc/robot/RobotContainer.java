@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
@@ -45,7 +46,7 @@ public class RobotContainer {
   private Conveyor conveyor;
   private Intake intake;
   private Shooter shooter;
-  private Compressor compressor;
+  //private Compressor compressor;
   private Climber climber;
   private ShooterMotor shooterMotor;
 
@@ -64,7 +65,7 @@ public class RobotContainer {
     conveyor = new Conveyor();
     intake = new Intake();
     shooter = new Shooter();
-    compressor = new Compressor();
+    //compressor = new Compressor();
     climber = new Climber();
     shooterMotor = new ShooterMotor();
     configureButtonBindings();
@@ -116,9 +117,9 @@ public class RobotContainer {
     return shooter;
   }
 
-  public Compressor getCompressor(){
-    return compressor;
-  }
+  // public Compressor getCompressor(){
+  //   return compressor;
+  // }
 
   public ShooterMotor getShooterMotor(){
     return shooterMotor;
@@ -139,7 +140,13 @@ public class RobotContainer {
     
 
 
-    buttonX.whenHeld(new SetShooterSpeed(60*3.4133));
+    //buttonX.whenHeld(new SetShooterSpeed(60*3.4133,mXboxController));
+    //buttonY.whenHeld(new SpinShooterMotor(mXboxController, .6));
+    //buttonB.whenHeld(new SpinShooterMotor(mXboxController, .75));
+    //buttonA.whenHeld(new SpinShooterMotor(mXboxController, -1));
+    //buttonB.whenHeld(new SpinShooterMotor(mXboxController, -.5));
+    buttonX.whenHeld(new SetShooterSpeed(mXboxController));//3750 works for 3 pts
+
     //buttonA.whenPressed(new DriveForward(.2));
      
     //buttonB.whenPressed(new DriveForwardDistance(3, .3));

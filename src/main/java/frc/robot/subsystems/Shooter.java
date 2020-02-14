@@ -21,11 +21,11 @@ public class Shooter extends SubsystemBase {
   private boolean isRetracted;
 
   public Shooter() {
-    piston = new DoubleSolenoid(Constants.SHOOTER_FORWARD_SOLENOID, Constants.SHOOTER_REVERSE_SOLENOID);
-    piston2 = new DoubleSolenoid(Constants.SHOOTER2_FORWARD_SOLENOID, Constants.SHOOTER2_REVERSE_SOLENOID);
+   // piston = new DoubleSolenoid(Constants.SHOOTER_FORWARD_SOLENOID, Constants.SHOOTER_REVERSE_SOLENOID);
+  //  piston2 = new DoubleSolenoid(Constants.SHOOTER2_FORWARD_SOLENOID, Constants.SHOOTER2_REVERSE_SOLENOID);
     isRetracted = true;
-    piston.set(DoubleSolenoid.Value.kReverse);
-    piston2.set(DoubleSolenoid.Value.kReverse);
+  //  piston.set(DoubleSolenoid.Value.kReverse);
+   // piston2.set(DoubleSolenoid.Value.kReverse);
   }
 
   @Override
