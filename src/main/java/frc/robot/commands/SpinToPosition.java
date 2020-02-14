@@ -45,6 +45,11 @@ public class SpinToPosition extends CommandBase {
         startColor = color;
         currentColor = color;
         colorCount = -1;
+        // if(color == "Unknown") {
+        //     SmartDashboard.putString("Unknown state", "true");
+        //     end(true);
+        // }
+        
         int prevIndex = (colorDictionary.get(startColor) - 1) > 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
         previousColor = expectedColorArray[prevIndex]; 
         expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];
@@ -53,7 +58,10 @@ public class SpinToPosition extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        RobotContainer.getContainer().getColorPanelSpinner().spin(0.05); //change the speed
+        System.out.println("exec");
+        
+
+        RobotContainer.getContainer().getColorPanelSpinner().spin(1); //change the speed
 
         //handling switch between yellow and blue
         currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
@@ -70,6 +78,7 @@ public class SpinToPosition extends CommandBase {
         }
         previousColor = currentColor;
         expectedColor =  expectedColorArray[(colorDictionary.get(currentColor) + 1) % 4];
+        RobotContainer.getContainer().getColorPanelSpinner().printPosition();
     }
 
 

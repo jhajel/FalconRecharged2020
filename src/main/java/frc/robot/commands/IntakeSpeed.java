@@ -16,12 +16,10 @@ public class IntakeSpeed extends CommandBase {
    * Creates a new IntakeSpeed.
    */
   private double speed;
-  // private final Intake intake;
   public IntakeSpeed(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getContainer().getIntake());
     this.speed = speed;
-    // intake = RobotContainer.getContainer().getIntake();
   }
 
   // Called when the command is initially scheduled.
