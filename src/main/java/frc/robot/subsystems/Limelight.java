@@ -8,15 +8,17 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-public class Limelight extends SubsystemBase {
+public class Limelight extends SubsystemBase  {
   /**
    * Creates a new Limelight.
    */
+
   public static double limelightx;
   public static double limelighty;
   public static double limelighta;
@@ -26,43 +28,60 @@ public class Limelight extends SubsystemBase {
   public NetworkTableEntry ta = table.getEntry("ta");
   public NetworkTableEntry tv = table.getEntry("tv");
   private boolean isLEDMode;
+  private boolean isTapePipeline;
+
   public Limelight() {
     limelightx = tx.getDouble(0.0);
     limelighty = ty.getDouble(0.0);
     limelighta = ta.getDouble(0.0);
     isLEDMode = false;
-    //setDefaultCommand(new ShowLimelight(this));
+    isTapePipeline = true;
+    // setDefaultCommand(new ShowLimelight(this));
   }
 
-  public void printInfo(){
+  public void printInfo() {
     SmartDashboard.putNumber("Limelight X", limelightx);
     SmartDashboard.putNumber("Limelight Y", limelighty);
     SmartDashboard.putNumber("Limelight A", limelighta);
+    SmartDashboard.putNumber("Current Pipeline", table.getEntry("pipeline").getDouble(-1));
   }
 
   public void setLEDMode() {
     table.getEntry("ledMode").setDouble(3);
     table.getEntry("camMode").setDouble(0);
-      SmartDashboard.putNumber("LEDMODE", 3);
-    } 
-  
-  public void setCamMode() {
-      table.getEntry("camMode").setDouble(1);
-      table.getEntry("ledMode").setDouble(1);
-      SmartDashboard.putNumber("CAMMODE", 1);
+    SmartDashboard.putNumber("LEDMODE", 3);
   }
 
-    public void switchLimeMode(){
+  public void setCamMode() {
+    table.getEntry("camMode").setDouble(1);
+    table.getEntry("ledMode").setDouble(1);
+    SmartDashboard.putNumber("CAMMODE", 1);
+  }
 
-      if(!isLEDMode){
-        setLEDMode();
-        isLEDMode = true;
-      }
-      else{
-        setCamMode();
-        isLEDMode = false;
-      }
+  public void switchLimeMode() {
+
+    if (!isLEDMode) {
+      setLEDMode();
+      isLEDMode = true;
+    } else {
+      setCamMode();
+      isLEDMode = false;
     }
+  }
+
+  public void switchPipeline()
+  {
+    if(isTapePipeline) {
+      table.getEntry("pipeline").setDouble(1);
+      isTapePipeline = !isTapePipeline;
+    }
+    else{
+      table.getEntry("pipeline").setDouble(0);
+      isTapePipeline = !isTapePipeline;
+    }
+    
+  }
+
   @Override
   public void periodic() {
     printInfo();

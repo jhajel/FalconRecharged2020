@@ -37,6 +37,7 @@ public class RobotContainer {
 
   private final Command m_autoCommand = null;
   private XboxController mXboxController;
+  private XboxController mXboxController2;
   private static RobotContainer theContainer;
   private SwerveDriveSubsystem swerveDriveSubsystem;
   private ColorSensor colorSensor;
@@ -60,6 +61,7 @@ public class RobotContainer {
     colorSensor = new ColorSensor();
     colorPanelSpinner = new ColorPanelSpinner();
     mXboxController = new XboxController(0);
+    mXboxController2 = new XboxController(1);
     limelight = new Limelight();
     conveyor = new Conveyor();
     intake = new Intake();
@@ -94,6 +96,9 @@ public class RobotContainer {
     return mXboxController;
   }
 
+  public XboxController getClimbController() {
+    return mXboxController2;
+  }
   
   public static RobotContainer getContainer(){
     return theContainer;
@@ -136,8 +141,26 @@ public class RobotContainer {
     JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
     JoystickButton buttonB = new JoystickButton(mXboxController, XboxController.Button.kB.value);
     JoystickButton buttonY = new JoystickButton(mXboxController, XboxController.Button.kY.value);
-    
+    JoystickButton buttonY_2 = new JoystickButton(mXboxController2, XboxController.Button.kY.value);
+    JoystickButton buttonX_2 = new JoystickButton(mXboxController2, XboxController.Button.kX.value);
+    JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
+    //buttonX.whenHeld(new IntakeSpeed(.5));
+    buttonA.whenHeld(new IntakeSpeed(-1));
+    buttonB.whenPressed(new ToggleIntakeArmMode(intake));
+    //buttonY.whenPressed(new ZeroNavX());
+    //buttonY.whileHeld(new IntakeSpeed(.5));
+    buttonY.whenPressed(new SwitchPipeline());
+    buttonX.whenPressed(new SwitchLimelightMode(limelight));
     //buttonA.whenPressed(new DriveForward(.2));
+
+    buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
+    buttonB_2.whenPressed(new SemiAutoClimb());
+    //buttonB_2.whenPressed(new MoveClimberArm(7, getClimber().getUpperArm()));
+    buttonX_2.whenPressed(new SemiAutoPullUp());
+    //buttonX_2.whenPressed(new MoveClimberArm(-7, getClimber().getLowerArm()));
+
+
+
      
     //buttonB.whenPressed(new DriveForwardDistance(3, .3));
     

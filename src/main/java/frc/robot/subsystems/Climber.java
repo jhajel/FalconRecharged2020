@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.ClimberArmSpeed;
 
 public class Climber extends SubsystemBase {
   /**
@@ -27,6 +28,14 @@ public class Climber extends SubsystemBase {
     motorController1 = new CANSparkMax(Constants.CLIMBER1_SPARK,MotorType.kBrushless);
     motorController2 = new CANSparkMax(Constants.CLIMBER2_SPARK,MotorType.kBrushless);
     climberGearLock = new DoubleSolenoid(Constants.CLIMBERFORWARD_SOLENOID,Constants.CLIMBERREVERSE_SOLENOID);
+    climberGearLock.set(Value.kReverse);
+    motorController1.getPIDController().setP(.2);
+    motorController1.getPIDController().setI(.0000);
+    motorController1.getPIDController().setD(.0002);
+    motorController2.getPIDController().setP(.2);
+    motorController2.getPIDController().setI(.0000);
+    motorController1.getPIDController().setD(.0002);
+
   }
 
   public void toggleClimberGearLock() {
@@ -42,10 +51,25 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    setDefaultCommand(new ClimberArmSpeed());
   }
 
-  public void climberToLimit()
+  public void moveArm1(double speed)
   {
+    motorController1.set(speed);
     
+  }
+
+  public void moveArm2(double speed)
+  {
+    motorController2.set(speed);
+  }
+
+  public CANSparkMax getUpperArm(){
+    return motorController2;
+  }
+
+  public CANSparkMax getLowerArm(){
+    return motorController1;
   }
 }
