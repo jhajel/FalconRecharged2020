@@ -69,7 +69,8 @@ public class Limelight extends SubsystemBase  {
     }
   }
 
-  public void switchPipeline()
+  public void 
+  switchPipeline()
   {
     if(isTapePipeline) {
       table.getEntry("pipeline").setDouble(1);

@@ -76,7 +76,6 @@ public class RobotContainer {
     compressor = new Compressor();
     climber = new Climber();
 
-    intake.setDefaultCommand(new IntakeSpeed(-.5));
     shooterMotor.setDefaultCommand(new SpinShooterMotor());
 
     configureButtonBindings();
@@ -149,19 +148,20 @@ public class RobotContainer {
     JoystickButton buttonY_2 = new JoystickButton(mXboxController2, XboxController.Button.kY.value);
     JoystickButton buttonX_2 = new JoystickButton(mXboxController2, XboxController.Button.kX.value);
     JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
+    JoystickButton buttonA_2 = new JoystickButton(mXboxController2,XboxController.Button.kA.value);
     // buttonX.whenHeld(new IntakeSpeed(.5));
     buttonA.whenHeld(new IntakeSpeed(-1));
     buttonB.whenPressed(new ToggleIntakeArmMode(intake));
-    // buttonY.whenPressed(new ZeroNavX());
+    buttonY.whenPressed(new ZeroNavX());
     // buttonY.whileHeld(new IntakeSpeed(.5));
-    buttonY.whenPressed(new SwitchPipeline());
+    //buttonY.whenPressed(new SwitchPipeline());
     buttonX.whenPressed(new SwitchLimelightMode(limelight));
     // buttonA.whenPressed(new DriveForward(.2));
 
-    buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
-    buttonB_2.whenPressed(new SemiAutoClimb());
-    // buttonB_2.whenPressed(new MoveClimberArm(7, getClimber().getUpperArm()));
-    buttonX_2.whenPressed(new SemiAutoPullUp());
+    // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
+    // buttonB_2.whenPressed(new SemiAutoClimb());
+    // // buttonB_2.whenPressed(new MoveClimberArm(7, getClimber().getUpperArm()));
+    // buttonX_2.whenPressed(new SemiAutoPullUp());
     // buttonX_2.whenPressed(new MoveClimberArm(-7, getClimber().getLowerArm()));
 
     // buttonB.whenPressed(new DriveForwardDistance(3, .3));
@@ -174,13 +174,11 @@ public class RobotContainer {
     // buttonA.whenPressed(new MoveConveyorDistance(-5));
     // buttonB.whenPressed(new ShooterSwitchArmMode());
 
-    buttonX.whenPressed(new SpinToPosition());
-    // buttonX.whenPressed(new SpinToPosition());
-    buttonY.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
+    buttonX_2.whenPressed(new SpinToPosition());
+    buttonY_2.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
+    buttonA_2.whenPressed(new ToggleSpinner(colorPanelSpinner));
 
     // buttonX.whenPressed(new SwitchLimelightMode(limelight));
-    // buttonX.whenPressed(new PrintSensor());
-
   }
 
   /**
@@ -191,5 +189,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
+    
   }
 }
