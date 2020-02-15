@@ -21,8 +21,10 @@ public class SpinToPosition extends CommandBase {
     private String currentColor;
     private String[] expectedColorArray;
     private int arraySize;
+    private int prevIndex;
     private Map<String,Integer> colorDictionary;
     private String color;
+    private boolean forward;
 
     public SpinToPosition() {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
@@ -50,9 +52,22 @@ public class SpinToPosition extends CommandBase {
         //     end(true);
         // }
         
-        int prevIndex = (colorDictionary.get(startColor) - 1) > 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
+        // int prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
+        // previousColor = expectedColorArray[prevIndex]; 
+        // expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];
+
+        forward = true;
+
+        if(forward) {
+        prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
         previousColor = expectedColorArray[prevIndex]; 
         expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];
+        }
+        else {
+        prevIndex = (colorDictionary.get(startColor) + 1) % arraySize;
+        previousColor = expectedColorArray[prevIndex];
+        expectedColor = expectedColorArray[(colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize - 1];
+        }
     }
 
     // Called repeatedly when this Command is scheduled to run

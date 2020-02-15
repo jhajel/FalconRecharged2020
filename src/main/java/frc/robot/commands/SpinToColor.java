@@ -23,9 +23,11 @@ public class SpinToColor extends CommandBase {
     private String currentColor;
     private String[] targetColorArray;
     private int arraySize;
+    private int prevIndex;
     private Map<String,Integer> colorDictionary;
     private String gameData;
     private String color;
+    private boolean forward;
     
     public SpinToColor(String data) {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
@@ -60,8 +62,17 @@ public class SpinToColor extends CommandBase {
 
         startColor = color;
         currentColor = color;
-        int prevIndex = (colorDictionary.get(startColor) - 1) > 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
+
+        forward = true;
+
+        if(forward) {
+            prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
+        }
+        else {
+            prevIndex = (colorDictionary.get(startColor) + 1) % arraySize;
+        }
         previousColor = targetColorArray[prevIndex]; 
+        
         if(gameData.length()>0){//sets target color based on game data(stage 3 control panel color)
 
             if(gameData.charAt(0) == 'G'){

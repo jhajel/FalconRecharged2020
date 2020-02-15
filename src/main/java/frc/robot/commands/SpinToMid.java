@@ -7,17 +7,14 @@
 
 package frc.robot.commands;
 
-import frc.robot.Constants;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class SenseColorTest extends CommandBase {
+public class SpinToMid extends CommandBase {
   /**
    * Creates a new SenseColorTest.
    */
@@ -27,14 +24,16 @@ public class SenseColorTest extends CommandBase {
   private String currentColor;
   private String[] expectedColorArray;
   private int arraySize;
+  private int prevIndex;
   private Map<String, Integer> colorDictionary;
   private String startColor;
   private double segmentLength;
   private double targetPos;
   private String gameData;
+  private boolean forward;
 
 
-  public SenseColorTest(String data) {
+  public SpinToMid(String data) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getContainer().getColorSensor());
     if(data.charAt(0) == 'G'){
@@ -71,14 +70,19 @@ public class SenseColorTest extends CommandBase {
     color = gameData;
     startColor = color;
     currentColor = color;
-    // if(color == "Unknown") {
-    // SmartDashboard.putString("Unknown state", "true");
-    // end(true);
-    // }
 
-    int prevIndex = (colorDictionary.get(startColor) + 1) % arraySize;
-    previousColor = expectedColorArray[prevIndex];
-    expectedColor = expectedColorArray[(colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize - 1];
+    forward = true;
+
+    if(forward) {
+      prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
+      previousColor = expectedColorArray[prevIndex]; 
+      expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];
+    }
+    else {
+      prevIndex = (colorDictionary.get(startColor) + 1) % arraySize;
+      previousColor = expectedColorArray[prevIndex];
+      expectedColor = expectedColorArray[(colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize - 1];
+    }
 
     SmartDashboard.putString("previousColor", previousColor);
     SmartDashboard.putString("expColor", expectedColor);
@@ -116,8 +120,8 @@ public class SenseColorTest extends CommandBase {
     double midPos = segmentLength / 2;
     targetPos = finalPos + midPos;
 
-    SmartDashboard.putNumber("Target pos", finalPos+midPos);
-    RobotContainer.getContainer().getColorPanelSpinner().setPosition(finalPos + midPos);
+    SmartDashboard.putNumber("Target pos", targetPos);
+    RobotContainer.getContainer().getColorPanelSpinner().setPosition(targetPos);
     RobotContainer.getContainer().getColorPanelSpinner().printPosition();
     SmartDashboard.putString("currentColor", currentColor);
     SmartDashboard.putNumber("Segment length", segmentLength);
