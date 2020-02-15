@@ -37,7 +37,15 @@ public class SenseColorTest extends CommandBase {
   public SenseColorTest(String data) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getContainer().getColorSensor());
-    if(data.charAt(0) == 'G'){
+    if(data == null)
+    {
+      gameData = "Unknown";
+    }
+    else if(data.length() == 0)
+    {
+      gameData = "Unknown";
+    }
+    else if(data.charAt(0) == 'G'){
       gameData = "Yellow";
     }
     else if(data.charAt(0) == 'B'){

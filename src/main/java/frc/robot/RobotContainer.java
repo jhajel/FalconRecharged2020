@@ -30,14 +30,15 @@ import frc.robot.subsystems.SwerveDriveSubsystem;
 //import sun.java2d.cmm.ColorTransform;
 
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final Command m_autoCommand = null;
   private XboxController mXboxController;
@@ -46,17 +47,18 @@ public class RobotContainer {
   private SwerveDriveSubsystem swerveDriveSubsystem;
   private ColorPanelSpinner colorPanelSpinner;
   private ColorSensor colorSensor;
-  private Limelight limelight; 
+  private Limelight limelight;
   private Conveyor conveyor;
   private Intake intake;
   private Shooter shooter;
   private ShooterMotor shooterMotor;
   private Compressor compressor;
   private Climber climber;
+
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() { 
+  public RobotContainer() {
     theContainer = this;
     // Configure the button bindings
     swerveDriveSubsystem = new SwerveDriveSubsystem();
@@ -72,6 +74,7 @@ public class RobotContainer {
     shooter = new Shooter();
     shooterMotor = new ShooterMotor();
     compressor = new Compressor();
+    climber = new Climber();
 
     intake.setDefaultCommand(new IntakeSpeed(-.5));
     shooterMotor.setDefaultCommand(new SpinShooterMotor());
@@ -79,23 +82,19 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-  public ShooterMotor getShooterMotor()
-  {
+  public ShooterMotor getShooterMotor() {
     return shooterMotor;
   }
 
-  public ColorPanelSpinner getColorPanelSpinner()
-  {
+  public ColorPanelSpinner getColorPanelSpinner() {
     return colorPanelSpinner;
   }
 
-  public ColorSensor getColorSensor()
-  {
+  public ColorSensor getColorSensor() {
     return colorSensor;
   }
 
-  public SwerveDriveSubsystem getHolonomicDrivetrain()
-  {
+  public SwerveDriveSubsystem getHolonomicDrivetrain() {
     return swerveDriveSubsystem;
   }
 
@@ -106,41 +105,41 @@ public class RobotContainer {
   public XboxController getClimbController() {
     return mXboxController2;
   }
-  
-  public static RobotContainer getContainer(){
+
+  public static RobotContainer getContainer() {
     return theContainer;
 
   }
 
-  public Limelight getLimelight(){
+  public Limelight getLimelight() {
     return limelight;
   }
 
-  public Conveyor getConveyor(){
+  public Conveyor getConveyor() {
     return conveyor;
   }
 
-  public Intake getIntake(){
+  public Intake getIntake() {
     return intake;
   }
 
-  public Shooter getShooter(){
+  public Shooter getShooter() {
     return shooter;
   }
 
-  public Compressor getCompressor(){
+  public Compressor getCompressor() {
     return compressor;
   }
 
-  public Climber getClimber(){
+  public Climber getClimber() {
     return climber;
   }
 
   /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
     JoystickButton buttonA = new JoystickButton(mXboxController, XboxController.Button.kA.value);
@@ -150,45 +149,39 @@ public class RobotContainer {
     JoystickButton buttonY_2 = new JoystickButton(mXboxController2, XboxController.Button.kY.value);
     JoystickButton buttonX_2 = new JoystickButton(mXboxController2, XboxController.Button.kX.value);
     JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
-    //buttonX.whenHeld(new IntakeSpeed(.5));
+    // buttonX.whenHeld(new IntakeSpeed(.5));
     buttonA.whenHeld(new IntakeSpeed(-1));
     buttonB.whenPressed(new ToggleIntakeArmMode(intake));
-    //buttonY.whenPressed(new ZeroNavX());
-    //buttonY.whileHeld(new IntakeSpeed(.5));
+    // buttonY.whenPressed(new ZeroNavX());
+    // buttonY.whileHeld(new IntakeSpeed(.5));
     buttonY.whenPressed(new SwitchPipeline());
     buttonX.whenPressed(new SwitchLimelightMode(limelight));
-    //buttonA.whenPressed(new DriveForward(.2));
+    // buttonA.whenPressed(new DriveForward(.2));
 
     buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
     buttonB_2.whenPressed(new SemiAutoClimb());
-    //buttonB_2.whenPressed(new MoveClimberArm(7, getClimber().getUpperArm()));
+    // buttonB_2.whenPressed(new MoveClimberArm(7, getClimber().getUpperArm()));
     buttonX_2.whenPressed(new SemiAutoPullUp());
-    //buttonX_2.whenPressed(new MoveClimberArm(-7, getClimber().getLowerArm()));
+    // buttonX_2.whenPressed(new MoveClimberArm(-7, getClimber().getLowerArm()));
 
+    // buttonB.whenPressed(new DriveForwardDistance(3, .3));
 
+    // buttonX.whenPressed(new WheelsDriveForwardTest(-100, 0).withTimeout(5));
 
-     
-    //buttonB.whenPressed(new DriveForwardDistance(3, .3));
-    
-    //  buttonX.whenPressed(new WheelsDriveForwardTest(-100, 0).withTimeout(5));
-     
-    //buttonY.whenPressed(new ZeroNavX());
-    //buttonX.whileHeld(new ConveyorSpeed(1));
-    //buttonY.whileHeld(new ConveyorSpeed(-1));
-    //buttonA.whenPressed(new MoveConveyorDistance(-5));
-    //buttonB.whenPressed(new ShooterSwitchArmMode());
-    
+    // buttonY.whenPressed(new ZeroNavX());
+    // buttonX.whileHeld(new ConveyorSpeed(1));
+    // buttonY.whileHeld(new ConveyorSpeed(-1));
+    // buttonA.whenPressed(new MoveConveyorDistance(-5));
+    // buttonB.whenPressed(new ShooterSwitchArmMode());
+
     buttonX.whenPressed(new SpinToPosition());
-    //buttonX.whenPressed(new SpinToPosition());
+    // buttonX.whenPressed(new SpinToPosition());
     buttonY.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
-    
-    //buttonX.whenPressed(new SwitchLimelightMode(limelight));
-    //buttonX.whenPressed(new PrintSensor());
-    
 
+    // buttonX.whenPressed(new SwitchLimelightMode(limelight));
+    // buttonX.whenPressed(new PrintSensor());
 
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
