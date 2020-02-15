@@ -7,6 +7,8 @@
 //Spins the wheel that spins the color panel
 package frc.robot.commands;
 
+import frc.robot.Constants;
+
 import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,7 +26,6 @@ public class SpinToPosition extends CommandBase {
     private int prevIndex;
     private Map<String,Integer> colorDictionary;
     private String color;
-    private boolean forward;
 
     public SpinToPosition() {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
@@ -56,9 +57,10 @@ public class SpinToPosition extends CommandBase {
         // previousColor = expectedColorArray[prevIndex]; 
         // expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];
 
-        forward = true;
 
-        if(forward) {
+        //{"Yellow", "Red", "Green", "Blue"}
+
+        if(Constants.forward) {
         prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
         previousColor = expectedColorArray[prevIndex]; 
         expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];

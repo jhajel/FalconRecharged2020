@@ -8,6 +8,8 @@
 package frc.robot.commands;
 
 import frc.robot.RobotContainer;
+import frc.robot.Constants;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,7 +29,6 @@ public class SpinToColor extends CommandBase {
     private Map<String,Integer> colorDictionary;
     private String gameData;
     private String color;
-    private boolean forward;
     
     public SpinToColor(String data) {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
@@ -63,16 +64,14 @@ public class SpinToColor extends CommandBase {
         startColor = color;
         currentColor = color;
 
-        forward = true;
-
-        if(forward) {
+        if(Constants.forward) {
             prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
         }
         else {
             prevIndex = (colorDictionary.get(startColor) + 1) % arraySize;
         }
         previousColor = targetColorArray[prevIndex]; 
-        
+
         if(gameData.length()>0){//sets target color based on game data(stage 3 control panel color)
 
             if(gameData.charAt(0) == 'G'){

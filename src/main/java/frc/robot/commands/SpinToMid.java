@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,6 @@ public class SpinToMid extends CommandBase {
   private double segmentLength;
   private double targetPos;
   private String gameData;
-  private boolean forward;
 
 
   public SpinToMid(String data) {
@@ -79,9 +80,8 @@ public class SpinToMid extends CommandBase {
     startColor = color;
     currentColor = color;
 
-    forward = true;
 
-    if(forward) {
+    if(Constants.forward) {
       prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
       previousColor = expectedColorArray[prevIndex]; 
       expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];

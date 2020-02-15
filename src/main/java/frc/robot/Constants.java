@@ -60,5 +60,6 @@ public final class Constants {
     public static final int CLIMBERREVERSE_SOLENOID = 3;
     public static final int COLORPANELFORWARD_SOLENOID = 4;
     public static final int COLORPANELREVERSE_SOLENOID = 5;
+    public static boolean forward = true;
     
 }
