@@ -107,6 +107,7 @@ public class SpinToMid extends CommandBase {
       SmartDashboard.putString("currentColor", currentColor);
       RobotContainer.getContainer().getColorPanelSpinner().spin(.15);
       currentColor = RobotContainer.getContainer().getColorSensor().getColor();
+      currentColor = currentColor.equals("Yellow") && RobotContainer.getContainer().getColorSensor().getColor().equals("Green") ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor();
       RobotContainer.getContainer().getColorPanelSpinner().printPosition();
     }
     RobotContainer.getContainer().getColorPanelSpinner().spin(0);
