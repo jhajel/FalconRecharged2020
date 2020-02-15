@@ -31,9 +31,10 @@ public class ColorPanelSpinner extends SubsystemBase {
 
     public ColorPanelSpinner() {
         //moto1 = new TalonSRX(Constants.SPINNER_TALON);
-        moto1 = new CANSparkMax(51,MotorType.kBrushed);
+        moto1 = new CANSparkMax(Constants.SPINNER_SPARK, MotorType.kBrushed);
         encoder = new CANEncoder(moto1, EncoderType.kQuadrature,8192);
         colorPanelSolenoid = new DoubleSolenoid(Constants.COLORPANELFORWARD_SOLENOID, Constants.COLORPANELREVERSE_SOLENOID);
+        colorPanelSolenoid.set(Value.kReverse);
         //moto1.setNeutralMode(IdleMode.kBrake);
        // encoder = moto1.getEncoder();
 
@@ -43,7 +44,7 @@ public class ColorPanelSpinner extends SubsystemBase {
         mPIDController.setI(mPIDControllerI); // .0000001
         mPIDController.setD(mPIDControllerD); // 0.0065
 
-        // moto1.setInverted(false);
+        moto1.setInverted(true);
         // encoder.setInverted(true);
 
     }
