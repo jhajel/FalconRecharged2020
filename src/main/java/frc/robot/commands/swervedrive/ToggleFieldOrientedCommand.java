@@ -5,31 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.swervedrive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.RobotContainer;
 
-public class ToggleIntakeArmMode extends CommandBase {
+public class ToggleFieldOrientedCommand extends CommandBase {
   /**
-   * Creates a new IntaketoggleArmMode.
+   * Creates a new ToggleFieldOriented.
    */
-  private Intake intake;
-  public ToggleIntakeArmMode(Intake intake) {
-    addRequirements(intake);
-    this.intake = intake;
+  public ToggleFieldOrientedCommand() {
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
-  @Override 
+  @Override
   public void initialize() {
-    intake.toggleIntakeSolenoidMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   
+    RobotContainer.getContainer().getHolonomicDrivetrain().setFieldOriented(!RobotContainer.getContainer().getHolonomicDrivetrain().isFieldOriented());
   }
 
   // Called once the command ends or is interrupted.

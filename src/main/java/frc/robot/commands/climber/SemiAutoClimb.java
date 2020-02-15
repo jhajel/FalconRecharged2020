@@ -5,22 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.climber;
 
+import com.revrobotics.CANSparkMax;
+
+import edu.wpi.first.wpilibj.CAN;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class SemiAutoPullUp extends SequentialCommandGroup {
+public class SemiAutoClimb extends SequentialCommandGroup {
   /**
-   * Creates a new SemiAutoPullUp.
+   * Creates a new SemiAutoClimb.
    */
-  public SemiAutoPullUp() {
+  public SemiAutoClimb() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new MoveBothClimberArms(-15, RobotContainer.getContainer().getClimber().getUpperArm(), RobotContainer.getContainer().getClimber().getLowerArm()).withTimeout(5),
-          new ToggleClimberGearLock(RobotContainer.getContainer().getClimber()));
+    super(new MoveClimberArm(18.07, RobotContainer.getContainer().getClimber().getUpperArm()), //6.47 second step upper arm
+          new MoveClimberArm(-20.07,RobotContainer.getContainer().getClimber().getLowerArm()));// -18.07 lower arm
   }
 }

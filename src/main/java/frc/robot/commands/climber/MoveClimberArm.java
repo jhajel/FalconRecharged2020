@@ -5,44 +5,59 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.climber;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
+import com.revrobotics.SparkMax;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class SpinShooterMotor extends CommandBase {
-  private XboxController mXboxController;
+public class MoveClimberArm extends CommandBase {
   /**
-   * Creates a new SpinShooterMotot.
+   * Creates a new MoveClimberArm.
    */
-  public SpinShooterMotor() {
+  private double initPos;
+  private double targetPosition;
+  private CANSparkMax arm;
+  private double inch;
+  public MoveClimberArm(double inches, CANSparkMax arm) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getShooterMotor()); 
+    this.arm = arm;
+    this.inch = inches;
+    addRequirements(RobotContainer.getContainer().getClimber());
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    initPos = arm.getEncoder().getPosition();
+    targetPosition = initPos + (inch*36)/(1.9*Math.PI); // 1 inch = 6.03 ticks
+    arm.getPIDController().setReference(targetPosition, ControlType.kPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mXboxController = RobotContainer.getContainer().getDriveController();
-    double forward = mXboxController.getY(Hand.kRight); //real: positive
-    RobotContainer.getContainer().getShooterMotor().spin(forward);
+    System.out.println("running");  
+    System.out.println(" Difference " + Math.abs(targetPosition - arm.getEncoder().getPosition()));
+    SmartDashboard.putNumber("Diff", targetPosition);
   }
+
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("done");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    
+    return Math.abs(targetPosition - arm.getEncoder().getPosition()) < 0.1;
+
   }
 }
