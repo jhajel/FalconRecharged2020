@@ -29,10 +29,10 @@ public class Climber extends SubsystemBase {
     motorController2 = new CANSparkMax(Constants.CLIMBER2_SPARK,MotorType.kBrushless);
     climberGearLock = new DoubleSolenoid(Constants.CLIMBERFORWARD_SOLENOID,Constants.CLIMBERREVERSE_SOLENOID);
     climberGearLock.set(Value.kReverse);
-    motorController1.getPIDController().setP(.2);
+    motorController1.getPIDController().setP(.2); // make faster .3?
     motorController1.getPIDController().setI(.0000);
     motorController1.getPIDController().setD(.0002);
-    motorController2.getPIDController().setP(.2);
+    motorController2.getPIDController().setP(.2); // make faster .3?
     motorController2.getPIDController().setI(.0000);
     motorController1.getPIDController().setD(.0002);
 

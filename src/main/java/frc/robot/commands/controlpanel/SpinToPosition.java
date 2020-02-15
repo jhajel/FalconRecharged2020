@@ -109,5 +109,6 @@ public class SpinToPosition extends CommandBase {
     @Override
     public void end(final boolean interrupted) {
         RobotContainer.getContainer().getColorPanelSpinner().spin(0);
+        colorCount = 0;
     }
 }
