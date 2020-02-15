@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.SenseCell;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
@@ -31,7 +32,6 @@ public class Conveyor extends SubsystemBase {
     encoder = indexer.getEncoder();
     pidController = indexer.getPIDController();
     pidController.setP(.2);
-    pidController.setD(0);
     pidController.setI(.0001);
   }
 
@@ -39,7 +39,7 @@ public class Conveyor extends SubsystemBase {
   public void periodic() {
     printStatus();
     printTicks();
-    //setDefaultCommand(new SenseCell());
+    setDefaultCommand(new SenseCell());
   }
 
   public boolean getStatus(){

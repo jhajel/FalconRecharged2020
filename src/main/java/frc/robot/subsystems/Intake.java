@@ -21,12 +21,12 @@ public class Intake extends SubsystemBase {
    */
   private CANSparkMax intakeController;
   private DoubleSolenoid intakeSolenoid;
+  private boolean isRetracted;
 
   public Intake() {
     intakeController = new CANSparkMax(Constants.INTAKE_SPARK, MotorType.kBrushless);
     intakeSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID, Constants.INTAKEREVERSE_SOLENOID);
-
-
+    isRetracted = false;
   }
 
   public void setSpeed(double speed){
@@ -34,16 +34,21 @@ public class Intake extends SubsystemBase {
   }
 
   public void toggleIntakeSolenoidMode(){
-    if(intakeSolenoid.get() == (DoubleSolenoid.Value.kReverse)){
+    if(isRetracted){
       intakeSolenoid.set(DoubleSolenoid.Value.kForward);
+      isRetracted = !isRetracted;
+      System.out.println("In Position");
     }
     else{
       intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
+      isRetracted = !isRetracted;
+      System.out.println("Arm is Up");
     }
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    //setDefaultCommand(new IntakeSpeed(-.5));
   }
 }

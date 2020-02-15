@@ -16,8 +16,9 @@ public class ToggleClimberGearLock extends CommandBase {
    */
   private Climber climber;
   public ToggleClimberGearLock(Climber climber) {
-    addRequirements(climber);
     this.climber = climber;
+    addRequirements(climber);
+    
   }
 
   // Called when the command is initially scheduled.
