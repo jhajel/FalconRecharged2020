@@ -5,40 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Intake;
 
-public class SwitchLimelightMode extends CommandBase {
+public class ToggleIntakeArmMode extends CommandBase {
   /**
-   * Creates a new SwitchLimelightMode.
+   * Creates a new IntaketoggleArmMode.
    */
-  private boolean finished;
-  public SwitchLimelightMode(Limelight limelight) {
-    addRequirements(RobotContainer.getContainer().getLimelight());
-    finished = false;
-
+  private Intake intake;
+  public ToggleIntakeArmMode(Intake intake) {
+    addRequirements(intake);
+    this.intake = intake;
   }
 
-  @Override
+  // Called when the command is initially scheduled.
+  @Override 
   public void initialize() {
-    RobotContainer.getContainer().getLimelight().setCamMode();
-    finished = false;
-    
+    intake.toggleIntakeSolenoidMode();
   }
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.getContainer().getLimelight().switchLimeMode();
+   
+  }
 
-    finished = true;
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return finished;
+    return true;
   }
 }

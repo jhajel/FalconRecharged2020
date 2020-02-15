@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 //Spins the wheel that spins the color panel
-package frc.robot.commands;
+package frc.robot.commands.controlpanel;
 
 import frc.robot.RobotContainer;
 import frc.robot.Constants;

@@ -5,22 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.limelight;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class SpinToMidColor extends SequentialCommandGroup {
-  /**
-   * Creates a new SpinToMidColor.
-   */
-  public SpinToMidColor(String data) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    // super(new SpinToColor(data));
-    super(new SpinToColor(data), new SpinToMid(data));
+public class SwitchPipeline extends InstantCommand {
+  public SwitchPipeline() {
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.getContainer().getLimelight());
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    RobotContainer.getContainer().getLimelight().switchPipeline();
   }
 }

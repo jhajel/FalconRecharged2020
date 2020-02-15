@@ -5,20 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.controlpanel;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ColorPanelSpinner;
 
-public class ToggleClimberGearLock extends CommandBase {
+public class ToggleSpinner extends CommandBase {
   /**
-   * Creates a new ToggleClimberGearLock.
+   * Creates a new ToggleSpinner.
    */
-  private Climber climber;
-  public ToggleClimberGearLock(Climber climber) {
-    this.climber = climber;
-    addRequirements(climber);
-    
+  private ColorPanelSpinner colorPanelSpinner;
+  public ToggleSpinner(ColorPanelSpinner colorPanelSpinner) {
+    addRequirements(colorPanelSpinner);
+    this.colorPanelSpinner = colorPanelSpinner;
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +28,7 @@ public class ToggleClimberGearLock extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.toggleClimberGearLock();
+      colorPanelSpinner.toggleSpinner();
   }
 
   // Called once the command ends or is interrupted.

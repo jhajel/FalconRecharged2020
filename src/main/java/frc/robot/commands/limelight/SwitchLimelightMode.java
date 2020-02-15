@@ -5,40 +5,40 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.limelight;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ColorPanelSpinner;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Limelight;
 
-public class ToggleSpinner extends CommandBase {
+public class SwitchLimelightMode extends CommandBase {
   /**
-   * Creates a new ToggleSpinner.
+   * Creates a new SwitchLimelightMode.
    */
-  private ColorPanelSpinner colorPanelSpinner;
-  public ToggleSpinner(ColorPanelSpinner colorPanelSpinner) {
-    addRequirements(colorPanelSpinner);
-    this.colorPanelSpinner = colorPanelSpinner;
+  private boolean finished;
+  public SwitchLimelightMode(Limelight limelight) {
+    addRequirements(RobotContainer.getContainer().getLimelight());
+    finished = false;
+
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    RobotContainer.getContainer().getLimelight().setCamMode();
+    finished = false;
+    
   }
-
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      colorPanelSpinner.toggleSpinner();
-  }
+    RobotContainer.getContainer().getLimelight().switchLimeMode();
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
+    finished = true;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return finished;
   }
 }

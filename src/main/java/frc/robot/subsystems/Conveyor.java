@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.SenseCell;
+import frc.robot.commands.conveyor.SenseCell;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;

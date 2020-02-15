@@ -5,59 +5,49 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.conveyor;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
-import com.revrobotics.SparkMax;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class MoveClimberArm extends CommandBase {
+public class SenseCell extends CommandBase {
   /**
-   * Creates a new MoveClimberArm.
+   * Creates a new SenseCell.
    */
-  private double initPos;
-  private double targetPosition;
-  private CANSparkMax arm;
-  private double inch;
-  public MoveClimberArm(double inches, CANSparkMax arm) {
+  private boolean seen;
+  public SenseCell() {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.arm = arm;
-    this.inch = inches;
-    addRequirements(RobotContainer.getContainer().getClimber());
+    addRequirements(RobotContainer.getContainer().getConveyor());
+    seen = false;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    initPos = arm.getEncoder().getPosition();
-    targetPosition = initPos + (inch*36)/(1.9*Math.PI); // 1 inch = 6.03 ticks
-    arm.getPIDController().setReference(targetPosition, ControlType.kPosition);
+    seen = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("running");  
-    System.out.println(" Difference " + Math.abs(targetPosition - arm.getEncoder().getPosition()));
-    SmartDashboard.putNumber("Diff", targetPosition);
+    if(RobotContainer.getContainer().getConveyor().getStatus())
+    {
+      Command a = new MoveConveyorDistance(-1);
+      a.schedule();
+      seen = true;
+    }
   }
-
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("done");
+    seen = false;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
-    return Math.abs(targetPosition - arm.getEncoder().getPosition()) < 0.1;
-
+    return seen;
   }
 }
