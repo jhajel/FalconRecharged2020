@@ -52,7 +52,7 @@ public final class Constants {
     public static final int DRIVE2_TALON = 2;
     public static final int DRIVE3_TALON = 6;
     public static final int DRIVE4_TALON = 4;
-    public static final int SPINNER_SPARK = 12;
+    public static final int SPINNER_SPARK = 51;
     public static final int INTAKEFORWARD_SOLENOID = 0;
     public static final int INTAKEREVERSE_SOLENOID = 1;
     public static final int CLIMBERFORWARD_SOLENOID = 2;
