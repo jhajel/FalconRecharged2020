@@ -38,7 +38,6 @@ public class Conveyor extends SubsystemBase {
   @Override
   public void periodic() {
     printStatus();
-    printTicks();
     setDefaultCommand(new SenseCell());
   }
 
@@ -58,11 +57,6 @@ public class Conveyor extends SubsystemBase {
   public void setConveyerSpeed(double speed)
   {
     indexer.set(speed);
-  }
-
-  public void printTicks()
-  {
-    SmartDashboard.putNumber("Ticks", encoder.getPosition());
   }
 
   public double getPositon()

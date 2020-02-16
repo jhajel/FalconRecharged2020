@@ -5,29 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.climber;
+package frc.robot.commands.intake;
 
-import com.revrobotics.CANSparkMax;
-
-import edu.wpi.first.wpilibj.CAN;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class SemiAutoClimb extends SequentialCommandGroup {
-  /**
-   * Creates a new SemiAutoClimb.
-   */
+public class ToggleIntake extends InstantCommand {
+  public ToggleIntake() {
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.getContainer().getIntake());
+  }
 
-  public SemiAutoClimb() {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new MoveClimberArm(18.07, RobotContainer.getContainer().getClimber().getUpperArm()), 
-          new MoveClimberArm(-18.07,RobotContainer.getContainer().getClimber().getLowerArm()));
-
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    RobotContainer.getContainer().getIntake().toggleIntakeSolenoidMode();
   }
 }

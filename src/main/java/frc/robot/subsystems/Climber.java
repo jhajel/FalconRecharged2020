@@ -10,8 +10,10 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.climber.ClimberArmSpeed;
@@ -20,21 +22,40 @@ public class Climber extends SubsystemBase {
   /**
    * Creates a new Climber.
    */
-  private CANSparkMax motorController1;
-  private CANSparkMax motorController2;
+  private CANSparkMax lowerArm;
+  private CANSparkMax upperArm;
   private DoubleSolenoid climberGearLock;
+  private DigitalInput leftLimit;
+  private DigitalInput rightLimit;
 
   public Climber() {
-    motorController1 = new CANSparkMax(Constants.CLIMBER1_SPARK,MotorType.kBrushless);
-    motorController2 = new CANSparkMax(Constants.CLIMBER2_SPARK,MotorType.kBrushless);
+    lowerArm = new CANSparkMax(Constants.CLIMBER1_SPARK,MotorType.kBrushless);
+    upperArm = new CANSparkMax(Constants.CLIMBER2_SPARK,MotorType.kBrushless);
     climberGearLock = new DoubleSolenoid(Constants.CLIMBERFORWARD_SOLENOID,Constants.CLIMBERREVERSE_SOLENOID);
+    leftLimit = new DigitalInput(1);
+    rightLimit = new DigitalInput(2);
     climberGearLock.set(Value.kReverse);
-    motorController1.getPIDController().setP(.2); // make faster .3?
-    motorController1.getPIDController().setI(.0000);
-    motorController1.getPIDController().setD(.0002);
-    motorController2.getPIDController().setP(.2); // make faster .3?
-    motorController2.getPIDController().setI(.0000);
-    motorController1.getPIDController().setD(.0002);
+    lowerArm.getPIDController().setP(.2); // make faster .3?
+    lowerArm.getPIDController().setI(.0000);
+    lowerArm.getPIDController().setD(.0002);
+    upperArm.getPIDController().setP(.2); // make faster .3?
+    upperArm.getPIDController().setI(.0000);
+    upperArm.getPIDController().setD(.0002);
+    //lowerArm.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);
+    upperArm.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 110);
+    upperArm.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 4);
+
+    lowerArm.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, -4);
+    lowerArm.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, -110);
+
+    upperArm.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+    upperArm.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+
+    lowerArm.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+    lowerArm.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+
+    upperArm.getEncoder().setPosition(0);
+    lowerArm.getEncoder().setPosition(0);
 
   }
 
@@ -52,24 +73,26 @@ public class Climber extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     setDefaultCommand(new ClimberArmSpeed());
+    SmartDashboard.putBoolean("Left Limit", leftLimit.get());
+    SmartDashboard.putBoolean("Right Limit", rightLimit.get());
   }
 
   public void moveArm1(double speed)
   {
-    motorController1.set(speed);
+    lowerArm.set(speed);
     
   }
 
   public void moveArm2(double speed)
   {
-    motorController2.set(speed);
+    upperArm.set(speed);
   }
 
   public CANSparkMax getUpperArm(){
-    return motorController2;
+    return upperArm;
   }
 
   public CANSparkMax getLowerArm(){
-    return motorController1;
+    return lowerArm;
   }
 }

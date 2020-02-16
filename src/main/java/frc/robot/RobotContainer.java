@@ -30,7 +30,6 @@ import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.HolonomicDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterMotor;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 //import sun.java2d.cmm.ColorTransform;
@@ -56,7 +55,6 @@ public class RobotContainer {
   private Limelight limelight;
   private Conveyor conveyor;
   private Intake intake;
-  private Shooter shooter;
   private ShooterMotor shooterMotor;
   private Compressor compressor;
   private Climber climber;
@@ -77,7 +75,6 @@ public class RobotContainer {
     limelight = new Limelight();
     conveyor = new Conveyor();
     intake = new Intake();
-    shooter = new Shooter();
     shooterMotor = new ShooterMotor();
     compressor = new Compressor();
     climber = new Climber();
@@ -128,10 +125,6 @@ public class RobotContainer {
     return intake;
   }
 
-  public Shooter getShooter() {
-    return shooter;
-  }
-
   public Compressor getCompressor() {
     return compressor;
   }
@@ -157,11 +150,11 @@ public class RobotContainer {
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2,XboxController.Button.kA.value);
     // buttonX.whenHeld(new IntakeSpeed(.5));
     buttonA.whenHeld(new IntakeSpeed(-1));
-    buttonB.whenPressed(new ToggleIntakeArmMode(intake));
+    buttonB.whenPressed(new ToggleIntake());
     buttonY.whenPressed(new ZeroNavX());
     // buttonY.whileHeld(new IntakeSpeed(.5));
     //buttonY.whenPressed(new SwitchPipeline());
-    buttonX.whenPressed(new SwitchLimelightMode(limelight));
+    buttonX.whileHeld(new ConveyorSpeed(-1));
     // buttonA.whenPressed(new DriveForward(.2));
 
     // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));

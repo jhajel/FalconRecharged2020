@@ -8,8 +8,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -40,22 +38,20 @@ public class Limelight extends SubsystemBase  {
   }
 
   public void printInfo() {
-    SmartDashboard.putNumber("Limelight X", limelightx);
-    SmartDashboard.putNumber("Limelight Y", limelighty);
-    SmartDashboard.putNumber("Limelight A", limelighta);
-    SmartDashboard.putNumber("Current Pipeline", table.getEntry("pipeline").getDouble(-1));
+    // SmartDashboard.putNumber("Limelight X", limelightx);
+    // SmartDashboard.putNumber("Limelight Y", limelighty);
+    // SmartDashboard.putNumber("Limelight A", limelighta);
+    // SmartDashboard.putNumber("Current Pipeline", table.getEntry("pipeline").getDouble(-1));
   }
 
   public void setLEDMode() {
     table.getEntry("ledMode").setDouble(3);
     table.getEntry("camMode").setDouble(0);
-    SmartDashboard.putNumber("LEDMODE", 3);
   }
 
   public void setCamMode() {
     table.getEntry("camMode").setDouble(1);
     table.getEntry("ledMode").setDouble(1);
-    SmartDashboard.putNumber("CAMMODE", 1);
   }
 
   public void switchLimeMode() {

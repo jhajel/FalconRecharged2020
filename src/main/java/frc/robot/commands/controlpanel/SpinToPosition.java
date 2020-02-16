@@ -75,9 +75,6 @@ public class SpinToPosition extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        System.out.println("exec");
-        
-
         RobotContainer.getContainer().getColorPanelSpinner().spin(1); //change the speed
 
         //handling switch between yellow and blue

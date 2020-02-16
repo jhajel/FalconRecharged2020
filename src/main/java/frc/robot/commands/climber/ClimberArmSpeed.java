@@ -7,7 +7,6 @@
 
 package frc.robot.commands.climber;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -25,8 +24,6 @@ public class ClimberArmSpeed extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.getContainer().getClimber().getUpperArm().getEncoder().setPosition(0);
-    RobotContainer.getContainer().getClimber().getLowerArm().getEncoder().setPosition(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,11 +31,9 @@ public class ClimberArmSpeed extends CommandBase {
   public void execute() {
     double speed1 = MathUtils.deadband(RobotContainer.getContainer().getClimbController().getRawAxis(1));
     double speed2 = MathUtils.deadband(RobotContainer.getContainer().getClimbController().getRawAxis(5));
+    // if(RobotContainer.getContainer().getClimbController().get)
     RobotContainer.getContainer().getClimber().moveArm1(speed1);
     RobotContainer.getContainer().getClimber().moveArm2(-speed2);
-    SmartDashboard.putNumber("UpperArm ticks", RobotContainer.getContainer().getClimber().getUpperArm().getEncoder().getPosition());
-    SmartDashboard.putNumber("LowerArm Ticks", RobotContainer.getContainer().getClimber().getLowerArm().getEncoder().getPosition());
-    
   }
 
   // Called once the command ends or is interrupted.
