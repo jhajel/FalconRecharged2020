@@ -24,14 +24,14 @@ import frc.robot.commands.limelight.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.swervedrive.*;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.ColorPanelSpinner;
-import frc.robot.subsystems.ColorSensor;
+import frc.robot.subsystems.Color.ColorPanelSpinner;
+import frc.robot.subsystems.Color.ColorSensor;
 import frc.robot.subsystems.Conveyor;
-import frc.robot.subsystems.HolonomicDrivetrain;
+import frc.robot.subsystems.Drive.HolonomicDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterMotor;
-import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 //import sun.java2d.cmm.ColorTransform;
 
 /**

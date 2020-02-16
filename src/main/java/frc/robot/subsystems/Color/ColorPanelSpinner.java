@@ -1,5 +1,5 @@
 
-package frc.robot.subsystems;
+package frc.robot.subsystems.Color;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
