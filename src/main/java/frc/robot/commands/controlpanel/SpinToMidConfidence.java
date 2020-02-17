@@ -38,32 +38,23 @@ public class SpinToMidConfidence extends CommandBase {
   private String gameData;
   private boolean runningForward;
   private double confidence;
- 
- 
+
   public SpinToMidConfidence(String data) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getContainer().getColorSensor());
-    if(data == null)
-    {
+    if (data == null) {
       gameData = "Unknown";
-    }
-    else if(data.length() == 0)
-    {
+    } else if (data.length() == 0) {
       gameData = "Unknown";
-    }
-    else if(data.charAt(0) == 'G'){
+    } else if (data.charAt(0) == 'G') {
       gameData = "Yellow";
-    }
-    else if(data.charAt(0) == 'B'){
+    } else if (data.charAt(0) == 'B') {
       gameData = "Red";
-    }
-    else if(data.charAt(0) == 'Y'){
+    } else if (data.charAt(0) == 'Y') {
       gameData = "Green";
-    }
-    else if(data.charAt(0) == 'R'){
+    } else if (data.charAt(0) == 'R') {
       gameData = "Blue";
-    }
-    else{
+    } else {
       gameData = "Unknown";
     }
   }
@@ -71,7 +62,7 @@ public class SpinToMidConfidence extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
+    // RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
     expectedColorArray = new String[] { "Yellow", "Red", "Green", "Blue" };
     arraySize = expectedColorArray.length;
 
@@ -84,18 +75,19 @@ public class SpinToMidConfidence extends CommandBase {
 
     color = gameData;
     startColor = color;
-    currentColor= RobotContainer.getContainer().getColorSensor().getColor();
+    currentColor = RobotContainer.getContainer().getColorSensor().getColor();
 
-    if(Constants.forward) {
-      prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
-      previousColor = expectedColorArray[prevIndex]; 
+    if (Constants.forward) {
+      prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize - 1;
+      previousColor = expectedColorArray[prevIndex];
       expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];
       prevColor = previousColor;
-    }
-    else {
+    } else {
       prevIndex = (colorDictionary.get(startColor) + 1) % arraySize;
       previousColor = expectedColorArray[prevIndex];
-      expectedColor = expectedColorArray[(colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize - 1];
+      expectedColor = expectedColorArray[(colorDictionary.get(startColor) - 1) >= 0
+          ? colorDictionary.get(startColor) - 1
+          : arraySize - 1];
       prevColor = previousColor;
     }
 
@@ -104,28 +96,33 @@ public class SpinToMidConfidence extends CommandBase {
     runningForward = true;
     confidence = RobotContainer.getContainer().getColorSensor().getConfidence();
     findMid();
-    //RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
-}
+    // RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
+  }
 
   public void updateColor() {
     prevColor = currentColor;
-    //Color change between green --> red sees yellow
-    if (confidence < .95 && RobotContainer.getContainer().getColorSensor().getColor().equals("Yellow")){
-      currentColor = "Red";
+    String color = RobotContainer.getContainer().getColorSensor().getColor();
+    // Color change between green --> red sees yellow
+    if (gameData.equals("Red")) { //viv bday = 3/6
+      if(runningForward && RobotContainer.getContainer().getColorSensor().getColor().equals("Yellow"))
+      {
+        currentColor = "Green";
+      }
+      else if(!runningForward && RobotContainer.getContainer().getColorSensor().getColor().equals("Yellow"))
+      {
+        currentColor = "Red";
+      }
+      if (prevColor.equals("Red") && currentColor.equals("Green") && RobotContainer.getContainer().getColorSensor().getColor().equals("Yellow")) {
+        currentColor = "Green";
+      }
     }
-    else if (confidence < .95 && RobotContainer.getContainer().getColorSensor().getColor().equals("Green")){
+    // Color change between yellow -> blue sees green
+    if (prevColor.equals("Blue") && currentColor.equals("Yellow")
+        && RobotContainer.getContainer().getColorSensor().getColor().equals("Green")) {
       currentColor = "Blue";
-    }
-    if(prevColor.equals("Red") && currentColor.equals("Green") && RobotContainer.getContainer().getColorSensor().getColor().equals("Yellow")) {
-      currentColor = "Red";
-    }
-    //Color change between yellow -> blue sees green
-    else if (prevColor.equals("Blue") && currentColor.equals("Yellow") && RobotContainer.getContainer().getColorSensor().getColor().equals("Green")) {
-      currentColor = "Blue";
-    }
-    else {
+    } else {
       currentColor = RobotContainer.getContainer().getColorSensor().getColor();
-    } 
+    }
   }
 
   public void findMid() {

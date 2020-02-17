@@ -21,6 +21,6 @@ public class SpinToMidColor extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     // super(new SpinToColor(data));
-    super(new SpinToColor(data), new SpinToMidConfidence(data));
+    super(new SpinToColor(data), new SpinToMid(data));
   }
 }

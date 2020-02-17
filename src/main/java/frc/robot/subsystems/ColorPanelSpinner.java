@@ -99,7 +99,7 @@ public class ColorPanelSpinner extends SubsystemBase {
 
     public void printPosition() {
         SmartDashboard.putNumber("Spinner Pos", getPosition());
-        System.out.println("spinner pos: " + getPosition());
+      //  System.out.println("spinner pos: " + getPosition());
     }
 
     public void resetEncoder() {
