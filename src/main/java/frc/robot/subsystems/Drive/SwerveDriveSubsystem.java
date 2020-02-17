@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.commands.swervedrive.HolonomicDriveCommand;
 
@@ -18,10 +19,10 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 	private static final double WHEELBASE = 22.5; 
 	private static final double TRACKWIDTH = 22.5;	
 	private static final double RATIO = Math.sqrt(Math.pow(WHEELBASE, 2) + Math.pow(TRACKWIDTH, 2));
-	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 143); //2020: 70
-	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 226); //2020: 211
-	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), -90); //2020: 307
-	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 137); //2020: 150
+	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 148); //2020: 70
+	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 234); //2020: 211
+	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), -80); //2020: 307
+	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 153); //2020: 150
 
 	/*
 	 * 0 is Front Right
@@ -120,6 +121,11 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 				Math.sqrt(a * a + d * d),
 				Math.sqrt(a * a + c * c)
 		};
+
+		SmartDashboard.putNumber("Module 0 Ticks", mSwerveModules[0].getPosition());
+		SmartDashboard.putNumber("Module 1 Ticks", mSwerveModules[1].getPosition());
+		SmartDashboard.putNumber("Module 2 Ticks", mSwerveModules[2].getPosition());
+		SmartDashboard.putNumber("Module 3 Ticks", mSwerveModules[3].getPosition());
 
 		double max = speeds[0];
 

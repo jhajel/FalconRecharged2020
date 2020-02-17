@@ -52,8 +52,8 @@ public class SwerveDriveModule extends SubsystemBase {
         angleMotor.setNeutralMode(NeutralMode.Brake);
         angleMotor.set(ControlMode.Position, 0);
         angleMotor.configNeutralDeadband(0.07);
-        // driveMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
-        // 0, 0); ADD TO CANSPARKMAX LATER***
+        driveMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,
+         0, 0); //ADD TO CANSPARKMAX LATER***
 
         driveMotor.setNeutralMode(NeutralMode.Brake);
         driveMotor.config_kD(0, 0.02, 0); // 0.02
