@@ -35,4 +35,6 @@ public final class Constants {
     public static final int CLIMBERREVERSE_SOLENOID = 3;
     public static final int COLORPANELFORWARD_SOLENOID = 4;
     public static final int COLORPANELREVERSE_SOLENOID = 5;
+    public static final int SHOOTER1_TALON = 35;
+    public static final int SHOOTER2_TALON = 36;
 }
