@@ -26,6 +26,7 @@ public class ColorSensor extends SubsystemBase {
   private final Color kGreenTarget = ColorMatch.makeColor(0.166, 0.59, 0.246);
   private final Color kRedTarget = ColorMatch.makeColor(0.505 , 0.36, 0.135);
   private final Color kYellowTarget = ColorMatch.makeColor(0.31, 0.57, 0.12);
+  private ColorMatchResult match;
 
   public ColorSensor() {
     m_colorMatcher.addColorMatch(kBlueTarget);
@@ -39,7 +40,7 @@ public class ColorSensor extends SubsystemBase {
     Color detectedColor = m_colorSensor.getColor();
 
     String colorString;
-    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+    match = m_colorMatcher.matchClosestColor(detectedColor);
 
     if (match.color == kBlueTarget) {
       colorString = "Blue";
@@ -60,6 +61,12 @@ public class ColorSensor extends SubsystemBase {
     SmartDashboard.putString("Detected Color", colorString);
     
     return colorString;
+  }
+
+  
+  public double getConfidence()
+  {
+      return match.confidence;
   }
 
   @Override

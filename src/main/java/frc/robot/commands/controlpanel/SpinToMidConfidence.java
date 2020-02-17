@@ -10,48 +10,60 @@ package frc.robot.commands.controlpanel;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.lang.model.util.ElementScanner6;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class SpinToMid extends CommandBase {
+public class SpinToMidConfidence extends CommandBase {
   /**
    * Creates a new SenseColorTest.
    */
-
-  private String currentColor;
+  private String color;
   private String previousColor;
   private String expectedColor;
+  private String currentColor;
   private String prevColor;
   private String[] expectedColorArray;
   private int arraySize;
   private int prevIndex;
   private Map<String, Integer> colorDictionary;
+  private String startColor;
   private double segmentLength;
   private double targetPos;
   private String gameData;
-  private ArrayList<ColorPosition> colorPosition = new ArrayList<ColorPosition>();
-
-  public SpinToMid(String data) {
+  private boolean runningForward;
+  private double confidence;
+ 
+ 
+  public SpinToMidConfidence(String data) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getContainer().getColorSensor());
-    if (data == null) {
+    if(data == null)
+    {
       gameData = "Unknown";
-    } else if (data.length() == 0) {
+    }
+    else if(data.length() == 0)
+    {
       gameData = "Unknown";
-    } else if (data.charAt(0) == 'G') {
+    }
+    else if(data.charAt(0) == 'G'){
       gameData = "Yellow";
-    } else if (data.charAt(0) == 'B') {
+    }
+    else if(data.charAt(0) == 'B'){
       gameData = "Red";
-    } else if (data.charAt(0) == 'Y') {
+    }
+    else if(data.charAt(0) == 'Y'){
       gameData = "Green";
-    } else if (data.charAt(0) == 'R') {
+    }
+    else if(data.charAt(0) == 'R'){
       gameData = "Blue";
-    } else {
+    }
+    else{
       gameData = "Unknown";
     }
   }
@@ -59,8 +71,7 @@ public class SpinToMid extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    String startColor;
-    // RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
+    //RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
     expectedColorArray = new String[] { "Yellow", "Red", "Green", "Blue" };
     arraySize = expectedColorArray.length;
 
@@ -71,71 +82,61 @@ public class SpinToMid extends CommandBase {
     colorDictionary.put("Green", Integer.valueOf(2));
     colorDictionary.put("Blue", Integer.valueOf(3));
 
-    currentColor = RobotContainer.getContainer().getColorSensor().getColor();
-    startColor = currentColor;
+    color = gameData;
+    startColor = color;
+    currentColor= RobotContainer.getContainer().getColorSensor().getColor();
 
     if(Constants.forward) {
-    prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ?
-    colorDictionary.get(startColor) - 1 : arraySize-1;
-    previousColor = expectedColorArray[prevIndex];
-    expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) %
-    arraySize];
-    prevColor = previousColor;
+      prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
+      previousColor = expectedColorArray[prevIndex]; 
+      expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];
+      prevColor = previousColor;
     }
     else {
-    prevIndex = (colorDictionary.get(startColor) + 1) % arraySize;
-    previousColor = expectedColorArray[prevIndex];
-    expectedColor = expectedColorArray[(colorDictionary.get(startColor) - 1) >= 0
-    ? colorDictionary.get(startColor) - 1 : arraySize - 1];
-    prevColor = previousColor;
+      prevIndex = (colorDictionary.get(startColor) + 1) % arraySize;
+      previousColor = expectedColorArray[prevIndex];
+      expectedColor = expectedColorArray[(colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize - 1];
+      prevColor = previousColor;
     }
 
-    SmartDashboard.putString("previousColor", prevColor);
-     SmartDashboard.putString("expColor", expectedColor);
+    SmartDashboard.putString("previousColor", previousColor);
+    SmartDashboard.putString("expColor", expectedColor);
+    runningForward = true;
+    confidence = RobotContainer.getContainer().getColorSensor().getConfidence();
     findMid();
-    // RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
-  }
+    //RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
+}
 
   public void updateColor() {
-    prevColor = currentColor;    
-    boolean goingForward = RobotContainer.getContainer().getColorPanelSpinner().getMotorSpeed() > 0.0;
-    currentColor = RobotContainer.getContainer().getColorSensor().getColor();
-    expectedColor = expectedColorArray[(colorDictionary.get(currentColor) + 1) % arraySize];
-    double position = RobotContainer.getContainer().getColorPanelSpinner().getPosition();
-    colorPosition.add(new ColorPosition(currentColor, position));
-
-    if (gameData.equals("Red")) {
-      if (goingForward) {
-        if (currentColor.equals("Yellow")) {
-          currentColor = "Green";
-          expectedColor = expectedColorArray[(colorDictionary.get(currentColor) + 1) % arraySize];
-
-        }
-      }
-      else if (prevColor.equals("Green") && !goingForward){ 
-        currentColor = "Red";
-        expectedColor = expectedColorArray[(colorDictionary.get(currentColor) + 1) % arraySize];
-
-      }
+    prevColor = currentColor;
+    //Color change between green --> red sees yellow
+    if (confidence < .95 && RobotContainer.getContainer().getColorSensor().getColor().equals("Yellow")){
+      currentColor = "Red";
     }
-    else{
+    else if (confidence < .95 && RobotContainer.getContainer().getColorSensor().getColor().equals("Green")){
+      currentColor = "Blue";
+    }
+    if(prevColor.equals("Red") && currentColor.equals("Green") && RobotContainer.getContainer().getColorSensor().getColor().equals("Yellow")) {
+      currentColor = "Red";
+    }
+    //Color change between yellow -> blue sees green
+    else if (prevColor.equals("Blue") && currentColor.equals("Yellow") && RobotContainer.getContainer().getColorSensor().getColor().equals("Green")) {
+      currentColor = "Blue";
+    }
+    else {
       currentColor = RobotContainer.getContainer().getColorSensor().getColor();
-      expectedColor = expectedColorArray[(colorDictionary.get(currentColor) + 1) % arraySize];
-    }
-
+    } 
   }
-
-  
 
   public void findMid() {
     SmartDashboard.putNumber("init pos", RobotContainer.getContainer().getColorPanelSpinner().getPosition());
 
     updateColor();
-    
     SmartDashboard.putString("currentColor", currentColor);
     while (currentColor != expectedColor) {
       SmartDashboard.putString("currentColor", currentColor);
       RobotContainer.getContainer().getColorPanelSpinner().spin(.15);
+      runningForward = true;
       updateColor();
       RobotContainer.getContainer().getColorPanelSpinner().printPosition();
     }
@@ -143,14 +144,14 @@ public class SpinToMid extends CommandBase {
     double forwardPos = RobotContainer.getContainer().getColorPanelSpinner().getPosition();
     RobotContainer.getContainer().getColorPanelSpinner().printPosition();
     SmartDashboard.putNumber("forward pos", forwardPos);
-
-    while (currentColor != prevColor) {
+    runningForward = false;
+    while (currentColor != previousColor) {
       SmartDashboard.putString("currentColor", currentColor);
       RobotContainer.getContainer().getColorPanelSpinner().spin(-.15);
       updateColor();
       RobotContainer.getContainer().getColorPanelSpinner().spin(0);
     }
-
+    runningForward = true;
     double finalPos = RobotContainer.getContainer().getColorPanelSpinner().getPosition();
     RobotContainer.getContainer().getColorPanelSpinner().printPosition();
     segmentLength = Math.abs(forwardPos - finalPos);
@@ -165,6 +166,7 @@ public class SpinToMid extends CommandBase {
     SmartDashboard.putString("currentColor", currentColor);
     SmartDashboard.putNumber("Segment length", segmentLength);
     SmartDashboard.putString("prevColor", prevColor);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -181,7 +183,6 @@ public class SpinToMid extends CommandBase {
 
   @Override
   public void end(final boolean interrupted) {
-    System.out.println(colorPosition);
     RobotContainer.getContainer().getColorPanelSpinner().spin(0);
   }
 }

@@ -180,9 +180,10 @@ public class RobotContainer {
     // buttonA.whenPressed(new MoveConveyorDistance(-5));
     // buttonB.whenPressed(new ShooterSwitchArmMode());
 
-    buttonX_2.whenPressed(new SpinToPosition());
-    buttonY_2.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
-    buttonA_2.whenPressed(new ToggleSpinner(colorPanelSpinner));
+    buttonB.whenPressed(new SpinUnoRotation());
+    buttonX.whenPressed(new SpinToColor(DriverStation.getInstance().getGameSpecificMessage()));
+    buttonY.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
+    buttonA.whenPressed(new ToggleSpinner(colorPanelSpinner));
 
     // buttonX.whenPressed(new SwitchLimelightMode(limelight));
   }

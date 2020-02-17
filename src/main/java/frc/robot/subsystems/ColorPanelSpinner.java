@@ -54,7 +54,12 @@ public class ColorPanelSpinner extends SubsystemBase {
         moto1.set(speed);
     
     }
-
+    
+    public double getMotorSpeed (){
+        //moto1.set(ControlMode.PercentOutput, speed);
+        return moto1.get();
+    
+    }
     public void spin(double speed) {
        // moto1.set(ControlMode.PercentOutput, speed);
        moto1.set(speed);
