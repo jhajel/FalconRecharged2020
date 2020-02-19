@@ -123,6 +123,11 @@ public class ColorPanelSpinner extends SubsystemBase {
     public void deploySpinner() {
         colorPanelSolenoid.set(Value.kForward);
     }
+
+    @Override
+    public void periodic() {
+      printPosition();
+    }
 }
 
 // 2pi*18 = circumference of control panel

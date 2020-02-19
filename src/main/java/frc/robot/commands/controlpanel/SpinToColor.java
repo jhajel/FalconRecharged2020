@@ -107,7 +107,7 @@ public class SpinToColor extends CommandBase {
         SmartDashboard.putString("previousColor", previousColor);
         SmartDashboard.putNumber("colorCount", colorCount);
         SmartDashboard.putString("targetColor", targetColor);
-        SmartDashboard.putString("startColor", startColor);
+        //SmartDashboard.putString("startColor", startColor);
     
 
         previousColor = currentColor;

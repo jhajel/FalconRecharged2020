@@ -156,12 +156,12 @@ public class RobotContainer {
     JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2,XboxController.Button.kA.value);
     // buttonX.whenHeld(new IntakeSpeed(.5));
-    buttonA.whenHeld(new IntakeSpeed(-1));
-    buttonB.whenPressed(new ToggleIntakeArmMode(intake));
-    buttonY.whenPressed(new ZeroNavX());
+    // buttonA.whenHeld(new IntakeSpeed(-1));
+    // buttonB.whenPressed(new ToggleIntakeArmMode(intake));
+    // buttonY.whenPressed(new ZeroNavX());
     // buttonY.whileHeld(new IntakeSpeed(.5));
     //buttonY.whenPressed(new SwitchPipeline());
-    buttonX.whenPressed(new SwitchLimelightMode(limelight));
+    //buttonX.whenPressed(new SwitchLimelightMode(limelight));
     // buttonA.whenPressed(new DriveForward(.2));
 
     // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
@@ -180,10 +180,11 @@ public class RobotContainer {
     // buttonA.whenPressed(new MoveConveyorDistance(-5));
     // buttonB.whenPressed(new ShooterSwitchArmMode());
 
-    buttonB.whenPressed(new SpinUnoRotation());
+    buttonB.whenPressed(new SpinToPosition());
     buttonX.whenPressed(new SpinToColor(DriverStation.getInstance().getGameSpecificMessage()));
     buttonY.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
-    buttonA.whenPressed(new ToggleSpinner(colorPanelSpinner));
+    buttonA.whenPressed(new SpinUnoRotation());
+    //buttonA.whenPressed(new ToggleSpinner(colorPanelSpinner));
 
     // buttonX.whenPressed(new SwitchLimelightMode(limelight));
   }
