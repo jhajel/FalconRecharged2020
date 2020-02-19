@@ -35,10 +35,10 @@ public class SetShooterSpeed extends CommandBase {
     
     SmartDashboard.putNumber("Current Shooter RPM", 0);
     SmartDashboard.putNumber("Input Shooter RPM", SmartDashboard.getNumber("Input Shooter RPM", 3750));
-    SmartDashboard.putNumber("Input pidF", SmartDashboard.getNumber("Input pidF", 0));
-    SmartDashboard.putNumber("Input pidP", SmartDashboard.getNumber("Input pidP", 0));
+    SmartDashboard.putNumber("Input pidF", SmartDashboard.getNumber("Input pidF", 0.04928));
+    SmartDashboard.putNumber("Input pidP", SmartDashboard.getNumber("Input pidP", 0.1));
     SmartDashboard.putNumber("Input pidI", SmartDashboard.getNumber("Input pidI", 0));
-    SmartDashboard.putNumber("Input pidD", SmartDashboard.getNumber("Input pidD", 0));
+    SmartDashboard.putNumber("Input pidD", SmartDashboard.getNumber("Input pidD", 2.5));
     shooterMotor = RobotContainer.getContainer().getShooterMotor();
     mXboxController = controller;
     addRequirements(shooterMotor);

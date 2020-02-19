@@ -146,6 +146,8 @@ public class RobotContainer {
     //buttonA.whenHeld(new SpinShooterMotor(mXboxController, -1));
     //buttonB.whenHeld(new SpinShooterMotor(mXboxController, -.5));
     buttonX.whenHeld(new SetShooterSpeed(mXboxController));//3750 works for 3 pts
+    buttonY.whileHeld(new ConveyorSpeed(-0.5));
+    buttonB.whileHeld(new ConveyorSpeed(0.5));
 
     //buttonA.whenPressed(new DriveForward(.2));
      
