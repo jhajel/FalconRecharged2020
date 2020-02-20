@@ -17,7 +17,7 @@ public class SpinToMidColor extends SequentialCommandGroup {
   /**
    * Creates a new SpinToMidColor.
    */
-  public SpinToMidColor(String data) {
+  public SpinToMidColor(String data) { //viv bday = 3/6
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     // super(new SpinToColor(data));

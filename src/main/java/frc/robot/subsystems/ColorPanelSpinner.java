@@ -99,7 +99,6 @@ public class ColorPanelSpinner extends SubsystemBase {
 
     public void printPosition() {
         SmartDashboard.putNumber("Spinner Pos", getPosition());
-      //  System.out.println("spinner pos: " + getPosition());
     }
 
     public void resetEncoder() {
@@ -129,7 +128,3 @@ public class ColorPanelSpinner extends SubsystemBase {
       printPosition();
     }
 }
-
-// 2pi*18 = circumference of control panel
-/// 12.57 = circumference of wheel
-// 8 rotations = 1 control panel rotationss

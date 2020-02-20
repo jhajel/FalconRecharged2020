@@ -37,9 +37,8 @@ public class SpinToMidConfidence extends CommandBase {
   private double targetPos;
   private String gameData;
   private boolean runningForward;
-  private double confidence;
 
-  public SpinToMidConfidence(String data) {
+  public SpinToMidConfidence(String data) { //viv bday = 3/6
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getContainer().getColorSensor());
     if (data == null) {
@@ -94,14 +93,11 @@ public class SpinToMidConfidence extends CommandBase {
     SmartDashboard.putString("previousColor", previousColor);
     SmartDashboard.putString("expColor", expectedColor);
     runningForward = true;
-    confidence = RobotContainer.getContainer().getColorSensor().getConfidence();
     findMid();
-    // RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
   }
 
   public void updateColor() {
     prevColor = currentColor;
-    String color = RobotContainer.getContainer().getColorSensor().getColor();
     // Color change between green --> red sees yellow
     if (gameData.equals("Red")) { //viv bday = 3/6
       if(runningForward && RobotContainer.getContainer().getColorSensor().getColor().equals("Yellow"))

@@ -9,9 +9,10 @@ package frc.robot.commands.controlpanel;
 
 /**
  * Add your docs here.
+ * not needed delete later if you want ... ;D *wink wink*
  */
 public class ColorPosition {
-    private String color;
+    private String color; 
     private double position;
     public ColorPosition(String initColor, double initPosition) {
         color = initColor;

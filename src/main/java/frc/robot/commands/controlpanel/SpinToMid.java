@@ -34,8 +34,6 @@ public class SpinToMid extends CommandBase {
   private double segmentLength;
   private double targetPos;
   private String gameData;
-  private ArrayList<ColorPosition> colorPosition = new ArrayList<ColorPosition>();
-  private boolean goingForward2;
 
   private Map<String, String> impossible;
 
@@ -107,45 +105,11 @@ public class SpinToMid extends CommandBase {
     SmartDashboard.putString("previousColor", prevColor);
     SmartDashboard.putString("expColor", expectedColor);
     findMid();
-    // RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
   }
 
   //If we see an impossible color, we don't change currentColor
   public void updateColor() {  
-    // public void updateColor() {
-  // prevColor = currentColor;
-  // boolean goingForward =
-  // RobotContainer.getContainer().getColorPanelSpinner().getMotorSpeed() > 0.0;
-  // currentColor = RobotContainer.getContainer().getColorSensor().getColor();
-  // expectedColor = expectedColorArray[(colorDictionary.get(currentColor) + 1) %
-  // arraySize];
-  // double position =
-  // RobotContainer.getContainer().getColorPanelSpinner().getPosition();
-  // colorPosition.add(new ColorPosition(currentColor, position));
-
-  // if (gameData.equals("Red")) {
-  // if (goingForward) {
-  // if (currentColor.equals("Yellow")) {
-  // currentColor = "Green";
-  // expectedColor = expectedColorArray[(colorDictionary.get(currentColor) + 1) %
-  // arraySize];
-
-  // }
-  // }
-  // else if (prevColor.equals("Green") && !goingForward){
-  // currentColor = "Red";
-  // expectedColor = expectedColorArray[(colorDictionary.get(currentColor) + 1) %
-  // arraySize];
-
-  // }
-  // }
-  // else{
-  // currentColor = RobotContainer.getContainer().getColorSensor().getColor();
-  // expectedColor = expectedColorArray[(colorDictionary.get(currentColor) + 1) %
-  // arraySize];
-  // }
-
-  // }
+  
     String wrongColor = impossible.get(currentColor);
 
     String detected = RobotContainer.getContainer().getColorSensor().getColor();
@@ -162,7 +126,6 @@ public class SpinToMid extends CommandBase {
     SmartDashboard.putString("currentColor", currentColor);
     while (currentColor != expectedColor) {
       SmartDashboard.putString("currentColor", currentColor);
-      goingForward2 = true;
       RobotContainer.getContainer().getColorPanelSpinner().spin(.15);
       updateColor();
       RobotContainer.getContainer().getColorPanelSpinner().printPosition();
@@ -174,11 +137,9 @@ public class SpinToMid extends CommandBase {
 
     while (currentColor != prevColor) {
       SmartDashboard.putString("currentColor", currentColor);
-      goingForward2 = false;
       RobotContainer.getContainer().getColorPanelSpinner().spin(-.15);
 
       updateColor();
-      goingForward2 = true;
       RobotContainer.getContainer().getColorPanelSpinner().spin(0);
     }
 
@@ -198,7 +159,7 @@ public class SpinToMid extends CommandBase {
     SmartDashboard.putString("prevColor", prevColor);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // Called every time the scheduler runs while the command is scheduled. v b-day = 3/6 hello  //viv bday = 3/6
   @Override
   public void execute() {
 
