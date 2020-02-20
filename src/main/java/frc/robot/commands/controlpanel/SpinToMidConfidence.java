@@ -99,7 +99,7 @@ public class SpinToMidConfidence extends CommandBase {
   public void updateColor() {
     prevColor = currentColor;
     // Color change between green --> red sees yellow
-    if (gameData.equals("Red")) { //viv bday = 3/6
+    if (gameData.equals("Red")) { //viv bday = 3/6  
       if(runningForward && RobotContainer.getContainer().getColorSensor().getColor().equals("Yellow"))
       {
         currentColor = "Green";
