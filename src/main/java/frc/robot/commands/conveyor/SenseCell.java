@@ -31,12 +31,12 @@ public class SenseCell extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if(!RobotContainer.getContainer().getConveyor().getStatus())
-    // {
-    //   // Command a = new MoveConveyorDistance(-1);
-    //   // a.schedule();
-    //   seen = true;
-    // }
+    if(RobotContainer.getContainer().getConveyor().getStatus())
+    {
+      Command a = new MoveConveyorDistance(-.15);
+      a.schedule();
+      seen = true;
+    }
   }
 
   // Called once the command ends or is interrupted.

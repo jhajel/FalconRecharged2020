@@ -45,6 +45,8 @@ public class HolonomicDriveCommand extends CommandBase {
 		strafe = MathUtils.deadband(strafe, mDrivetrain.isFieldOriented());
 		rotation = MathUtils.deadband(rotation, mDrivetrain.isFieldOriented());
 
+		System.out.println("DriveTrainCommand Running");
+		mDrivetrain.swapPIDSlot(0);
 		mDrivetrain.holonomicDrive(forward, strafe, rotation);
 	}
 

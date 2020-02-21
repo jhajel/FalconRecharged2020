@@ -9,11 +9,14 @@ package frc.robot;
 
 import java.sql.Driver;
 
+import com.playingwithfusion.TimeOfFlight;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climber.*;
@@ -80,7 +83,6 @@ public class RobotContainer {
     climber = new Climber();
 
     shooterMotor.setDefaultCommand(new SpinShooterMotor());
-
     configureButtonBindings();
   }
 
@@ -133,6 +135,7 @@ public class RobotContainer {
     return climber;
   }
 
+
   /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by instantiating a {@link GenericHID} or one of its subclasses
@@ -154,11 +157,14 @@ public class RobotContainer {
     buttonY.whenPressed(new ZeroNavX());
     // buttonY.whileHeld(new IntakeSpeed(.5));
     //buttonY.whenPressed(new SwitchPipeline());
-    buttonX.whileHeld(new ConveyorSpeed(-1));
+    //buttonX.whileHeld(new ConveyorSpeed(-1));
     // buttonA.whenPressed(new DriveForward(.2));
+    //buttonY.whenPressed(new SwitchPipeline());
+    //buttonX.whenPressed(new SwitchLimelightMode());
+    buttonX.whenPressed(new Autonomous());
 
     // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
-    // buttonB_2.whenPressed(new SemiAutoClimb());
+     buttonB_2.whenPressed(new SemiAutoClimb());
     // // buttonB_2.whenPressed(new MoveClimberArm(7, getClimber().getUpperArm()));
     // buttonX_2.whenPressed(new SemiAutoPullUp());
     // buttonX_2.whenPressed(new MoveClimberArm(-7, getClimber().getLowerArm()));

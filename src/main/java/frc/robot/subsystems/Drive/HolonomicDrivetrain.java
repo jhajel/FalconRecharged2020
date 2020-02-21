@@ -23,6 +23,8 @@ public abstract class HolonomicDrivetrain extends Drivetrain {
 
 	public abstract void holonomicDrive(double forward, double strafe, double rotation);
 
+	public abstract void swapPIDSlot(int slot);
+
 	@Override
 	protected void initDefaultCommand() {
 		//setDefaultCommand(new HolonomicDriveCommand(this));
