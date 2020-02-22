@@ -23,10 +23,10 @@ public class ColorSensor extends SubsystemBase {
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
   private final ColorMatch m_colorMatcher = new ColorMatch();
 
-  private final Color kBlueTarget = ColorMatch.makeColor(0.127, 0.44, 0.43);
-  private final Color kGreenTarget = ColorMatch.makeColor(0.166, 0.59, 0.246);
-  private final Color kRedTarget = ColorMatch.makeColor(0.505 , 0.36, 0.135);
-  private final Color kYellowTarget = ColorMatch.makeColor(0.31, 0.57, 0.12);
+  private final Color kBlueTarget = ColorMatch.makeColor(0.112, 0.43, 0.455);
+  private final Color kGreenTarget = ColorMatch.makeColor(0.154, 0.597, 0.249);
+  private final Color kRedTarget = ColorMatch.makeColor(0.519, 0.350, 0.132);
+  private final Color kYellowTarget = ColorMatch.makeColor(0.307, 0.576, 0.117);
   private ColorMatchResult match;
 
 

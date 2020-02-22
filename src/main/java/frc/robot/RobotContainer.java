@@ -183,7 +183,7 @@ public class RobotContainer {
     buttonB.whenPressed(new SpinToPosition());
     // buttonB.whenPressed(new GameData(DriverStation.getInstance().getGameSpecificMessage()));
     buttonX.whenPressed(new SpinToColor());
-    buttonY.whenPressed(new SpinToMidColor());
+    buttonY.whenPressed(new SpinToMidColor().withTimeout(7));
     buttonA.whenPressed(new SpinToPosition());
 
     //buttonA.whenPressed(new ToggleSpinner(colorPanelSpinner));

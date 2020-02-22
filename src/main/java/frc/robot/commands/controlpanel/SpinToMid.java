@@ -106,7 +106,7 @@ public class SpinToMid extends CommandBase {
     if(gameData.equals("Red") || gameData.equals("Blue")) {
       blueOrRed();
     }
-    else {
+    else if(gameData.equals("Yellow") || gameData.equals("Green")) {
       findMid();
     }
   }
@@ -127,7 +127,7 @@ public class SpinToMid extends CommandBase {
   public void blueOrRed() {
     String wrongColor = impossible.get(gameData);
 
-    while(!currentColor.equals(wrongColor)) {
+    while(!currentColor.equals(wrongColor))  {//"Blue"
       RobotContainer.getContainer().getColorPanelSpinner().spin(.2);
       updateColor();
     }
@@ -135,11 +135,11 @@ public class SpinToMid extends CommandBase {
     double forwardPos = RobotContainer.getContainer().getColorPanelSpinner().getPosition();
     RobotContainer.getContainer().getColorPanelSpinner().printPosition();
     SmartDashboard.putNumber("forward pos", forwardPos);
-    while(!currentColor.equals(gameData)) {
+    while(!currentColor.equals(gameData)) { //"Red"
       RobotContainer.getContainer().getColorPanelSpinner().spin(-.2);
       updateColor();
     }
-    while(!currentColor.equals(wrongColor)) {
+    while(!currentColor.equals(wrongColor)) { //"Blue"
       RobotContainer.getContainer().getColorPanelSpinner().spin(-.2);
       updateColor();
     }
