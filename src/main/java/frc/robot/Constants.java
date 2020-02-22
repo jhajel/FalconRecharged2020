@@ -41,4 +41,5 @@ public final class Constants {
     public static final int SHOOTER_REVERSE_SOLENOID = 7; //ID number to do
     public static final int SHOOTER2_FORWARD_SOLENOID = 8; //ID number to do
     public static final int SHOOTER2_REVERSE_SOLENOID = 9; //ID number to do
+    public static boolean forward = true;
 }
