@@ -71,9 +71,6 @@ public class ColorPanelSpinner extends SubsystemBase {
     }
 
     public void setPosition(double pos) {
-        // mPIDController.setP(mPIDControllerP); // 0.00001 working value. we keep it.
-        // mPIDController.setI(mPIDControllerI); // .0000001
-        // mPIDController.setD(mPIDControllerD); // 0.0065
         mPIDController.setReference(pos, ControlType.kPosition);
     }
 

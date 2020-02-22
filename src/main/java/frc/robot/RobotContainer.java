@@ -181,9 +181,11 @@ public class RobotContainer {
     // buttonB.whenPressed(new ShooterSwitchArmMode());
 
     buttonB.whenPressed(new SpinToPosition());
-    buttonX.whenPressed(new SpinToColor(DriverStation.getInstance().getGameSpecificMessage()));
-    buttonY.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
-    buttonA.whenPressed(new SpinUnoRotation());
+    // buttonB.whenPressed(new GameData(DriverStation.getInstance().getGameSpecificMessage()));
+    buttonX.whenPressed(new SpinToColor());
+    buttonY.whenPressed(new SpinToMidColor());
+    buttonA.whenPressed(new SpinToPosition());
+
     //buttonA.whenPressed(new ToggleSpinner(colorPanelSpinner));
 
     // buttonX.whenPressed(new SwitchLimelightMode(limelight));

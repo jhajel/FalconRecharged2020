@@ -28,9 +28,16 @@ public class SpinToPosition extends CommandBase {
     private Map<String,Integer> colorDictionary;
     private String color;
     private ArrayList<String> colorList = new ArrayList<String>();
+    
+    private Map<String, String> impossible;
 
     public SpinToPosition() {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
+        impossible = new HashMap<String, String>();
+        impossible.put("Yellow", "Green");
+        impossible.put("Green", "Yellow");
+        impossible.put("Blue", "Red");
+        impossible.put("Red", "Blue");
     }
 
     // Called just before this Command runs the first time
@@ -51,10 +58,6 @@ public class SpinToPosition extends CommandBase {
         startColor = "Blue";
         currentColor = color;
         colorCount = -1;
-        // if(color == "Unknown") {
-        //     SmartDashboard.putString("Unknown state", "true");
-        //     end(true);
-        // }
         
         // int prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
         // previousColor = expectedColorArray[prevIndex]; 
@@ -75,6 +78,17 @@ public class SpinToPosition extends CommandBase {
         }
     }
 
+    //If we see an impossible color, we don't change currentColor
+    public void updateColor() {  
+    
+        String wrongColor = impossible.get(currentColor);
+
+        String detected = RobotContainer.getContainer().getColorSensor().getColor();
+        if (!detected.equals(wrongColor)) {
+        currentColor = detected;
+        }
+    }
+
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
@@ -84,7 +98,8 @@ public class SpinToPosition extends CommandBase {
         RobotContainer.getContainer().getColorPanelSpinner().spin(.5); //change the speed
 
         //handling switch between yellow and blue
-        currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
+        //currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
+        updateColor();
 
         SmartDashboard.putString("currentColor", currentColor);
         SmartDashboard.putString("previousColor", previousColor);

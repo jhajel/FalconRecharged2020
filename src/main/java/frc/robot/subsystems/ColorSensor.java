@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -28,11 +29,13 @@ public class ColorSensor extends SubsystemBase {
   private final Color kYellowTarget = ColorMatch.makeColor(0.31, 0.57, 0.12);
   private ColorMatchResult match;
 
+
   public ColorSensor() {
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
     m_colorMatcher.addColorMatch(kYellowTarget);
+
   }
 
   
@@ -68,6 +71,7 @@ public class ColorSensor extends SubsystemBase {
   {
       return match.confidence;
   }
+
 
   @Override
   public void periodic() {
