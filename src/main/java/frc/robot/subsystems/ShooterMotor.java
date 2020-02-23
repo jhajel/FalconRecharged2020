@@ -31,12 +31,11 @@ public class ShooterMotor extends SubsystemBase {
   private double pidD = 2.5;
   private double pidF = 0.04928;
 
+  
 
-  // The PID values below work for inner port at 3750 RPM
-  // private double pidP = 0.1;//0.1 works 
-  // private double pidI = 0.001;//0.001 works
-  // private double pidD = 0.0005;//0.0005 works
-  // private double pidF = 0;
+
+  // The PID values below work for inner port at 3750 RPM <- Input Num
+  // 3325 Works 1 Robot Back <- Input Actual RPM (3300)
 
 
 

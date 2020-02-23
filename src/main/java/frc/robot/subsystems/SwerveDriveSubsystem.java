@@ -51,7 +51,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwis
 			mSwerveModules[i].getDriveMotor().setNeutralMode(NeutralMode.Brake);
 		}
 
-		setDefaultCommand(new HolonomicDriveCommand(this));
+		//setDefaultCommand(new HolonomicDriveCommand(this));
 	}
 
 	public AHRS getNavX() {

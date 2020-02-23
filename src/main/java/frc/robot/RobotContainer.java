@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -137,7 +138,8 @@ public class RobotContainer {
     JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
     JoystickButton buttonB = new JoystickButton(mXboxController, XboxController.Button.kB.value);
     JoystickButton buttonY = new JoystickButton(mXboxController, XboxController.Button.kY.value);
-    
+    JoystickButton leftBumper = new JoystickButton(mXboxController, XboxController.Button.kBumperLeft.value);
+    JoystickButton rightBumper = new JoystickButton(mXboxController, XboxController.Button.kBumperRight.value);
 
 
     //buttonX.whenHeld(new SetShooterSpeed(60*3.4133,mXboxController));
@@ -146,8 +148,11 @@ public class RobotContainer {
     //buttonA.whenHeld(new SpinShooterMotor(mXboxController, -1));
     //buttonB.whenHeld(new SpinShooterMotor(mXboxController, -.5));
     buttonX.whenHeld(new SetShooterSpeed(mXboxController));//3750 works for 3 pts
-    buttonY.whileHeld(new ConveyorSpeed(-0.5));
+    buttonY.whileHeld(new ConveyorSpeed(-0.75));
     buttonB.whileHeld(new ConveyorSpeed(0.5));
+    leftBumper.whileHeld(new ConveyorSpeed(-1));
+    rightBumper.whileHeld(new ConveyorSpeed(-0.25));
+
 
     //buttonA.whenPressed(new DriveForward(.2));
      
