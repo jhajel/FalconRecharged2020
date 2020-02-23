@@ -37,4 +37,5 @@ public final class Constants {
     public static final int COLORPANELREVERSE_SOLENOID = 5;
     public static final int SHOOTER1_TALON = 35;
     public static final int SHOOTER2_TALON = 36;
+    public static boolean forward = true;
 }
