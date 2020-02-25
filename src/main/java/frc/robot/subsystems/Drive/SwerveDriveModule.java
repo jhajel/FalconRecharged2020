@@ -52,10 +52,10 @@ public class SwerveDriveModule extends SubsystemBase {
         angleMotor.config_kI(0, 0.001, 0);
         angleMotor.config_kD(0, 60, 0);
 
-        angleMotor.config_kF(1, 0.1, 0); // .012
-        angleMotor.config_kP(1, 0.0, 0);
-        angleMotor.config_kI(1, 0.0, 0);
-        angleMotor.config_kD(1, 0.0, 0);
+        angleMotor.config_kF(1, 0, 0); // .012
+        angleMotor.config_kP(1, 30.0, 0);
+        angleMotor.config_kI(1, 0.01, 0);
+        angleMotor.config_kD(1, 60, 0);
 
         angleMotor.setNeutralMode(NeutralMode.Brake);
         angleMotor.set(ControlMode.Position, 0);
@@ -63,7 +63,7 @@ public class SwerveDriveModule extends SubsystemBase {
         driveMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0); // ADD TO CANSPARKMAX LATER***
 
         driveMotor.setNeutralMode(NeutralMode.Brake);
-        driveMotor.config_kF(0, 0.0018, 0);
+        driveMotor.config_kF(0, 0.0016, 0); //0.0018
         driveMotor.config_kP(0, 0.001, 0); // 0.02
         driveMotor.config_kI(0, 0, 0); // 0.000001
         driveMotor.config_kD(0, 0, 0); // 0.0065
@@ -150,17 +150,17 @@ public class SwerveDriveModule extends SubsystemBase {
             } else {
                 mDriveMotor.setInverted(true);
             }
-        } else {
-            delta = currentAngleMod - targetAngle;
-            if (delta > 90 || delta < -90) {
-                if (delta > 90)
-                    targetAngle += 180;
-                else if (delta < -90)
-                    targetAngle -= 180;
-                // mDriveMotor.setInverted(false);
-            } else {
-                // mDriveMotor.setInverted(true);
-            }
+        // } else {
+        //     delta = currentAngleMod - targetAngle;
+        //     if (delta > 90 || delta < -90) {
+        //         if (delta > 90)
+        //             targetAngle += 180;
+        //         else if (delta < -90)
+        //             targetAngle -= 180;
+        //         // mDriveMotor.setInverted(false);
+        //     } else {
+        //         // mDriveMotor.setInverted(true);
+        //     }
 
         }
 

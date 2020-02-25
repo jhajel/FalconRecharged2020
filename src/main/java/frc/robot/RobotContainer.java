@@ -8,6 +8,7 @@
 package frc.robot;
 
 import java.sql.Driver;
+import java.util.ArrayList;
 
 import com.playingwithfusion.TimeOfFlight;
 
@@ -16,9 +17,18 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoPath1;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
 import frc.robot.commands.conveyor.*;
@@ -153,7 +163,7 @@ public class RobotContainer {
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2,XboxController.Button.kA.value);
     // buttonX.whenHeld(new IntakeSpeed(.5));
     buttonA.whenHeld(new IntakeSpeed(-1));
-    buttonB.whenPressed(new ToggleIntake());
+    //buttonB.whenPressed(new ToggleIntake());
     buttonY.whenPressed(new ZeroNavX());
     // buttonY.whileHeld(new IntakeSpeed(.5));
     //buttonY.whenPressed(new SwitchPipeline());
@@ -161,7 +171,8 @@ public class RobotContainer {
     // buttonA.whenPressed(new DriveForward(.2));
     //buttonY.whenPressed(new SwitchPipeline());
     //buttonX.whenPressed(new SwitchLimelightMode());
-    buttonX.whenPressed(new Autonomous());
+    buttonX.whenPressed(new Autonomous(createAutonomousPath2()));
+    buttonB.whenPressed(new AutoPath1());
 
     // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
      buttonB_2.whenPressed(new SemiAutoClimb());
@@ -196,4 +207,52 @@ public class RobotContainer {
     return m_autoCommand;
 
   }
+
+  public Trajectory createAutonomousPath() //Test Path
+  {
+    Trajectory trajectory;
+    TrajectoryConfig config = new TrajectoryConfig(2, 1);
+    config.setStartVelocity(0);
+    config.setEndVelocity(0);
+    config.setReversed(false);
+    config.addConstraint(new CentripetalAccelerationConstraint(0.5));
+    ArrayList<Translation2d> listOfPoints = new ArrayList<Translation2d>();
+    //listOfPoints.add(new Translation2d(1, 1));
+    trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(Math.toRadians(0))),
+      listOfPoints, 
+      new Pose2d(-1, -1, new Rotation2d(Math.toRadians(180))), config);
+    return trajectory;
+  }
+
+  public Trajectory createAutonomousPath1() // Init Line (Start on Left) to Port Test
+  {
+    Trajectory trajectory;
+    TrajectoryConfig config = new TrajectoryConfig(2, 1.0);
+    config.setStartVelocity(0);
+    config.setEndVelocity(0);
+    config.setReversed(false);
+    config.addConstraint(new CentripetalAccelerationConstraint(0.5));
+    ArrayList<Translation2d> listOfPoints = new ArrayList<Translation2d>();
+    listOfPoints.add(new Translation2d(1.0, 2.4384));
+    trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
+      listOfPoints, 
+      new Pose2d(3.048, 2.4384, new Rotation2d(Math.toRadians(0))), config);
+    return trajectory;
+  }
+
+  public Trajectory createAutonomousPath2() //Test 2 Electric Bugaloo
+  {
+    Trajectory trajectory;
+    TrajectoryConfig config = new TrajectoryConfig(2, 1.0);
+    config.setStartVelocity(0);
+    config.setEndVelocity(0);
+    config.setReversed(false);
+    ArrayList<Translation2d> listOfPoints = new ArrayList<Translation2d>();
+
+    trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
+      listOfPoints, 
+      new Pose2d(1, 0, new Rotation2d(Math.toRadians(0))), config);
+    return trajectory;
+  }
+  
 }
