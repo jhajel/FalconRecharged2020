@@ -5,29 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.AutoPaths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
-import frc.robot.commands.swervedrive.AutoRotate;
 import frc.robot.commands.swervedrive.Autonomous;
-import frc.robot.commands.swervedrive.SetWheelAngle;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class AutoPath1 extends SequentialCommandGroup {
+public class AutoDelayToScore extends SequentialCommandGroup {
   /**
-   * Creates a new AutoPath1.
+   * Creates a new AutoDelayToScore.
    */
-  public AutoPath1() {
+  public AutoDelayToScore() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-      
-    super( new Autonomous(RobotContainer.getContainer().createAutonomousPath()));
-    //  new SetWheelAngle(0), 
-    //  new AutoRotate(-90),
-      // new SetWheelAngle(0));
-     //new Autonomous(RobotContainer.getContainer().createAutonomousPath()));
+    super(new WaitCommand(10),
+          new Autonomous(RobotContainer.getContainer().createMoveToPort().getTrajectory(), 0));
   }
 }

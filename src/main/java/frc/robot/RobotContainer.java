@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AutoPath1;
+import frc.robot.commands.AutoPaths.AutoPath1;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
 import frc.robot.commands.conveyor.*;
@@ -46,6 +46,7 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterMotor;
 import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 //import sun.java2d.cmm.ColorTransform;
+import frc.robot.utility.TrajectoryMaker;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -162,7 +163,8 @@ public class RobotContainer {
     JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2,XboxController.Button.kA.value);
     // buttonX.whenHeld(new IntakeSpeed(.5));
-    buttonA.whenHeld(new IntakeSpeed(-1));
+    //buttonA.whenHeld(new IntakeSpeed(-1));
+    buttonA.whenHeld(new ConveyorSpeed(-1));
     //buttonB.whenPressed(new ToggleIntake());
     buttonY.whenPressed(new ZeroNavX());
     // buttonY.whileHeld(new IntakeSpeed(.5));
@@ -171,8 +173,8 @@ public class RobotContainer {
     // buttonA.whenPressed(new DriveForward(.2));
     //buttonY.whenPressed(new SwitchPipeline());
     //buttonX.whenPressed(new SwitchLimelightMode());
-    buttonX.whenPressed(new Autonomous(createAutonomousPath2()));
-    buttonB.whenPressed(new AutoPath1());
+    //buttonB.whenPressed(new ToggleIntake());
+    buttonX.whenPressed(new AutoPath1());
 
     // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
      buttonB_2.whenPressed(new SemiAutoClimb());
@@ -204,55 +206,43 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return new AutoPath1();
 
   }
 
-  public Trajectory createAutonomousPath() //Test Path
+  public TrajectoryMaker createfrontScorePath() //Test Path
   {
-    Trajectory trajectory;
-    TrajectoryConfig config = new TrajectoryConfig(2, 1);
-    config.setStartVelocity(0);
-    config.setEndVelocity(0);
-    config.setReversed(false);
-    config.addConstraint(new CentripetalAccelerationConstraint(0.5));
-    ArrayList<Translation2d> listOfPoints = new ArrayList<Translation2d>();
-    //listOfPoints.add(new Translation2d(1, 1));
-    trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(Math.toRadians(0))),
-      listOfPoints, 
-      new Pose2d(-1, -1, new Rotation2d(Math.toRadians(180))), config);
-    return trajectory;
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
   }
 
-  public Trajectory createAutonomousPath1() // Init Line (Start on Left) to Port Test
+  public TrajectoryMaker createPortToFrontofTrench()
+    {
+      ArrayList<Translation2d> points = new ArrayList<Translation2d>();
+      points.add(new Translation2d(-1.5, 2.3));
+      points.add(new Translation2d(-3, 2.3));
+      return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-5.3, 2.3, new Rotation2d(180)), points );
+    }
+  public TrajectoryMaker createMoveDownTrench()
   {
-    Trajectory trajectory;
-    TrajectoryConfig config = new TrajectoryConfig(2, 1.0);
-    config.setStartVelocity(0);
-    config.setEndVelocity(0);
-    config.setReversed(false);
-    config.addConstraint(new CentripetalAccelerationConstraint(0.5));
-    ArrayList<Translation2d> listOfPoints = new ArrayList<Translation2d>();
-    listOfPoints.add(new Translation2d(1.0, 2.4384));
-    trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-      listOfPoints, 
-      new Pose2d(3.048, 2.4384, new Rotation2d(Math.toRadians(0))), config);
-    return trajectory;
+    return new TrajectoryMaker(new Pose2d(0,0,new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
   }
 
-  public Trajectory createAutonomousPath2() //Test 2 Electric Bugaloo
+  public TrajectoryMaker createMoveToPort()
   {
-    Trajectory trajectory;
-    TrajectoryConfig config = new TrajectoryConfig(2, 1.0);
-    config.setStartVelocity(0);
-    config.setEndVelocity(0);
-    config.setReversed(false);
-    ArrayList<Translation2d> listOfPoints = new ArrayList<Translation2d>();
+    ArrayList<Translation2d> points = new ArrayList<Translation2d>();
+      points.add(new Translation2d(1.524, 2.286));
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3.048, 4.572, new Rotation2d(0)), points );
+  }
+  
 
-    trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-      listOfPoints, 
-      new Pose2d(1, 0, new Rotation2d(Math.toRadians(0))), config);
-    return trajectory;
+  public TrajectoryMaker createAutonomousPath1() // Init Line (Start on Left) to Port Test
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), true);
+  }
+
+  public TrajectoryMaker createAutonomousPath2() //Test 2 Electric Bugaloo
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, -1, new Rotation2d(0)), true);
   }
   
 }

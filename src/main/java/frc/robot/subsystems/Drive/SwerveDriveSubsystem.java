@@ -45,7 +45,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		// mSwerveModules[1].getDriveMotor().setInverted(false); //real: true
 		// mSwerveModules[2].getDriveMotor().setInverted(false); //real: false
 		//mSwerveModules[3].getDriveMotor().setInverted(TalonFXInvertType.CounterClockwise); //real: false
-
+		
 		 mSwerveModules[0].getAngleMotor().setInverted(true); //real: true
 		 mSwerveModules[2].getAngleMotor().setInverted(true); //real: true
 		 mSwerveModules[1].getAngleMotor().setInverted(true); //real: true
@@ -202,6 +202,14 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 	public void setIsAuto(boolean is)
 	{
 		isAuto = is;
+	}
+
+	@Override 
+	public void periodic() {
+		SmartDashboard.putBoolean("Mod 0 Motor Inversion", mSwerveModules[0].getDriveMotor().getInverted());
+		SmartDashboard.putBoolean("Mod 1 Motor Inversion", mSwerveModules[1].getDriveMotor().getInverted());
+		SmartDashboard.putBoolean("Mod 2 Motor Inversion", mSwerveModules[2].getDriveMotor().getInverted());
+		SmartDashboard.putBoolean("Mod 3 Motor Inversion", mSwerveModules[3].getDriveMotor().getInverted());
 	}
 }
 
