@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.Drive;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -45,7 +45,6 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		//mSwerveModules[3].getDriveMotor().setInverted(TalonFXInvertType.CounterClockwise); //real: false
 
 		 mSwerveModules[0].getAngleMotor().setInverted(true); //real: true
-		System.out.println("we Inverted Stuff!");
 		 mSwerveModules[2].getAngleMotor().setInverted(true); //real: true
 		 mSwerveModules[1].getAngleMotor().setInverted(true); //real: true
 		 mSwerveModules[3].getAngleMotor().setInverted(true); //real: true
@@ -88,17 +87,6 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 
 	public SwerveDriveModule getSwerveModule(int i) {
 		return mSwerveModules[i];
-	}
-
-	
-	@Override
-	public void periodic() {
-		SmartDashboard.putBoolean("left Encoder Inversion 0", mSwerveModules[0].getDriveMotor().getInverted());
-		SmartDashboard.putBoolean("left Encoder Inversion 1", mSwerveModules[1].getDriveMotor().getInverted());
-		SmartDashboard.putBoolean("left Encoder Inversion 2", mSwerveModules[2].getDriveMotor().getInverted());
-		SmartDashboard.putBoolean("left Encoder Inversion 3", mSwerveModules[3].getDriveMotor().getInverted());
-
-
 	}
 
 	@Override

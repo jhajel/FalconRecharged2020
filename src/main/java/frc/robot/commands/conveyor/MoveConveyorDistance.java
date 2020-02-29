@@ -7,7 +7,6 @@
 
 package frc.robot.commands.conveyor;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
@@ -30,7 +29,6 @@ public class MoveConveyorDistance extends CommandBase {
   @Override
   public void initialize() {
     initPos = RobotContainer.getContainer().getConveyor().getPositon();
-    //System.out.println(initPos);
     RobotContainer.getContainer().getConveyor().setConveyerPosition(targetPos+initPos);
   }
 
@@ -38,9 +36,6 @@ public class MoveConveyorDistance extends CommandBase {
   @Override
   public void execute() {
     currPos = RobotContainer.getContainer().getConveyor().getPositon();
-    SmartDashboard.putNumber("target", targetPos+initPos);
-    SmartDashboard.putNumber("initPos", initPos);
-    
   }
 
   // Called once the command ends or is interrupted.

@@ -24,15 +24,14 @@ import frc.robot.commands.limelight.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.swervedrive.*;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.ColorPanelSpinner;
-import frc.robot.subsystems.ColorSensor;
+import frc.robot.subsystems.Color.ColorPanelSpinner;
+import frc.robot.subsystems.Color.ColorSensor;
 import frc.robot.subsystems.Conveyor;
-import frc.robot.subsystems.HolonomicDrivetrain;
+import frc.robot.subsystems.Drive.HolonomicDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterMotor;
-import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 //import sun.java2d.cmm.ColorTransform;
 
 /**
@@ -56,7 +55,6 @@ public class RobotContainer {
   private Limelight limelight;
   private Conveyor conveyor;
   private Intake intake;
-  private Shooter shooter;
   private ShooterMotor shooterMotor;
   private Compressor compressor;
   private Climber climber;
@@ -77,7 +75,6 @@ public class RobotContainer {
     limelight = new Limelight();
     conveyor = new Conveyor();
     intake = new Intake();
-    shooter = new Shooter();
     shooterMotor = new ShooterMotor();
     compressor = new Compressor();
     climber = new Climber();
@@ -128,10 +125,6 @@ public class RobotContainer {
     return intake;
   }
 
-  public Shooter getShooter() {
-    return shooter;
-  }
-
   public Compressor getCompressor() {
     return compressor;
   }
@@ -156,12 +149,12 @@ public class RobotContainer {
     JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2,XboxController.Button.kA.value);
     // buttonX.whenHeld(new IntakeSpeed(.5));
-    // buttonA.whenHeld(new IntakeSpeed(-1));
-    // buttonB.whenPressed(new ToggleIntakeArmMode(intake));
-    // buttonY.whenPressed(new ZeroNavX());
+    buttonA.whenHeld(new IntakeSpeed(-1));
+    buttonB.whenPressed(new ToggleIntake());
+    buttonY.whenPressed(new ZeroNavX());
     // buttonY.whileHeld(new IntakeSpeed(.5));
     //buttonY.whenPressed(new SwitchPipeline());
-    //buttonX.whenPressed(new SwitchLimelightMode(limelight));
+    buttonX.whileHeld(new ConveyorSpeed(-1));
     // buttonA.whenPressed(new DriveForward(.2));
 
     // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
@@ -180,11 +173,11 @@ public class RobotContainer {
     // buttonA.whenPressed(new MoveConveyorDistance(-5));
     // buttonB.whenPressed(new ShooterSwitchArmMode());
 
-    buttonB.whileHeld(new SpinUnoWheel());
+    buttonB_2.whileHeld(new SpinUnoWheel());
     // buttonB.whenPressed(new GameData(DriverStation.getInstance().getGameSpecificMessage()));
-    buttonX.whenPressed(new SpinToColor());
-    buttonY.whenPressed(new SpinToMidColor().withTimeout(7));
-    buttonA.whenPressed(new SpinToPosition());
+    buttonX_2.whenPressed(new SpinToColor());
+    buttonY_2.whenPressed(new SpinToMidColor().withTimeout(7));
+    buttonA_2.whenPressed(new SpinToPosition());
 
     //buttonA.whenPressed(new ToggleSpinner(colorPanelSpinner));
 
