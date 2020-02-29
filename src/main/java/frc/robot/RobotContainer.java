@@ -9,6 +9,7 @@ package frc.robot;
 
 import java.util.ArrayList;
 
+import java.sql.Driver;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoPaths.AutoPath1;
+import frc.robot.commands.SpinUnoWheel;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
 import frc.robot.commands.conveyor.*;
@@ -179,9 +181,13 @@ public class RobotContainer {
     // buttonA.whenPressed(new MoveConveyorDistance(-5));
     // buttonB.whenPressed(new ShooterSwitchArmMode());
 
-    buttonX_2.whenPressed(new SpinToPosition());
-    buttonY_2.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
-    buttonA_2.whenPressed(new ToggleSpinner(colorPanelSpinner));
+    buttonB_2.whileHeld(new SpinUnoWheel());
+    // buttonB.whenPressed(new GameData(DriverStation.getInstance().getGameSpecificMessage()));
+    buttonX_2.whenPressed(new SpinToColor());
+    buttonY_2.whenPressed(new SpinToMidColor().withTimeout(7));
+    buttonA_2.whenPressed(new SpinToPosition());
+
+    //buttonA.whenPressed(new ToggleSpinner(colorPanelSpinner));
 
     // buttonX.whenPressed(new SwitchLimelightMode(limelight));
   }
