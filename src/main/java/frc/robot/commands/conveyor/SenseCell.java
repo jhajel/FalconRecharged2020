@@ -33,8 +33,6 @@ public class SenseCell extends CommandBase {
   public void execute() {
     if(RobotContainer.getContainer().getConveyor().getStatus())
     {
-      Command a = new MoveConveyorDistance(-.15);
-      a.schedule();
       seen = true;
     }
   }

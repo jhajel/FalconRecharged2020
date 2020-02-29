@@ -14,7 +14,6 @@ import frc.robot.commands.intake.IntakeSpeed;
 import frc.robot.commands.intake.ToggleIntake;
 import frc.robot.commands.swervedrive.AutoRotate;
 import frc.robot.commands.swervedrive.Autonomous;
-import frc.robot.commands.swervedrive.SetWheelAngle;
 import frc.robot.utility.TrajectoryMaker;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -31,13 +30,6 @@ public class AutoPath1 extends SequentialCommandGroup {
     //        new Autonomous(RobotContainer.getContainer().createAutonomousPath1().getTrajectory(), RobotContainer.getContainer().createAutonomousPath1().getAngle()),
     //        new Autonomous(RobotContainer.getContainer().createAutonomousPath2().getTrajectory(), RobotContainer.getContainer().createAutonomousPath2().getAngle())); 
     super();
-      //new ConveyorSpeed(-1).withTimeout(2));
-
-            //new Autonomous(RobotContainer.getContainer().createAutonomousPath2()).raceWith(new IntakeSpeed(-1))); // Race With Method for Paralell
-    //  new SetWheelAngle(0), 
-    //  new AutoRotate(-90),
-      // new SetWheelAngle(0));
-     //new Autonomous(RobotContainer.getContainer().createAutonomousPath()));
   }
   
 }
