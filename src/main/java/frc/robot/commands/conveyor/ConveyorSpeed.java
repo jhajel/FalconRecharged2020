@@ -5,19 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.conveyor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.RobotContainer;
 
-public class ToggleClimberGearLock extends CommandBase {
+public class ConveyorSpeed extends CommandBase {
   /**
-   * Creates a new ToggleClimberGearLock.
+   * Creates a new Neo550TicksTest.
    */
-  private Climber climber;
-  public ToggleClimberGearLock(Climber climber) {
-    addRequirements(climber);
-    this.climber = climber;
+  private double speed;
+  public ConveyorSpeed(double speed) {
+    this.speed = speed;
+    addRequirements(RobotContainer.getContainer().getConveyor());
   }
 
   // Called when the command is initially scheduled.
@@ -28,17 +28,18 @@ public class ToggleClimberGearLock extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.toggleClimberGearLock();
+    RobotContainer.getContainer().getConveyor().setConveyerSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.getContainer().getConveyor().setConveyerSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

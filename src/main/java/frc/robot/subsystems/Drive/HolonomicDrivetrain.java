@@ -1,6 +1,6 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.Drive;
 
-import frc.robot.commands.HolonomicDriveCommand;
+import frc.robot.commands.swervedrive.HolonomicDriveCommand;
 
 public abstract class HolonomicDrivetrain extends Drivetrain {
 
@@ -24,6 +24,8 @@ public abstract class HolonomicDrivetrain extends Drivetrain {
 	public abstract double getGyroAngle();
 
 	public abstract void holonomicDrive(double forward, double strafe, double rotation);
+
+	public abstract void swapPIDSlot(int slot);
 
 	@Override
 	protected void initDefaultCommand() {

@@ -7,11 +7,10 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.SenseCell;
+import frc.robot.commands.conveyor.SenseCell;
 
 import com.playingwithfusion.TimeOfFlight;
 import com.revrobotics.CANEncoder;
@@ -29,13 +28,12 @@ public class Conveyor extends SubsystemBase {
   private boolean ignore;
   
   public Conveyor() {
-    sensor = new TimeOfFlight(2);
+    sensor = new TimeOfFlight(2);// to change ID for TOF sensor go to...      ipOfRoboRio:5812
     sensor.setRangingMode(TimeOfFlight.RangingMode.Short, 0.24);
-    indexer = new CANSparkMax(Constants.CONVEYOR_SPARK, MotorType.kBrushless);// not correct
+    indexer = new CANSparkMax(Constants.CONVEYOR_SPARK, MotorType.kBrushless);
     encoder = indexer.getEncoder();
     pidController = indexer.getPIDController();
     pidController.setP(.2);
-    pidController.setD(0);
     pidController.setI(.0001);
     ignore = false;
   }
@@ -79,10 +77,6 @@ public class Conveyor extends SubsystemBase {
   public void setConveyerSpeed(double speed)
   {
     indexer.set(speed);
-  }
-
-  public void printTicks()
-  {
   }
 
   public double getPositon()

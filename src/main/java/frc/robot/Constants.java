@@ -28,7 +28,6 @@ public final class Constants {
     public static final int DRIVE2_TALON = 2;
     public static final int DRIVE3_TALON = 6;
     public static final int DRIVE4_TALON = 4;
-    public static final int SPINNER_SPARK = 12;
     public static final int INTAKEFORWARD_SOLENOID = 4;
     public static final int INTAKEREVERSE_SOLENOID = 5;
     public static final int INTAKEFORWARD_SOLENOID2 = 6;
@@ -39,5 +38,6 @@ public final class Constants {
     public static final int COLORPANELREVERSE_SOLENOID = 1;
     public static final int SHOOTER1_TALON = 35;
     public static final int SHOOTER2_TALON = 36;
+    public static final int SPINNER_SPARK = 51;
     public static boolean forward = true;  
 }

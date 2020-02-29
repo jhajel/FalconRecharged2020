@@ -5,19 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ColorPanelSpinner;
+import frc.robot.RobotContainer;
+import frc.robot.utility.MathUtils;
 
-public class ToggleSpinner extends CommandBase {
+public class ClimberArmSpeed extends CommandBase {
   /**
-   * Creates a new ToggleSpinner.
+   * Creates a new ClimberArmSpeed.
    */
-  private ColorPanelSpinner colorPanelSpinner;
-  public ToggleSpinner(ColorPanelSpinner colorPanelSpinner) {
-    addRequirements(colorPanelSpinner);
-    this.colorPanelSpinner = colorPanelSpinner;
+  public ClimberArmSpeed() {
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.getContainer().getClimber());
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +28,11 @@ public class ToggleSpinner extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      colorPanelSpinner.toggleSpinner();
+    double speed1 = MathUtils.deadband(RobotContainer.getContainer().getOperatorController().getRawAxis(1));
+    double speed2 = MathUtils.deadband(RobotContainer.getContainer().getOperatorController().getRawAxis(5));
+    // if(RobotContainer.getContainer().getClimbController().get)
+    RobotContainer.getContainer().getClimber().moveArm1(speed1);
+    RobotContainer.getContainer().getClimber().moveArm2(-speed2);
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +43,6 @@ public class ToggleSpinner extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

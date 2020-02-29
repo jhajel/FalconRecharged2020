@@ -5,41 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.controlpanel;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.Color.ColorPanelSpinner;
 
-public class SenseCell extends CommandBase {
+public class ToggleSpinner extends CommandBase {
   /**
-   * Creates a new SenseCell.
+   * Creates a new ToggleSpinner.
    */
-  private boolean seen;
-  public SenseCell() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getConveyor());
-    seen = false;
+  private ColorPanelSpinner colorPanelSpinner;
+  public ToggleSpinner(ColorPanelSpinner colorPanelSpinner) {
+    addRequirements(colorPanelSpinner);
+    this.colorPanelSpinner = colorPanelSpinner;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    seen = RobotContainer.getContainer().getConveyor().getStatus() && !RobotContainer.getContainer().getConveyor().isIgnored();
-    if(seen)
-    {
-      RobotContainer.getContainer().getConveyor().setConveyerSpeed(-.5);
-    }
-    else
-    {
-      RobotContainer.getContainer().getConveyor().setConveyerSpeed(0);
-    }
+      colorPanelSpinner.toggleSpinner();
   }
 
   // Called once the command ends or is interrupted.
@@ -50,6 +39,6 @@ public class SenseCell extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

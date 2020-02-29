@@ -5,60 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.intake;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class SpinShooterMotor extends CommandBase {
-  private XboxController mXboxController;
-  private double speed;
-  private boolean speedControl;
+public class IntakeSpeed extends CommandBase {
   /**
-   * Creates a new SpinShooterMotor.
+   * Creates a new IntakeSpeed.
    */
-
-  public SpinShooterMotor(XboxController xboxController) {
+  private double speed;
+  public IntakeSpeed(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    mXboxController = xboxController;
-    addRequirements(RobotContainer.getContainer().getShooterMotor()); 
-    speedControl = false;
-  }
-
-  public SpinShooterMotor(XboxController xboxController, double speed) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    mXboxController = xboxController;
-    addRequirements(RobotContainer.getContainer().getShooterMotor()); 
+    addRequirements(RobotContainer.getContainer().getIntake());
     this.speed = speed;
-    speedControl = true;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(speedControl)
-    {
-      RobotContainer.getContainer().getShooterMotor().spin(speed);
-    }
-    else
-    {
-      //double forward = mXboxController.getY(Hand.kRight); //real: positive
-      //RobotContainer.getContainer().getShooterMotor().spin(forward);
-    }
-    
+    RobotContainer.getContainer().getIntake().setSpeed(speed);
+
+   // intake.setSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.getContainer().getShooterMotor().spin(0);
+    //intake.setSpeed(0);
+    RobotContainer.getContainer().getIntake().setSpeed(0);
   }
 
   // Returns true when the command should end.

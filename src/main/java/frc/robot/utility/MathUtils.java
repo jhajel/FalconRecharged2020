@@ -15,4 +15,10 @@ public class MathUtils
             return 0;
         return input;
     }
+    public static double deadband(double input) {
+        
+        if (Math.abs(input) < 0.20) 
+            return 0;
+        return input;
+    }
 }

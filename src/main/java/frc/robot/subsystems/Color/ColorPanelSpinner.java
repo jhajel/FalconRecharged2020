@@ -1,11 +1,15 @@
 
-package frc.robot.subsystems;
+package frc.robot.subsystems.Color;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.ControlType;
+import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -17,32 +21,44 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class ColorPanelSpinner extends SubsystemBase {
     private CANEncoder encoder;
+    //private TalonSRX moto1;
     private CANSparkMax moto1;
     public static CANPIDController mPIDController;
-    public static double mPIDControllerP = 0.15;
-    public static double mPIDControllerI = 0.0000001;
-    public static double mPIDControllerD = 0.01;
-    public static DoubleSolenoid colorPanelSolenoid;
+    public static double mPIDControllerP = 0.17; //0.15
+    public static double mPIDControllerI = 0.0002; //0.0000001
+    public static double mPIDControllerD = 0.1; //0.01
+    public DoubleSolenoid colorPanelSolenoid;
 
     public ColorPanelSpinner() {
-        moto1 = new CANSparkMax(Constants.SPINNER_SPARK, MotorType.kBrushless);
+        //moto1 = new TalonSRX(Constants.SPINNER_TALON);
+        moto1 = new CANSparkMax(Constants.SPINNER_SPARK, MotorType.kBrushed);
+        encoder = new CANEncoder(moto1, EncoderType.kQuadrature,8192);
         colorPanelSolenoid = new DoubleSolenoid(Constants.COLORPANELFORWARD_SOLENOID, Constants.COLORPANELREVERSE_SOLENOID);
-        moto1.setIdleMode(IdleMode.kBrake);
-        encoder = moto1.getEncoder();
+        colorPanelSolenoid.set(Value.kReverse);
+        //moto1.setNeutralMode(IdleMode.kBrake);
+       // encoder = moto1.getEncoder();
+
         mPIDController = moto1.getPIDController();
-        // mPIDControllerP = 0.0;
+        // // mPIDControllerP = 0.0;
         mPIDController.setP(mPIDControllerP); // 0.00001 working value. we keep it.
         mPIDController.setI(mPIDControllerI); // .0000001
         mPIDController.setD(mPIDControllerD); // 0.0065
 
+        moto1.setInverted(true);
+        // encoder.setInverted(true);
+
     }
 
     public void setMotorSpeed (double speed){
+        //moto1.set(ControlMode.PercentOutput, speed);
         moto1.set(speed);
+    
     }
 
     public void spin(double speed) {
-        moto1.set(speed);
+       // moto1.set(ControlMode.PercentOutput, speed);
+       moto1.set(speed);
+       //position_encoder.setPosition(position_encoder.getPosition() + 5);
     }
 
     public int inchesToEncoderTicks(double inches) {
@@ -65,6 +81,7 @@ public class ColorPanelSpinner extends SubsystemBase {
          */
         double ticks = degrees / 360.0;
         SmartDashboard.putNumber("Module Ticks ", ticks);
+        
     }
 
     public CANPIDController getPIDController() {
@@ -77,6 +94,11 @@ public class ColorPanelSpinner extends SubsystemBase {
 
     public void printPosition() {
         SmartDashboard.putNumber("Spinner Pos", getPosition());
+        System.out.println("spinner pos: " + getPosition());
+    }
+
+    public void resetEncoder() {
+        encoder.setPosition(0);
     }
 
     public void toggleSpinner() {

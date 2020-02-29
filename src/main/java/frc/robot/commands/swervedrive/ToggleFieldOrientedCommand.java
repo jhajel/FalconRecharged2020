@@ -5,38 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.swervedrive;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
 
-public class ToggleFieldOrientedCommand extends CommandBase {
+public class ToggleFieldOrientedCommand extends InstantCommand {
   /**
    * Creates a new ToggleFieldOriented.
    */
   public ToggleFieldOrientedCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.getContainer().getHolonomicDrivetrain());
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
     RobotContainer.getContainer().getHolonomicDrivetrain().setFieldOriented(!RobotContainer.getContainer().getHolonomicDrivetrain().isFieldOriented());
   }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return true;
-  }
 }

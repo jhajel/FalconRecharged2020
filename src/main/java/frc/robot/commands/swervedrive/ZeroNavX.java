@@ -5,12 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.swervedrive;
 
 import frc.robot.RobotContainer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class ZeroNavX extends CommandBase {
+public class ZeroNavX extends InstantCommand {
 
   public ZeroNavX() {
     addRequirements(RobotContainer.getContainer().getHolonomicDrivetrain());
@@ -18,19 +18,7 @@ public class ZeroNavX extends CommandBase {
 
   @Override
   public void initialize() {
-  }
-
-  @Override
-  public void execute() {
     RobotContainer.getContainer().getHolonomicDrivetrain().zeroGyro();
   }
 
-  @Override
-  public boolean isFinished() {
-    return true;
-  }
-
-  @Override
-  public void end(boolean interrupted) {
-  }
 }

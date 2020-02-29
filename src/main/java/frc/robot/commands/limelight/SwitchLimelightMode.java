@@ -5,40 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.limelight;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Limelight;
 
-public class SwitchLimelightMode extends CommandBase {
-  /**
-   * Creates a new SwitchLimelightMode.
-   */
-  private boolean finished;
-  public SwitchLimelightMode(Limelight limelight) {
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
+public class SwitchLimelightMode extends InstantCommand {
+  public SwitchLimelightMode() {
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getContainer().getLimelight());
-    finished = false;
-
   }
 
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     RobotContainer.getContainer().getLimelight().setCamMode();
-    finished = false;
-    
-  }
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
     RobotContainer.getContainer().getLimelight().switchLimeMode();
 
-    finished = true;
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return finished;
   }
 }

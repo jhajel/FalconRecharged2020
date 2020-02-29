@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.subsystems;
+package frc.robot.subsystems.Drive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -16,16 +16,15 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.SwerveModuleCommand;
+import frc.robot.RobotContainer;
+import frc.robot.commands.swervedrive.SwerveModuleCommand;
+import frc.robot.commands.swervedrive.Autonomous;
 
 public class SwerveDriveModule extends SubsystemBase {
     /**
      * Creates a new SwerveDriveModule.
      */
 
-    private static final long STALL_TIMEOUT = 2000;
-
-    private long mStallTimeBegin = Long.MAX_VALUE;
 
     private double mLastError = 0, mLastTargetAngle = 0;
 
@@ -51,13 +50,13 @@ public class SwerveDriveModule extends SubsystemBase {
         angleMotor.setNeutralMode(NeutralMode.Brake);
         angleMotor.set(ControlMode.Position, 0);
         angleMotor.configNeutralDeadband(0.07);
-        // driveMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
-        // 0, 0); ADD TO CANSPARKMAX LATER***
+        driveMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0); // ADD TO CANSPARKMAX LATER***
 
         driveMotor.setNeutralMode(NeutralMode.Brake);
-        driveMotor.config_kD(0, 0.02, 0); // 0.02
-        driveMotor.config_kD(0, 0.000001, 0); // 0.000001
-        driveMotor.config_kD(0, 0.0065, 0); //0.0065
+        driveMotor.config_kF(0, 0.0018, 0); //0.0018
+        driveMotor.config_kP(0, 0.001, 0); // 0.02 //0.001-Auto
+        driveMotor.config_kI(0, 0, 0); // 0.000001
+        driveMotor.config_kD(0, 0, 0); // 0.0065
 
         // Set amperage limits
         angleMotor.configContinuousCurrentLimit(30, 0);
@@ -65,8 +64,9 @@ public class SwerveDriveModule extends SubsystemBase {
         angleMotor.configPeakCurrentDuration(100, 0);
         angleMotor.enableCurrentLimit(true);
 
-        // driveMotor.setSmartCurrentLimit(15); No clue how to set Current Limit... 
-        // driveMotor.setSecondaryCurrentLimit(15, 0); //config`SupplyCurrentLimit (SupplyCurrentLimitConfiguration currLimitCfg, int timeoutMs)? 
+        // driveMotor.setSmartCurrentLimit(15); No clue how to set Current Limit...
+        // driveMotor.setSecondaryCurrentLimit(15, 0); //config`SupplyCurrentLimit
+        // (SupplyCurrentLimitConfiguration currLimitCfg, int timeoutMs)?
         // driveMotor.enableCurrentLimit(true); try using pheonix tuner
 
         setDefaultCommand(new SwerveModuleCommand(this));
@@ -102,10 +102,6 @@ public class SwerveDriveModule extends SubsystemBase {
         return mDriveMotor;
     }
 
-    public void robotDisabledInit() {
-        mStallTimeBegin = Long.MAX_VALUE;
-    }
-
     public void setTargetAngle(double targetAngle) {
 
         mLastTargetAngle = targetAngle;
@@ -128,16 +124,18 @@ public class SwerveDriveModule extends SubsystemBase {
         } else if (delta < -180) {
             targetAngle -= 360;
         }
-
-        delta = currentAngleMod - targetAngle;
-        if (delta > 90 || delta < -90) {
-            if (delta > 90)
-                targetAngle += 180;
-            else if (delta < -90)
-                targetAngle -= 180;
-            mDriveMotor.setInverted(false);
-        } else {
-            mDriveMotor.setInverted(true);
+        if (!RobotContainer.getContainer().getHolonomicDrivetrain().getIsAuto()) {
+            
+            delta = currentAngleMod - targetAngle;
+            if (delta > 90 || delta < -90) {
+                if (delta > 90)
+                    targetAngle += 180;
+                else if (delta < -90)
+                    targetAngle -= 180;
+                mDriveMotor.setInverted(false);
+            } else {
+                mDriveMotor.setInverted(true);
+            }
         }
 
         targetAngle += currentAngle - currentAngleMod;
@@ -146,15 +144,22 @@ public class SwerveDriveModule extends SubsystemBase {
         mLastError = currentError;
         targetAngle *= 1024.0 / 360.0;
         mAngleMotor.set(ControlMode.Position, targetAngle);
+
     }
 
     public void setTargetDistance(double distance) { // inches NEED TO TEST
-         //TalonFX’s integrated sensor has a native resolution of 2048 units per rotation regardless of which class is used.
+        // TalonFX’s integrated sensor has a native resolution of 2048 units per
+        // rotation regardless of which class is used.
         mDriveMotor.set(ControlMode.Position, distance);
     }
 
     public void setTargetSpeed(double speed) {
         mDriveMotor.set(TalonFXControlMode.PercentOutput, speed);
+    }
+
+    public void setMeterSpeed(double speed) // in meters per sec
+    {
+        mDriveMotor.set(TalonFXControlMode.Velocity, speed / Autonomous.SPEEDCONSTANT);
     }
 
     public void resetEncoder() {
@@ -169,9 +174,12 @@ public class SwerveDriveModule extends SubsystemBase {
         return ticks / 35.6;
     }
 
-    public double getPosition()
-    {
-        return (double)mDriveMotor.getSelectedSensorPosition();
+    public double getPosition() {
+        return (double) mDriveMotor.getSelectedSensorPosition();
+    }
+
+    public void setPIDSlot(int slot) {
+        mAngleMotor.selectProfileSlot(slot, 0);
     }
 
     public double getInches() {
@@ -179,7 +187,7 @@ public class SwerveDriveModule extends SubsystemBase {
     }
 
     public void printTick() {
-        SmartDashboard.putNumber("Ticks" + mModuleNumber, mDriveMotor.getSelectedSensorPosition() );
+        SmartDashboard.putNumber("Ticks" + mModuleNumber, mDriveMotor.getSelectedSensorPosition());
     }
 
 }

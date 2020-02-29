@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.commands.SpinShooterMotor;
 
 
 public class ShooterMotor extends SubsystemBase {
@@ -102,7 +101,6 @@ public class ShooterMotor extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    setDefaultCommand(new SpinShooterMotor(RobotContainer.getContainer().getDriveController()));
   }
 
 }

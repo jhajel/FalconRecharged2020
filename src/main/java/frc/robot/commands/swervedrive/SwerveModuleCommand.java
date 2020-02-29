@@ -5,10 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.swervedrive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.SwerveDriveModule;
+import frc.robot.subsystems.Drive.SwerveDriveModule;
 
 public class SwerveModuleCommand extends CommandBase {
   private SwerveDriveModule mDriveModule;

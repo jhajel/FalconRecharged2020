@@ -5,15 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.swervedrive;
 
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.HolonomicDrivetrain;
+import frc.robot.subsystems.Drive.HolonomicDrivetrain;
 import frc.robot.utility.MathUtils;
 
 public class HolonomicDriveCommand extends CommandBase {
@@ -46,11 +45,9 @@ public class HolonomicDriveCommand extends CommandBase {
 		strafe = MathUtils.deadband(strafe, mDrivetrain.isFieldOriented());
 		rotation = MathUtils.deadband(rotation, mDrivetrain.isFieldOriented());
 
-		SmartDashboard.putNumber("Forward", forward);
-		SmartDashboard.putNumber("Strafe", strafe);
-		SmartDashboard.putNumber("Rotation", rotation);
-
-		mDrivetrain.holonomicDrive(forward, -strafe, rotation);
+		
+		mDrivetrain.swapPIDSlot(0);
+		mDrivetrain.holonomicDrive(forward, strafe, rotation);
 	}
 
 	@Override

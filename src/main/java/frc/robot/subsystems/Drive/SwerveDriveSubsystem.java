@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.Drive;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -7,10 +7,11 @@ import com.kauailabs.navx.frc.AHRS;
 
 
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.commands.HolonomicDriveCommand;
+import frc.robot.commands.swervedrive.HolonomicDriveCommand;
 
-public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwise + is counter clockwise test commit 2 electric bugaloo
+public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwise - is counter clockwise test commit 2 electric bugaloo
 	private static final double WHEELBASE = 22.5; 
 	private static final double TRACKWIDTH = 22.5;
 	private static final double RATIO = Math.sqrt(Math.pow(WHEELBASE, 2) + Math.pow(TRACKWIDTH, 2));
@@ -18,7 +19,8 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwis
 	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 174); //real:293 practice: 59
 	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), 290); //real:298 practice: 56
 	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 30); //real: 355 practice: 190
-
+	private boolean isAuto;
+	
 	/*
 	 * 0 is Front Right
 	 * 1 is Front Left
@@ -34,30 +36,32 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwis
 	public SwerveDriveSubsystem() { // add PID controll stuff for Drive Motors
 		zeroGyro(); 
 
-		mSwerveModules[0].getDriveMotor().setInverted(false); //real: false
-		mSwerveModules[1].getDriveMotor().setInverted(true); //real: true
-		mSwerveModules[2].getDriveMotor().setInverted(false); //real: false
-		mSwerveModules[3].getDriveMotor().setInverted(false); //real: false
+		// mSwerveModules[0].getDriveMotor().setInverted(InvertType.InvertMotorOutput); //real: false
+		//mSwerveModules[2].getDriveMotor().setInverted(true); //
+		// mSwerveModules[1].getDriveMotor().setInverted(false); //real: true
+		// mSwerveModules[2].getDriveMotor().setInverted(false); //real: false
+		//mSwerveModules[3].getDriveMotor().setInverted(TalonFXInvertType.CounterClockwise); //real: false
+		
+		 mSwerveModules[0].getAngleMotor().setInverted(true); //real: true
+		 mSwerveModules[2].getAngleMotor().setInverted(true); //real: true
+		 mSwerveModules[1].getAngleMotor().setInverted(true); //real: true
+		 mSwerveModules[3].getAngleMotor().setInverted(true); //real: true
+		 
 
-		mSwerveModules[0].getAngleMotor().setInverted(true); //real: true
-		mSwerveModules[2].getAngleMotor().setInverted(true); //real: true
-		mSwerveModules[1].getAngleMotor().setInverted(true); //real: true
-		mSwerveModules[3].getAngleMotor().setInverted(true); //real: true
 
-		this.resetAllEncoders();
-
-		//mSwerveModules[0].resetEncoder();
+		mSwerveModules[0].resetEncoder();
 		for(int i = 0; i < 4; i++) {
 			mSwerveModules[i].getDriveMotor().setNeutralMode(NeutralMode.Brake);
 		}
 
 		setDefaultCommand(new HolonomicDriveCommand(this));
+		isAuto = false;
 	}
 
 	public AHRS getNavX() {
 		return mNavX;
 	}
-	//changeeeeeeeeeeeee for new robot 90 degrees
+
 	public double getGyroAngle() {
 		return (mNavX.getAngle() - getAdjustmentAngle());
 	}
@@ -66,13 +70,19 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwis
 		return mNavX.getRate();
 	}
 
-	public double getRawGyroAngle() {
-		return mNavX.getAngle();
-	}
-
 	public double getYaw()
 	{
 		return mNavX.getAngle();
+	}
+
+	public double getPitch()
+	{
+		return mNavX.getPitch();
+	}
+
+	public double getRoll()
+	{
+		return  mNavX.getRoll();
 	}
 
 	public SwerveDriveModule getSwerveModule(int i) {
@@ -110,6 +120,11 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwis
 				Math.sqrt(a * a + d * d),
 				Math.sqrt(a * a + c * c)
 		};
+
+		SmartDashboard.putNumber("Module 0 Ticks", mSwerveModules[0].getPosition());
+		SmartDashboard.putNumber("Module 1 Ticks", mSwerveModules[1].getPosition());
+		SmartDashboard.putNumber("Module 2 Ticks", mSwerveModules[2].getPosition());
+		SmartDashboard.putNumber("Module 3 Ticks", mSwerveModules[3].getPosition());
 
 		double max = speeds[0];
 
@@ -157,6 +172,14 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwis
 			
 	} // 2/12/19 3:37 PM i want boba and a burrito so bad right now !!!!!!!!!
 
+	public void swapPIDSlot(int slot)
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			mSwerveModules[i].setPIDSlot(slot);
+		}
+	}
+
 	public void driveSidewaysDistance(double targetPos, double angle, double speed) {
 		double angleError = ((angle - mNavX.getYaw()) / 180)*10;
 		angleError = Math.min(angleError, 1);
@@ -168,5 +191,22 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // - is clockwis
 		return d1 - mSwerveModules[0].getInches(); //return d1 - mSwerveModules[0].getDriveDistance();
 	}
 
+	public boolean getIsAuto()
+	{
+		return isAuto;
+	}
+
+	public void setIsAuto(boolean is)
+	{
+		isAuto = is;
+	}
+
+	@Override 
+	public void periodic() {
+		SmartDashboard.putBoolean("Mod 0 Motor Inversion", mSwerveModules[0].getDriveMotor().getInverted());
+		SmartDashboard.putBoolean("Mod 1 Motor Inversion", mSwerveModules[1].getDriveMotor().getInverted());
+		SmartDashboard.putBoolean("Mod 2 Motor Inversion", mSwerveModules[2].getDriveMotor().getInverted());
+		SmartDashboard.putBoolean("Mod 3 Motor Inversion", mSwerveModules[3].getDriveMotor().getInverted());
+	}
 }
 
