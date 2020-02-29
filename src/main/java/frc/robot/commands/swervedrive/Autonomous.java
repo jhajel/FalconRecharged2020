@@ -33,12 +33,13 @@ public class Autonomous extends CommandBase {
   private SwerveDriveSubsystem drivetrain;
   private Timer time;
   private double initGyro;
+  private double angle;
 
   //Speed constant calulated using 19251 as ticks/rev, 0.3048 ft to m conversion, 2pi*(1/6) is rev tp ft conversion
   public static final double SPEEDCONSTANT = (2*Math.PI*(1.0/6)*0.3048)/19251; //used to swtich from ticks to meters
   public double initPos[];
 
-  public Autonomous(Trajectory trajectory) {
+  public Autonomous(Trajectory trajectory, double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     drivetrain = RobotContainer.getContainer().getHolonomicDrivetrain();
     this.trajectory = trajectory;
@@ -52,24 +53,29 @@ public class Autonomous extends CommandBase {
     odometry = new SwerveDriveOdometry(kinematics,new Rotation2d(Math.toRadians(0)));
     time = new Timer();
     initPos = new double[4];
+    this.angle = angle;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(0)), new Rotation2d(0));
+    odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(0)), new Rotation2d(Math.toRadians(0)));
     time.start();
     drivetrain.setFieldOriented(false);
     drivetrain.setIsAuto(true);
     drivetrain.swapPIDSlot(1);
-    drivetrain.getSwerveModule(0).setTargetAngle(0);
-    drivetrain.getSwerveModule(1).setTargetAngle(0);
-    drivetrain.getSwerveModule(2).setTargetAngle(180);
-    drivetrain.getSwerveModule(3).setTargetAngle(0);
-    initPos[0] = drivetrain.getSwerveModule(0).getCurrentAngle();
-    initPos[1] = drivetrain.getSwerveModule(1).getCurrentAngle();
-    initPos[2] = drivetrain.getSwerveModule(2).getCurrentAngle();
-    initPos[3] = drivetrain.getSwerveModule(3).getCurrentAngle();
+    drivetrain.getSwerveModule(0).setTargetAngle(0+angle);
+    drivetrain.getSwerveModule(1).setTargetAngle(0+angle);
+    drivetrain.getSwerveModule(2).setTargetAngle(180+angle);
+    drivetrain.getSwerveModule(3).setTargetAngle(0+angle);
+    drivetrain.getSwerveModule(0).getDriveMotor().setInverted(true);
+    drivetrain.getSwerveModule(1).getDriveMotor().setInverted(true);
+    drivetrain.getSwerveModule(2).getDriveMotor().setInverted(true);
+    drivetrain.getSwerveModule(3).getDriveMotor().setInverted(true);
+    initPos[0] = angle;
+    initPos[1] = angle;
+    initPos[2] = angle;
+    initPos[3] = angle;
     initGyro = drivetrain.getGyroAngle();
     
 
@@ -86,7 +92,8 @@ public class Autonomous extends CommandBase {
       new SwerveModuleState(10*drivetrain.getSwerveModule(1).getDriveMotor().getSelectedSensorVelocity()*SPEEDCONSTANT, new Rotation2d(Math.toRadians(drivetrain.getSwerveModule(1).getCurrentAngle()-initPos[1]))),
       new SwerveModuleState(10*drivetrain.getSwerveModule(2).getDriveMotor().getSelectedSensorVelocity()*SPEEDCONSTANT, new Rotation2d(Math.toRadians(drivetrain.getSwerveModule(2).getCurrentAngle()-initPos[2]))),
       new SwerveModuleState(10*drivetrain.getSwerveModule(3).getDriveMotor().getSelectedSensorVelocity()*SPEEDCONSTANT, new Rotation2d(Math.toRadians(drivetrain.getSwerveModule(3).getCurrentAngle()-initPos[3]))));
-    Trajectory.State goal = trajectory.sample(time.get()); // sample the trajectory at 3.4 seconds from the beginning
+    System.out.println("after odometry update");
+      Trajectory.State goal = trajectory.sample(time.get()); // sample the trajectory at 3.4 seconds from the beginning
     ChassisSpeeds adjustedSpeeds = controller.calculate(odometry.getPoseMeters(), goal);
     SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(adjustedSpeeds);
     drivetrain.getSwerveModule(0).setMeterSpeed(moduleStates[0].speedMetersPerSecond);
@@ -121,6 +128,7 @@ public class Autonomous extends CommandBase {
     drivetrain.setIsAuto(false);
     time.reset();
     System.out.println("AutoEnded");
+    odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(0)), new Rotation2d(Math.toRadians(0)));
   }
 
   // Returns true when the command should end.
@@ -130,6 +138,10 @@ public class Autonomous extends CommandBase {
     Pose2d tarPos = trajectory.getStates().get(trajectory.getStates().size()-1).poseMeters;
     double posDif = currPos.getTranslation().getDistance(tarPos.getTranslation());
     double rotDif = Math.abs((currPos.getRotation().minus(tarPos.getRotation())).getDegrees());
-    return posDif <= .5 && rotDif <= 10; // review -Riley "Change once we account for slip.""
+    SmartDashboard.putString("CurPos", currPos.toString());
+    SmartDashboard.putString("tarPos", tarPos.toString());
+
+    System.out.println("Pos diff " + posDif + "          Rot Diff" + rotDif);
+    return (posDif <= .5 && rotDif <= 10) || (trajectory.getTotalTimeSeconds() < time.get()); // review -Riley "Change once we account for slip.""
   }
 }

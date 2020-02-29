@@ -63,8 +63,8 @@ public class SwerveDriveModule extends SubsystemBase {
         driveMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0); // ADD TO CANSPARKMAX LATER***
 
         driveMotor.setNeutralMode(NeutralMode.Brake);
-        driveMotor.config_kF(0, 0.0016, 0); //0.0018
-        driveMotor.config_kP(0, 0.001, 0); // 0.02
+        driveMotor.config_kF(0, 0.0018, 0); //0.0018
+        driveMotor.config_kP(0, 0.001, 0); // 0.02 //0.001-Auto
         driveMotor.config_kI(0, 0, 0); // 0.000001
         driveMotor.config_kD(0, 0, 0); // 0.0065
 
@@ -150,18 +150,6 @@ public class SwerveDriveModule extends SubsystemBase {
             } else {
                 mDriveMotor.setInverted(true);
             }
-        // } else {
-        //     delta = currentAngleMod - targetAngle;
-        //     if (delta > 90 || delta < -90) {
-        //         if (delta > 90)
-        //             targetAngle += 180;
-        //         else if (delta < -90)
-        //             targetAngle -= 180;
-        //         // mDriveMotor.setInverted(false);
-        //     } else {
-        //         // mDriveMotor.setInverted(true);
-        //     }
-
         }
 
         targetAngle += currentAngle - currentAngleMod;
