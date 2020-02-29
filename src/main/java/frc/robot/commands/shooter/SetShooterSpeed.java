@@ -5,17 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.shooter;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.ShooterMotor;
+import frc.robot.subsystems.Shooter;
 
 
 public class SetShooterSpeed extends CommandBase {
@@ -23,7 +18,7 @@ public class SetShooterSpeed extends CommandBase {
    * Creates a new SetShooterSpeed.
    */
   private double speed; 
-  private ShooterMotor shooterMotor;
+  private Shooter shooter;
   private double pidF;
   private double pidP;
   private double pidI;
@@ -38,15 +33,15 @@ public class SetShooterSpeed extends CommandBase {
     SmartDashboard.putNumber("Input pidP", SmartDashboard.getNumber("Input pidP", 0.1));
     SmartDashboard.putNumber("Input pidI", SmartDashboard.getNumber("Input pidI", 0));
     SmartDashboard.putNumber("Input pidD", SmartDashboard.getNumber("Input pidD", 2.5));
-    shooterMotor = RobotContainer.getContainer().getShooterMotor();
-    addRequirements(shooterMotor);
+    shooter = RobotContainer.getContainer().getShooterMotor();
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
 
-    shooterMotor.setSpeed(-speed);
+    shooter.setSpeed(-speed);
 
   }
 
@@ -57,25 +52,25 @@ public class SetShooterSpeed extends CommandBase {
     // if(RobotContainer.getContainer().getOperatorController().getXButtonPressed())
     // {
       this.speed = SmartDashboard.getNumber("Input Shooter RPM", 3750);
-      shooterMotor.setSpeed(-speed);
+      shooter.setSpeed(-speed);
       this.pidF = SmartDashboard.getNumber("Input pidF", 0);
       this.pidP = SmartDashboard.getNumber("Input pidP", 0);
       this.pidI = SmartDashboard.getNumber("Input pidI", 0);
       this.pidD = SmartDashboard.getNumber("Input pidD", 0);
-      shooterMotor.getmotor1().config_kF(0, this.pidF, 0);
-      shooterMotor.getmotor2().config_kF(0, this.pidF, 0);
+      shooter.getmotor1().config_kF(0, this.pidF, 0);
+      shooter.getmotor2().config_kF(0, this.pidF, 0);
 
-      shooterMotor.getmotor1().config_kP(0, this.pidP, 0);
-      shooterMotor.getmotor2().config_kP(0, this.pidP, 0);
+      shooter.getmotor1().config_kP(0, this.pidP, 0);
+      shooter.getmotor2().config_kP(0, this.pidP, 0);
 
-      shooterMotor.getmotor1().config_kI(0, this.pidI, 0);
-      shooterMotor.getmotor2().config_kI(0, this.pidI, 0);
+      shooter.getmotor1().config_kI(0, this.pidI, 0);
+      shooter.getmotor2().config_kI(0, this.pidI, 0);
 
-      shooterMotor.getmotor1().config_kD(0, this.pidD, 0);
-      shooterMotor.getmotor2().config_kD(0, this.pidD, 0);
+      shooter.getmotor1().config_kD(0, this.pidD, 0);
+      shooter.getmotor2().config_kD(0, this.pidD, 0);
 
     //}
-    SmartDashboard.putNumber("Current Shooter RPM", -shooterMotor.getSpeed());
+    SmartDashboard.putNumber("Current Shooter RPM", -shooter.getSpeed());
     SmartDashboard.putNumber("pidF", this.pidF);
     SmartDashboard.putNumber("pidP", this.pidP);
     SmartDashboard.putNumber("pidI", this.pidI);
@@ -85,7 +80,7 @@ public class SetShooterSpeed extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterMotor.setSpeed(0);
+    shooter.setSpeed(0);
   }
 
   // Returns true when the command should end.

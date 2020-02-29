@@ -20,14 +20,12 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.SetShooterSpeed;
-import frc.robot.commands.ToggleIgnore;
-import frc.robot.commands.ToggleIntakeArmMode;
 import frc.robot.commands.AutoPaths.AutoPath1;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
 import frc.robot.commands.conveyor.*;
 import frc.robot.commands.intake.*;
+import frc.robot.commands.shooter.SetShooterSpeed;
 import frc.robot.commands.swervedrive.*;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Color.ColorPanelSpinner;
@@ -35,7 +33,7 @@ import frc.robot.subsystems.Color.ColorSensor;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.ShooterMotor;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 //import sun.java2d.cmm.ColorTransform;
 import frc.robot.utility.TrajectoryMaker;
@@ -61,7 +59,7 @@ public class RobotContainer {
   private Limelight limelight;
   private Conveyor conveyor;
   private Intake intake;
-  private ShooterMotor shooterMotor;
+  private Shooter shooterMotor;
   private Compressor compressor;
   private Climber climber;
 
@@ -81,14 +79,14 @@ public class RobotContainer {
     limelight = new Limelight();
     conveyor = new Conveyor();
     intake = new Intake();
-    shooterMotor = new ShooterMotor();
+    shooterMotor = new Shooter();
     compressor = new Compressor();
     climber = new Climber();
 
     configureButtonBindings();
   }
 
-  public ShooterMotor getShooterMotor() {
+  public Shooter getShooterMotor() {
     return shooterMotor;
   }
 
@@ -160,7 +158,7 @@ public class RobotContainer {
     JoystickButton rightBumper_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperRight.value);
     
     buttonX.whileHeld(new IntakeSpeed(-1));
-    buttonA.whenPressed(new ToggleIntakeArmMode(intake));
+    buttonA.whenPressed(new ToggleIntake());
     buttonY.whenPressed(new ConveyorSpeed(.5));
     buttonB.whileHeld(new IntakeSpeed(.5));
     leftBumper.whileHeld(new ConveyorSpeed(-.8));

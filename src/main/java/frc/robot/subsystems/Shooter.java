@@ -14,11 +14,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 
 
-public class ShooterMotor extends SubsystemBase {
+public class Shooter extends SubsystemBase {
   /**
    * Creates a new ShooterMotor.
    */
@@ -38,7 +36,7 @@ public class ShooterMotor extends SubsystemBase {
 
 
 
-  public ShooterMotor() {
+  public Shooter() {
     tickConversion = 3.4133;//Calculated to convert RPM to ticks/100ms
     motor1 = new TalonFX(Constants.SHOOTER1_TALON);
     motor2 = new TalonFX(Constants.SHOOTER2_TALON);
