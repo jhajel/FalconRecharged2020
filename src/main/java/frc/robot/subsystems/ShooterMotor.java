@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.shooter.SpinShooterMotor;
 
 public class ShooterMotor extends SubsystemBase {
   /**

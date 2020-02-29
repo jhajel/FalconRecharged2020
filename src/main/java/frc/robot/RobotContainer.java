@@ -7,40 +7,27 @@
 
 package frc.robot;
 
-import java.sql.Driver;
 import java.util.ArrayList;
 
-import com.playingwithfusion.TimeOfFlight;
-
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoPaths.AutoPath1;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
 import frc.robot.commands.conveyor.*;
-import frc.robot.commands.intake.*;
-import frc.robot.commands.limelight.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.swervedrive.*;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Color.ColorPanelSpinner;
 import frc.robot.subsystems.Color.ColorSensor;
 import frc.robot.subsystems.Conveyor;
-import frc.robot.subsystems.Drive.HolonomicDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterMotor;

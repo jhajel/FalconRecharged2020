@@ -16,7 +16,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.commands.swervedrive.SwerveModuleCommand;
 import frc.robot.commands.swervedrive.Autonomous;
@@ -26,9 +25,6 @@ public class SwerveDriveModule extends SubsystemBase {
      * Creates a new SwerveDriveModule.
      */
 
-    private static final long STALL_TIMEOUT = 2000;
-
-    private long mStallTimeBegin = Long.MAX_VALUE;
 
     private double mLastError = 0, mLastTargetAngle = 0;
 
@@ -110,10 +106,6 @@ public class SwerveDriveModule extends SubsystemBase {
 
     public TalonFX getDriveMotor() {
         return mDriveMotor;
-    }
-
-    public void robotDisabledInit() {
-        mStallTimeBegin = Long.MAX_VALUE;
     }
 
     public void setTargetAngle(double targetAngle) {

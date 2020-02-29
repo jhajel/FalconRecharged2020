@@ -1,8 +1,6 @@
 package frc.robot.subsystems.Drive;
 
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
@@ -11,14 +9,11 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.commands.swervedrive.HolonomicDriveCommand;
 
 public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwise - is counter clockwise test commit 2 electric bugaloo
 	private static final double WHEELBASE = 22.5; 
-	private static final double TRACKWIDTH = 22.5;	
-	private static final double RATIO = Math.sqrt(Math.pow(WHEELBASE, 2) + Math.pow(TRACKWIDTH, 2));
+	private static final double TRACKWIDTH = 22.5;
 	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 148); //2020: 70
 	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 228); //2020: 211
 	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), -80); //2020: 307
