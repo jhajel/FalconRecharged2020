@@ -149,11 +149,12 @@ public class RobotContainer {
     
     buttonX.whileHeld(new IntakeSpeed(-1));
     buttonA.whenPressed(new ToggleIntakeArmMode(intake));
-    buttonY.whenPressed(new ZeroNavX());
+    buttonY.whenPressed(new ConveyorSpeed(.5));
     buttonB.whileHeld(new IntakeSpeed(.5));
     leftBumper.whileHeld(new ConveyorSpeed(-.8));
     rightBumper.whileHeld(new SetShooterSpeed());
-    back.whileHeld(new ConveyorSpeed(.5));
+    back.whileHeld(new ZeroNavX());
+    
 
     buttonA_2.whenPressed(new ToggleIgnore());
 
