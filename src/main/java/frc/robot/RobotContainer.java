@@ -23,7 +23,6 @@ import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.HolonomicDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.ShooterMotor;
 
@@ -39,6 +38,7 @@ public class RobotContainer {
 
   private final Command m_autoCommand = null;
   private XboxController mXboxController;
+  private XboxController mXboxController2;
   private static RobotContainer theContainer;
   private SwerveDriveSubsystem swerveDriveSubsystem;
   private ColorSensor colorSensor;
@@ -46,8 +46,7 @@ public class RobotContainer {
   private Limelight limelight; 
   private Conveyor conveyor;
   private Intake intake;
-  private Shooter shooter;
-  //private Compressor compressor;
+  private Compressor compressor;
   private Climber climber;
   private ShooterMotor shooterMotor;
 
@@ -62,11 +61,11 @@ public class RobotContainer {
     colorSensor = new ColorSensor();
     colorPanelSpinner = new ColorPanelSpinner();
     mXboxController = new XboxController(0);
+    mXboxController2 = new XboxController(1);
     limelight = new Limelight();
     conveyor = new Conveyor();
     intake = new Intake();
-    shooter = new Shooter();
-    //compressor = new Compressor();
+    compressor = new Compressor();
     climber = new Climber();
     shooterMotor = new ShooterMotor();
     configureButtonBindings();
@@ -96,7 +95,10 @@ public class RobotContainer {
     return mXboxController;
   }
 
-  
+  public XboxController getOperatorController() {
+    return mXboxController2;
+  }
+
   public static RobotContainer getContainer(){
     return theContainer;
 
@@ -114,13 +116,9 @@ public class RobotContainer {
     return intake;
   }
 
-  public Shooter getShooter(){
-    return shooter;
+  public Compressor getCompressor(){
+    return compressor;
   }
-
-  // public Compressor getCompressor(){
-  //   return compressor;
-  // }
 
   public ShooterMotor getShooterMotor(){
     return shooterMotor;
@@ -140,36 +138,24 @@ public class RobotContainer {
     JoystickButton buttonY = new JoystickButton(mXboxController, XboxController.Button.kY.value);
     JoystickButton leftBumper = new JoystickButton(mXboxController, XboxController.Button.kBumperLeft.value);
     JoystickButton rightBumper = new JoystickButton(mXboxController, XboxController.Button.kBumperRight.value);
+    JoystickButton back = new JoystickButton(mXboxController, XboxController.Button.kBack.value);
 
-
-    //buttonX.whenHeld(new SetShooterSpeed(60*3.4133,mXboxController));
-    //buttonY.whenHeld(new SpinShooterMotor(mXboxController, .6));
-    //buttonB.whenHeld(new SpinShooterMotor(mXboxController, .75));
-    //buttonA.whenHeld(new SpinShooterMotor(mXboxController, -1));
-    //buttonB.whenHeld(new SpinShooterMotor(mXboxController, -.5));
-    buttonX.whenHeld(new SetShooterSpeed(mXboxController));//3750 works for 3 pts
-    buttonY.whileHeld(new ConveyorSpeed(-0.75));
-    buttonB.whileHeld(new ConveyorSpeed(0.5));
-    leftBumper.whileHeld(new ConveyorSpeed(-1));
-    rightBumper.whileHeld(new ConveyorSpeed(-0.25));
-
-
-    //buttonA.whenPressed(new DriveForward(.2));
-     
-    //buttonB.whenPressed(new DriveForwardDistance(3, .3));
+    JoystickButton buttonA_2 = new JoystickButton(mXboxController2, XboxController.Button.kA.value);
+    JoystickButton buttonX_2 = new JoystickButton(mXboxController2, XboxController.Button.kX.value);
+    JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
+    JoystickButton buttonY_2 = new JoystickButton(mXboxController2, XboxController.Button.kY.value);
+    JoystickButton leftBumper_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperLeft.value);
+    JoystickButton rightBumper_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperRight.value);
     
-    //  buttonX.whenPressed(new WheelsDriveForwardTest(-100, 0).withTimeout(5));
-     
-    //buttonY.whenPressed(new ZeroNavX());
-    //buttonX.whileHeld(new ConveyorSpeed(1));
-    //buttonY.whileHeld(new ConveyorSpeed(-1));
-    //buttonA.whenPressed(new MoveConveyorDistance(-5));
-    //buttonB.whenPressed(new ShooterSwitchArmMode());
+    buttonX.whileHeld(new IntakeSpeed(-1));
+    buttonA.whenPressed(new ToggleIntakeArmMode(intake));
+    buttonY.whenPressed(new ZeroNavX());
+    buttonB.whileHeld(new IntakeSpeed(.5));
+    leftBumper.whileHeld(new ConveyorSpeed(-.8));
+    rightBumper.whileHeld(new SetShooterSpeed());
+    back.whileHeld(new ConveyorSpeed(.5));
 
-    //buttonX.whenPressed(new SwitchLimelightMode(limelight));
-    //buttonX.whenPressed(new PrintSensor());
-    
-    
+    buttonA_2.whenPressed(new ToggleIgnore());
 
 
   }

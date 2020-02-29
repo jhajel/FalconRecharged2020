@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     m_robotContainer.getLimelight().setCamMode();
+    m_robotContainer.getHolonomicDrivetrain().setFieldOriented(true);
   }
 
   /**
@@ -91,13 +92,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    if(!RobotContainer.getContainer().getShooter().getRetracted()) 
-    {
-      RobotContainer.getContainer().getShooter().switchPistonMode();
-    }
-    
-   
-  
   }
 
   /**

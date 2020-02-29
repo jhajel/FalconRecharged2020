@@ -29,6 +29,7 @@ public class ToggleIntakeArmMode extends CommandBase {
   @Override
   public void execute() {
     intake.toggleIntakeSolenoidMode();
+    System.out.println("Intake Execute");
   }
 
   // Called once the command ends or is interrupted.

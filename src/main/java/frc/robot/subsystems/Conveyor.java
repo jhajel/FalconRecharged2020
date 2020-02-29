@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.SenseCell;
 
+import com.playingwithfusion.TimeOfFlight;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -20,34 +22,53 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Conveyor extends SubsystemBase {
   
-  private DigitalInput sensor;
+  private TimeOfFlight sensor;
   private CANSparkMax indexer;
   private CANEncoder encoder;
   private CANPIDController pidController;
+  private boolean ignore;
   
   public Conveyor() {
-    sensor = new DigitalInput(0);
+    sensor = new TimeOfFlight(2);
+    sensor.setRangingMode(TimeOfFlight.RangingMode.Short, 0.24);
     indexer = new CANSparkMax(Constants.CONVEYOR_SPARK, MotorType.kBrushless);// not correct
     encoder = indexer.getEncoder();
     pidController = indexer.getPIDController();
     pidController.setP(.2);
     pidController.setD(0);
     pidController.setI(.0001);
+    ignore = false;
   }
 
   @Override
   public void periodic() {
-    printStatus();
-    printTicks();
-    //setDefaultCommand(new SenseCell());
+    printStuff();
+    setDefaultCommand(new SenseCell());
   }
 
-  public boolean getStatus(){
-    return sensor.get();
+  private void printStuff() {
+    SmartDashboard.putBoolean("Sensor State", getDistance() < 4.2);
+    SmartDashboard.putNumber("Ticks", encoder.getPosition());
+    SmartDashboard.putNumber("Distance", getDistance());
+    SmartDashboard.putBoolean("Ignored", isIgnored());
   }
 
-  public void printStatus() {
-    SmartDashboard.putBoolean("Sensor State", getStatus());
+  public boolean getStatus() {
+    return getDistance() < 4.2;
+  }
+
+  public boolean isIgnored() {
+    return ignore;
+  }
+
+  public void toggleIgnore()
+  {
+    ignore = !ignore;
+  }
+
+  public double getDistance()
+  {
+    return sensor.getRange()*0.0393701;
   }
 
   public void setConveyerPosition(double ticks) 
@@ -62,7 +83,6 @@ public class Conveyor extends SubsystemBase {
 
   public void printTicks()
   {
-    SmartDashboard.putNumber("Ticks", encoder.getPosition());
   }
 
   public double getPositon()

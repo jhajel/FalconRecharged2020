@@ -20,11 +20,15 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   private CANSparkMax intakeController;
-  private DoubleSolenoid intakeSolenoid;
+  private DoubleSolenoid rightSolenoid;
+  private DoubleSolenoid leftSolenoid;
 
   public Intake() {
     intakeController = new CANSparkMax(Constants.INTAKE_SPARK, MotorType.kBrushless);
-    intakeSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID, Constants.INTAKEREVERSE_SOLENOID);
+    rightSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID, Constants.INTAKEREVERSE_SOLENOID);
+    leftSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID2, Constants.INTAKEREVERSE_SOLENOID2);
+    leftSolenoid.set(DoubleSolenoid.Value.kReverse);
+    rightSolenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
   public void setSpeed(double speed){
@@ -32,17 +36,20 @@ public class Intake extends SubsystemBase {
   }
 
   public void toggleIntakeSolenoidMode(){
-    if(intakeSolenoid.get() == (DoubleSolenoid.Value.kReverse)){
-      intakeSolenoid.set(DoubleSolenoid.Value.kForward);
+    if(rightSolenoid.get() == (DoubleSolenoid.Value.kReverse)){
+      rightSolenoid.set(DoubleSolenoid.Value.kForward);
+      leftSolenoid.set(DoubleSolenoid.Value.kForward);
+
     }
     else{
-      intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
+      rightSolenoid.set(DoubleSolenoid.Value.kReverse);
+      leftSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    setDefaultCommand(new IntakeSpeed(-.5));
+    //setDefaultCommand(new IntakeSpeed(-.5));
   }
 }

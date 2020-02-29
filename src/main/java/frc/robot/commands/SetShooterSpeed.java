@@ -24,14 +24,13 @@ public class SetShooterSpeed extends CommandBase {
    */
   private double speed; 
   private ShooterMotor shooterMotor;
-  private XboxController mXboxController;
   private double pidF;
   private double pidP;
   private double pidI;
   private double pidD;
 
 
-  public SetShooterSpeed(XboxController controller) {    
+  public SetShooterSpeed() {    
     
     SmartDashboard.putNumber("Current Shooter RPM", 0);
     SmartDashboard.putNumber("Input Shooter RPM", SmartDashboard.getNumber("Input Shooter RPM", 3750));
@@ -40,7 +39,6 @@ public class SetShooterSpeed extends CommandBase {
     SmartDashboard.putNumber("Input pidI", SmartDashboard.getNumber("Input pidI", 0));
     SmartDashboard.putNumber("Input pidD", SmartDashboard.getNumber("Input pidD", 2.5));
     shooterMotor = RobotContainer.getContainer().getShooterMotor();
-    mXboxController = controller;
     addRequirements(shooterMotor);
   }
 
@@ -56,8 +54,8 @@ public class SetShooterSpeed extends CommandBase {
   @Override
   public void execute() {
     //shooterMotor.setSpeed(mXboxController.getY(Hand.kRight));
-    if(RobotContainer.getContainer().getDriveController().getAButtonPressed())
-    {
+    // if(RobotContainer.getContainer().getOperatorController().getXButtonPressed())
+    // {
       this.speed = SmartDashboard.getNumber("Input Shooter RPM", 3750);
       shooterMotor.setSpeed(-speed);
       this.pidF = SmartDashboard.getNumber("Input pidF", 0);
@@ -76,13 +74,12 @@ public class SetShooterSpeed extends CommandBase {
       shooterMotor.getmotor1().config_kD(0, this.pidD, 0);
       shooterMotor.getmotor2().config_kD(0, this.pidD, 0);
 
-    }
+    //}
     SmartDashboard.putNumber("Current Shooter RPM", -shooterMotor.getSpeed());
     SmartDashboard.putNumber("pidF", this.pidF);
     SmartDashboard.putNumber("pidP", this.pidP);
     SmartDashboard.putNumber("pidI", this.pidI);
     SmartDashboard.putNumber("pidD", this.pidD);
-    System.out.println("Current Speed: "+ shooterMotor.getSpeed() + " Desired Speed: " + speed + " Difference: "+(speed - shooterMotor.getSpeed()));
   }
 
   // Called once the command ends or is interrupted.

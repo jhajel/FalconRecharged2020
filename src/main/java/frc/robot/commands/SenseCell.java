@@ -25,29 +25,31 @@ public class SenseCell extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    seen = false;
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(RobotContainer.getContainer().getConveyor().getStatus())
+    seen = RobotContainer.getContainer().getConveyor().getStatus() && !RobotContainer.getContainer().getConveyor().isIgnored();
+    if(seen)
     {
-      Command a = new MoveConveyorDistance(-4);
-      a.schedule();
-      seen = true;
+      RobotContainer.getContainer().getConveyor().setConveyerSpeed(-.5);
+    }
+    else
+    {
+      RobotContainer.getContainer().getConveyor().setConveyerSpeed(0);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    seen = false;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return seen;
+    return false;
   }
 }
