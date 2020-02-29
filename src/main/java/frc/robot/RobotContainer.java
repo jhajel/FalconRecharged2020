@@ -8,14 +8,27 @@
 package frc.robot;
 
 import java.sql.Driver;
+import java.util.ArrayList;
+
+import com.playingwithfusion.TimeOfFlight;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoPaths.AutoPath1;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
 import frc.robot.commands.conveyor.*;
@@ -33,6 +46,7 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterMotor;
 import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 //import sun.java2d.cmm.ColorTransform;
+import frc.robot.utility.TrajectoryMaker;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -80,7 +94,6 @@ public class RobotContainer {
     climber = new Climber();
 
     shooterMotor.setDefaultCommand(new SpinShooterMotor());
-
     configureButtonBindings();
   }
 
@@ -133,6 +146,7 @@ public class RobotContainer {
     return climber;
   }
 
+
   /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by instantiating a {@link GenericHID} or one of its subclasses
@@ -149,16 +163,21 @@ public class RobotContainer {
     JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2,XboxController.Button.kA.value);
     // buttonX.whenHeld(new IntakeSpeed(.5));
-    buttonA.whenHeld(new IntakeSpeed(-1));
-    buttonB.whenPressed(new ToggleIntake());
+    //buttonA.whenHeld(new IntakeSpeed(-1));
+    buttonA.whenHeld(new ConveyorSpeed(-1));
+    //buttonB.whenPressed(new ToggleIntake());
     buttonY.whenPressed(new ZeroNavX());
     // buttonY.whileHeld(new IntakeSpeed(.5));
     //buttonY.whenPressed(new SwitchPipeline());
-    buttonX.whileHeld(new ConveyorSpeed(-1));
+    //buttonX.whileHeld(new ConveyorSpeed(-1));
     // buttonA.whenPressed(new DriveForward(.2));
+    //buttonY.whenPressed(new SwitchPipeline());
+    //buttonX.whenPressed(new SwitchLimelightMode());
+    //buttonB.whenPressed(new ToggleIntake());
+    buttonX.whenPressed(new AutoPath1());
 
     // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
-    // buttonB_2.whenPressed(new SemiAutoClimb());
+     buttonB_2.whenPressed(new SemiAutoClimb());
     // // buttonB_2.whenPressed(new MoveClimberArm(7, getClimber().getUpperArm()));
     // buttonX_2.whenPressed(new SemiAutoPullUp());
     // buttonX_2.whenPressed(new MoveClimberArm(-7, getClimber().getLowerArm()));
@@ -187,7 +206,43 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return new AutoPath1();
 
   }
+
+  public TrajectoryMaker createfrontScorePath() //Test Path
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
+  }
+
+  public TrajectoryMaker createPortToFrontofTrench()
+    {
+      ArrayList<Translation2d> points = new ArrayList<Translation2d>();
+      points.add(new Translation2d(-1.5, 2.3));
+      points.add(new Translation2d(-3, 2.3));
+      return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-5.3, 2.3, new Rotation2d(180)), points );
+    }
+  public TrajectoryMaker createMoveDownTrench()
+  {
+    return new TrajectoryMaker(new Pose2d(0,0,new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
+  }
+
+  public TrajectoryMaker createMoveToPort()
+  {
+    ArrayList<Translation2d> points = new ArrayList<Translation2d>();
+      points.add(new Translation2d(1.524, 2.286));
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3.048, 4.572, new Rotation2d(0)), points );
+  }
+  
+
+  public TrajectoryMaker createAutonomousPath1() // Init Line (Start on Left) to Port Test
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), true);
+  }
+
+  public TrajectoryMaker createAutonomousPath2() //Test 2 Electric Bugaloo
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, -1, new Rotation2d(0)), true);
+  }
+  
 }

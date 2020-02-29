@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.commands.conveyor.SenseCell;
 
+import com.playingwithfusion.TimeOfFlight;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -21,14 +23,15 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Conveyor extends SubsystemBase {
   
-  private DigitalInput sensor;
+  private TimeOfFlight sensor;
   private CANSparkMax indexer;
   private CANEncoder encoder;
   private CANPIDController pidController;
   
   public Conveyor() {
-    sensor = new DigitalInput(0);
-    indexer = new CANSparkMax(Constants.CONVEYOR_SPARK, MotorType.kBrushless);// not correct
+    sensor = new TimeOfFlight(2);// to change ID for TOF sensor go to...      ipOfRoboRio:5812
+    sensor.setRangingMode(TimeOfFlight.RangingMode.Short, 0.24);
+    indexer = new CANSparkMax(Constants.CONVEYOR_SPARK, MotorType.kBrushless);
     encoder = indexer.getEncoder();
     pidController = indexer.getPIDController();
     pidController.setP(.2);
@@ -37,13 +40,20 @@ public class Conveyor extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Distance TOF", getDistance());
     printStatus();
     setDefaultCommand(new SenseCell());
   }
 
   public boolean getStatus(){
-    return sensor.get();
+    return getDistance() < 4;
   }
+
+  public double getDistance()// in inches
+  {
+    return sensor.getRange()*0.0393701;//range is in mm, converted to inches
+  }
+
 
   public void printStatus() {
     SmartDashboard.putBoolean("Sensor State", getStatus());
