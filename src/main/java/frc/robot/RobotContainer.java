@@ -8,7 +8,6 @@
 package frc.robot;
 
 import java.sql.Driver;
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -16,6 +15,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.SpinUnoWheel;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
 import frc.robot.commands.conveyor.*;
@@ -180,7 +180,7 @@ public class RobotContainer {
     // buttonA.whenPressed(new MoveConveyorDistance(-5));
     // buttonB.whenPressed(new ShooterSwitchArmMode());
 
-    buttonB.whenPressed(new SpinToPosition());
+    buttonB.whileHeld(new SpinUnoWheel());
     // buttonB.whenPressed(new GameData(DriverStation.getInstance().getGameSpecificMessage()));
     buttonX.whenPressed(new SpinToColor());
     buttonY.whenPressed(new SpinToMidColor().withTimeout(7));

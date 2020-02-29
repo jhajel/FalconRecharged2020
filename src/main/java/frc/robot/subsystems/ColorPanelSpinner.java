@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,15 +25,20 @@ public class ColorPanelSpinner extends SubsystemBase {
     //private TalonSRX moto1;
     private CANSparkMax moto1;
     public static CANPIDController mPIDController;
-    public static double mPIDControllerP = 0.17; //0.15
-    public static double mPIDControllerI = 0.0002; //0.0000001
-    public static double mPIDControllerD = 0.1; //0.01
+    public static double mPIDControllerP = 0.2; //0.17 not neo 550
+    public static double mPIDControllerI = 0.0; //0.0002 the one that works
+    public static double mPIDControllerD = 0.0; //0.1 these r guud
     public DoubleSolenoid colorPanelSolenoid;
 
     public ColorPanelSpinner() {
         //moto1 = new TalonSRX(Constants.SPINNER_TALON);
-        moto1 = new CANSparkMax(Constants.SPINNER_SPARK, MotorType.kBrushed);
-        encoder = new CANEncoder(moto1, EncoderType.kQuadrature,8192);
+         SmartDashboard.putNumber("PID_P", mPIDControllerP);
+         SmartDashboard.putNumber("PID_I", mPIDControllerI);
+         SmartDashboard.putNumber("PID_D", mPIDControllerD);
+
+        moto1 = new CANSparkMax(Constants.SPINNER_SPARK, MotorType.kBrushless);
+        //encoder = new CANEncoder(moto1, EncoderType.kQuadrature,8192); //for throughbore encoder
+        encoder = moto1.getEncoder(); //for neo 550 built in motor
         colorPanelSolenoid = new DoubleSolenoid(Constants.COLORPANELFORWARD_SOLENOID, Constants.COLORPANELREVERSE_SOLENOID);
         colorPanelSolenoid.set(Value.kReverse);
         //moto1.setNeutralMode(IdleMode.kBrake);
@@ -44,7 +50,7 @@ public class ColorPanelSpinner extends SubsystemBase {
         mPIDController.setI(mPIDControllerI); // .0000001
         mPIDController.setD(mPIDControllerD); // 0.0065
 
-        moto1.setInverted(true);
+        //moto1.setInverted(true);
         // encoder.setInverted(true);
 
     }
@@ -90,6 +96,22 @@ public class ColorPanelSpinner extends SubsystemBase {
         return mPIDController;
     }
 
+    public void printPID() {
+        SmartDashboard.putNumber("PID_P", mPIDControllerP);
+        SmartDashboard.putNumber("PID_I", mPIDControllerI);
+        SmartDashboard.putNumber("PID_D", mPIDControllerD);
+    }
+
+    public void setPID() {
+        double defaultValue = 0.2;
+        mPIDController.setP(SmartDashboard.getNumber("PID_P", defaultValue));
+        mPIDController.setI(SmartDashboard.getNumber("PID_I", defaultValue));
+        mPIDController.setD(SmartDashboard.getNumber("PID_D", defaultValue));
+
+        printPID();
+
+    }
+
     public double getPosition() {
         return encoder.getPosition();
     }
@@ -123,5 +145,9 @@ public class ColorPanelSpinner extends SubsystemBase {
     @Override
     public void periodic() {
       printPosition();
+      SmartDashboard.putNumber("Current", moto1.getOutputCurrent());
+      SmartDashboard.putNumber("Temperature", moto1.getMotorTemperature());
+      SmartDashboard.putNumber("Voltage",moto1.getBusVoltage());
+      //printPID();
     }
 }

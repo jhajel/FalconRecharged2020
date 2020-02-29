@@ -55,7 +55,7 @@ public class SpinToPosition extends CommandBase {
         colorDictionary.put("Blue", Integer.valueOf(3));
 
         color = RobotContainer.getContainer().getColorSensor().getColor();
-        startColor = "Blue";
+        startColor = "Blue"; //to get rid of green/yellow error
         currentColor = color;
         colorCount = -1;
         
@@ -95,7 +95,7 @@ public class SpinToPosition extends CommandBase {
         System.out.println("exec");
         
 
-        RobotContainer.getContainer().getColorPanelSpinner().spin(.5); //change the speed
+        RobotContainer.getContainer().getColorPanelSpinner().spin(.70); //change the speed
 
         //handling switch between yellow and blue
         //currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
@@ -120,7 +120,8 @@ public class SpinToPosition extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        return colorCount > 6;
+        //6 is 4 rotations, each +1 is 1/2 rotation
+        return colorCount > 4;
     }
 
     // Called once after isFinished returns true
@@ -128,6 +129,6 @@ public class SpinToPosition extends CommandBase {
     public void end(final boolean interrupted) {
         System.out.println(colorList);
         RobotContainer.getContainer().getColorPanelSpinner().spin(0);
-        colorCount = 0;
+        colorCount = -1;
     }
 }

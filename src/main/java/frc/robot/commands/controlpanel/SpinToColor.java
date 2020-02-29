@@ -73,16 +73,16 @@ public class SpinToColor extends CommandBase {
 
         if(gameData.length()>0){//sets target color based on game data(stage 3 control panel color)
 
-            if(gameData.charAt(0) == 'G'){
+            if(gameData.toUpperCase().charAt(0) == 'G'){
                 targetColor = "Yellow";
             }
-            else if(gameData.charAt(0) == 'B'){
+            else if(gameData.toUpperCase().charAt(0) == 'B'){
                 targetColor = "Red";
             }
-            else if(gameData.charAt(0) == 'Y'){
+            else if(gameData.toUpperCase().charAt(0) == 'Y'){
                 targetColor = "Green";
             }
-            else if(gameData.charAt(0) == 'R'){
+            else if(gameData.toUpperCase().charAt(0) == 'R'){
                 targetColor = "Blue";
             }
             else{
