@@ -50,6 +50,7 @@ public class ColorPanelSpinner extends SubsystemBase {
         mPIDController.setI(mPIDControllerI); // .0000001
         mPIDController.setD(mPIDControllerD); // 0.0065
 
+        moto1.setSmartCurrentLimit(50);
         //moto1.setInverted(true);
         // encoder.setInverted(true);
 

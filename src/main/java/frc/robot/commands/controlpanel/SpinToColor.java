@@ -34,6 +34,7 @@ public class SpinToColor extends CommandBase {
     
     public SpinToColor() {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
+        addRequirements(RobotContainer.getContainer().getColorPanelSpinner());
         //gameData = data;
         impossible = new HashMap<String, String>();
         impossible.put("Yellow", "Green");
@@ -112,6 +113,7 @@ public class SpinToColor extends CommandBase {
         RobotContainer.getContainer().getColorPanelSpinner().spin(0.2); //change the speed
         //currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
         updateColor();
+
 
         SmartDashboard.putString("currentColor", currentColor);
         SmartDashboard.putString("previousColor", previousColor);

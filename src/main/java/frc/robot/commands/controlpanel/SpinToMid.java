@@ -41,6 +41,7 @@ private double finalPos;
   public SpinToMid() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getContainer().getColorSensor());
+    addRequirements(RobotContainer.getContainer().getColorPanelSpinner());
     RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
     RobotContainer.getContainer().getColorPanelSpinner().setPID();
     //pairs colors with colors that it can't reach so we can detect if the sensor jumps

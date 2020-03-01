@@ -33,6 +33,7 @@ public class SpinToPosition extends CommandBase {
 
     public SpinToPosition() {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
+        addRequirements(RobotContainer.getContainer().getColorPanelSpinner());
         impossible = new HashMap<String, String>();
         impossible.put("Yellow", "Green");
         impossible.put("Green", "Yellow");

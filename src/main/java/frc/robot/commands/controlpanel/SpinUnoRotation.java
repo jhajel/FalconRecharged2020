@@ -8,7 +8,7 @@
 package frc.robot.commands.controlpanel;
 
 import frc.robot.Constants;
-
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,6 +31,7 @@ public class SpinUnoRotation extends CommandBase {
 
     public SpinUnoRotation() {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
+        addRequirements(RobotContainer.getContainer().getColorPanelSpinner());
     }
 
     // Called just before this Command runs the first time
@@ -81,7 +82,7 @@ public class SpinUnoRotation extends CommandBase {
         System.out.println("exec");
         
 
-        RobotContainer.getContainer().getColorPanelSpinner().spin(.25); //change the speed
+        RobotContainer.getContainer().getColorPanelSpinner().spin(Constants.SPINNER_SPEED); //change the speed
 
         //handling switch between yellow and blue
         currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
