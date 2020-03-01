@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 
@@ -64,10 +65,10 @@ public class Autonomous extends CommandBase {
     drivetrain.setFieldOriented(false);
     drivetrain.setIsAuto(true);
     drivetrain.swapPIDSlot(1);
-    drivetrain.getSwerveModule(0).setTargetAngle(0+angle);
-    drivetrain.getSwerveModule(1).setTargetAngle(0+angle);
-    drivetrain.getSwerveModule(2).setTargetAngle(180+angle);
-    drivetrain.getSwerveModule(3).setTargetAngle(0+angle);
+    drivetrain.getSwerveModule(0).setTargetAngle(angle);
+    drivetrain.getSwerveModule(1).setTargetAngle(angle);
+    drivetrain.getSwerveModule(2).setTargetAngle(angle);
+    drivetrain.getSwerveModule(3).setTargetAngle(angle);
     drivetrain.getSwerveModule(0).getDriveMotor().setInverted(true);
     drivetrain.getSwerveModule(1).getDriveMotor().setInverted(true);
     drivetrain.getSwerveModule(2).getDriveMotor().setInverted(true);
@@ -76,8 +77,9 @@ public class Autonomous extends CommandBase {
     initPos[1] = angle;
     initPos[2] = angle;
     initPos[3] = angle;
+    RobotContainer.getContainer().getHolonomicDrivetrain().zeroGyro();
     initGyro = drivetrain.getGyroAngle();
-    
+    SmartDashboard.putNumber("Init Gyro", initGyro);
 
   }
 
@@ -92,8 +94,8 @@ public class Autonomous extends CommandBase {
       new SwerveModuleState(10*drivetrain.getSwerveModule(1).getDriveMotor().getSelectedSensorVelocity()*SPEEDCONSTANT, new Rotation2d(Math.toRadians(drivetrain.getSwerveModule(1).getCurrentAngle()-initPos[1]))),
       new SwerveModuleState(10*drivetrain.getSwerveModule(2).getDriveMotor().getSelectedSensorVelocity()*SPEEDCONSTANT, new Rotation2d(Math.toRadians(drivetrain.getSwerveModule(2).getCurrentAngle()-initPos[2]))),
       new SwerveModuleState(10*drivetrain.getSwerveModule(3).getDriveMotor().getSelectedSensorVelocity()*SPEEDCONSTANT, new Rotation2d(Math.toRadians(drivetrain.getSwerveModule(3).getCurrentAngle()-initPos[3]))));
-    System.out.println("after odometry update");
-      Trajectory.State goal = trajectory.sample(time.get()); // sample the trajectory at 3.4 seconds from the beginning
+    Trajectory.State goal = trajectory.sample(time.get()); // sample the trajectory at 3.4 seconds from the beginning
+    SmartDashboard.putString("current Goal", goal.poseMeters.toString());
     ChassisSpeeds adjustedSpeeds = controller.calculate(odometry.getPoseMeters(), goal);
     SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(adjustedSpeeds);
     drivetrain.getSwerveModule(0).setMeterSpeed(moduleStates[0].speedMetersPerSecond);
@@ -138,6 +140,7 @@ public class Autonomous extends CommandBase {
     Pose2d tarPos = trajectory.getStates().get(trajectory.getStates().size()-1).poseMeters;
     double posDif = currPos.getTranslation().getDistance(tarPos.getTranslation());
     double rotDif = Math.abs((currPos.getRotation().minus(tarPos.getRotation())).getDegrees());
+    SmartDashboard.putString("StartPos", trajectory.getStates().get(0).poseMeters.toString());
     SmartDashboard.putString("CurPos", currPos.toString());
     SmartDashboard.putString("tarPos", tarPos.toString());
 

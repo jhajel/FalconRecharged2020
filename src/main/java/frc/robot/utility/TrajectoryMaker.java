@@ -61,8 +61,10 @@ public TrajectoryMaker(Pose2d start, Pose2d end, ArrayList<Translation2d> points
 
 private Trajectory createTrajectory()
 {
+    SmartDashboard.putBoolean("isHyp", isHyp);
     if(isHyp) 
     {   
+
         double x_Dis = end.getTranslation().getX() - start.getTranslation().getX();
         double y_Dis = end.getTranslation().getY() - start.getTranslation().getY();
         double distance = start.getTranslation().getDistance(end.getTranslation());
