@@ -163,10 +163,7 @@ public class RobotContainer {
     JoystickButton buttonLB_2 = new JoystickButton(mXboxController, XboxController.Axis.kLeftTrigger.value);
     JoystickButton buttonLT_2 = new JoystickButton(mXboxController2, XboxController.Axis.kLeftTrigger.value);
     JoystickButton buttonRT_2 = new JoystickButton(mXboxController2, XboxController.Axis.kRightTrigger.value);
-    JoystickButton leftTriggerButton = new JoystickButton(() -> mXboxController2.getTriggerAxis(Hand.kLeft) > 0.5);
-    JoystickButton RightTriggerButton = new JoystickButton(() -> mXboxController2.getTriggerAxis(Hand.kRight) > 0.5);
-
-
+    
     buttonRB.whenPressed(new SpinToMidColor());
     buttonLB.whenPressed(new SpinToPosition());
     buttonA.whileHeld(new SpinUnoWheel(-1));
