@@ -33,7 +33,7 @@ public class SpinnerCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mXboxController = RobotContainer.getContainer().getDriveController();
+    mXboxController = RobotContainer.getContainer().getClimbController();
     double rightTriggerSpeed = mXboxController.getTriggerAxis(Hand.kRight);
     double leftTriggerSpeed = mXboxController.getTriggerAxis(Hand.kLeft);
     if (leftTriggerSpeed >= 0.5 && rightTriggerSpeed <= 0.5)
