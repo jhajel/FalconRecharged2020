@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.intake.IntakeSpeed;
 
 public class Intake extends SubsystemBase {
   /**
@@ -28,7 +27,7 @@ public class Intake extends SubsystemBase {
     intakeController = new CANSparkMax(Constants.INTAKE_SPARK, MotorType.kBrushless);
     intakeSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID, Constants.INTAKEREVERSE_SOLENOID);
     intakeSolenoid.set(Value.kReverse);
-    isRetracted = false;
+    isRetracted = true;
   }
 
   public void setSpeed(double speed){

@@ -7,7 +7,6 @@
 
 package frc.robot.commands.conveyor;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
@@ -31,12 +30,10 @@ public class SenseCell extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if(!RobotContainer.getContainer().getConveyor().getStatus())
-    // {
-    //   // Command a = new MoveConveyorDistance(-1);
-    //   // a.schedule();
-    //   seen = true;
-    // }
+    if(RobotContainer.getContainer().getConveyor().getStatus())
+    {
+      seen = true;
+    }
   }
 
   // Called once the command ends or is interrupted.

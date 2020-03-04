@@ -5,24 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.climber;
+package frc.robot.commands.AutoPaths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
+import frc.robot.commands.swervedrive.Autonomous;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class SemiAutoClimb extends SequentialCommandGroup {
+public class AutoDelayToScore extends SequentialCommandGroup {
   /**
-   * Creates a new SemiAutoClimb.
+   * Creates a new AutoDelayToScore.
    */
-
-  public SemiAutoClimb() {
+  public AutoDelayToScore() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new MoveClimberArm(18.07, RobotContainer.getContainer().getClimber().getUpperArm()), 
-          new MoveClimberArm(-18.07,RobotContainer.getContainer().getClimber().getLowerArm()));
-
+    super(new WaitCommand(10),
+          new Autonomous(RobotContainer.getContainer().createMoveToPort().getTrajectory(), 0));
   }
 }
