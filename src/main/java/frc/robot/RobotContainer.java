@@ -150,8 +150,8 @@ public class RobotContainer {
     JoystickButton buttonStart = new JoystickButton(mXboxController, XboxController.Button.kStart.value);
     JoystickButton buttonRB = new JoystickButton(mXboxController, XboxController.Button.kBumperRight.value);
     JoystickButton buttonLB = new JoystickButton(mXboxController, XboxController.Button.kBumperLeft.value);
-    JoystickButton buttonLT = new JoystickButton(mXboxController, XboxController.Axis.kLeftTrigger.value);
-    JoystickButton buttonRT = new JoystickButton(mXboxController, XboxController.Axis.kRightTrigger.value);
+    // JoystickButton buttonLT = new JoystickButton(mXboxController, XboxController.Axis.kLeftTrigger.value);
+    // JoystickButton buttonRT = new JoystickButton(mXboxController, XboxController.Axis.kRightTrigger.value);
 
     JoystickButton buttonY_2 = new JoystickButton(mXboxController2, XboxController.Button.kY.value);
     JoystickButton buttonX_2 = new JoystickButton(mXboxController2, XboxController.Button.kX.value);
@@ -160,9 +160,9 @@ public class RobotContainer {
     JoystickButton buttonBack_2 = new JoystickButton(mXboxController2, XboxController.Button.kBack.value);
     JoystickButton buttonStart_2 = new JoystickButton(mXboxController2, XboxController.Button.kStart.value);
     JoystickButton buttonRB_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperRight.value);
-    JoystickButton buttonLB_2 = new JoystickButton(mXboxController, XboxController.Axis.kLeftTrigger.value);
-    JoystickButton buttonLT_2 = new JoystickButton(mXboxController2, XboxController.Axis.kLeftTrigger.value);
-    JoystickButton buttonRT_2 = new JoystickButton(mXboxController2, XboxController.Axis.kRightTrigger.value);
+    JoystickButton buttonLB_2 = new JoystickButton(mXboxController, XboxController.Button.kBumperLeft.value);
+    // JoystickButton buttonLT_2 = new JoystickButton(mXboxController2, XboxController.Axis.kLeftTrigger.value);
+    // JoystickButton buttonRT_2 = new JoystickButton(mXboxController2, XboxController.Axis.kRightTrigger.value);
     
     buttonRB.whenPressed(new SpinToMidColor());
     buttonLB.whenPressed(new SpinToPosition());

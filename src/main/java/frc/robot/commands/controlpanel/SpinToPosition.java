@@ -90,6 +90,12 @@ public class SpinToPosition extends CommandBase {
         }
     }
 
+    /**
+     * if start on red/green, count reds
+     * if start on blue/yellow, count blues
+     * saves time on 3/8 of a rotation if start on red
+     */
+
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {

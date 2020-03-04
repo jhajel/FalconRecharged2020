@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.controlpanel.SpinnerCommand;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -53,6 +54,8 @@ public class ColorPanelSpinner extends SubsystemBase {
         moto1.setSmartCurrentLimit(50);
         //moto1.setInverted(true);
         // encoder.setInverted(true);
+
+        setDefaultCommand(new SpinnerCommand(this));
 
     }
 
