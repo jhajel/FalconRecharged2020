@@ -15,7 +15,7 @@ public class ClimberArmSpeed extends CommandBase {
   /**
    * Creates a new ClimberArmSpeed.
    */
-  public ClimberArmSpeed() {
+  public  ClimberArmSpeed() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getContainer().getClimber());
   }
@@ -31,8 +31,8 @@ public class ClimberArmSpeed extends CommandBase {
     double speed1 = MathUtils.deadband(RobotContainer.getContainer().getOperatorController().getRawAxis(1));
     double speed2 = MathUtils.deadband(RobotContainer.getContainer().getOperatorController().getRawAxis(5));
     // if(RobotContainer.getContainer().getClimbController().get)
-    RobotContainer.getContainer().getClimber().moveArm1(speed1);
-    RobotContainer.getContainer().getClimber().moveArm2(-speed2);
+    RobotContainer.getContainer().getClimber().moveUpperArm(speed1);
+    RobotContainer.getContainer().getClimber().moveLowerArm(speed2);
   }
 
   // Called once the command ends or is interrupted.

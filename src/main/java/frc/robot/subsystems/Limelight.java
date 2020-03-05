@@ -34,7 +34,6 @@ public class Limelight extends SubsystemBase  {
     limelighta = ta.getDouble(0.0);
     isLEDMode = false;
     isTapePipeline = true;
-    // setDefaultCommand(new ShowLimelight(this));
   }
 
   public void printInfo() {

@@ -13,7 +13,7 @@ import frc.robot.subsystems.Drive.SwerveDriveModule;
 public class SwerveModuleCommand extends CommandBase {
   private SwerveDriveModule mDriveModule;
 
-	public SwerveModuleCommand(SwerveDriveModule driveModule) {
+	public SwerveModuleCommand(final SwerveDriveModule driveModule) {
 		this.mDriveModule = driveModule;
 
 		addRequirements(driveModule);

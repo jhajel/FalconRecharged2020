@@ -34,7 +34,7 @@ public class SwerveDriveModule extends SubsystemBase {
     private final TalonSRX mAngleMotor;
     public final TalonFX mDriveMotor;
 
-    public SwerveDriveModule(int moduleNumber, TalonSRX angleMotor, TalonFX driveMotor, double zeroOffset) {
+    public SwerveDriveModule(final int moduleNumber, final TalonSRX angleMotor, final TalonFX driveMotor, final double zeroOffset) {
         mModuleNumber = moduleNumber;
 
         mAngleMotor = angleMotor;
@@ -76,9 +76,9 @@ public class SwerveDriveModule extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        setDefaultCommand(new SwerveModuleCommand(this));
+        //setDefaultCommand(new SwerveModuleCommand(this));
     }
-
+    
     public TalonSRX getAngleMotor() {
         return mAngleMotor;
     }
@@ -112,7 +112,7 @@ public class SwerveDriveModule extends SubsystemBase {
 
         targetAngle += mZeroOffset;
 
-        double currentAngle = mAngleMotor.getSelectedSensorPosition(0) * (360.0 / 1024.0);
+        final double currentAngle = mAngleMotor.getSelectedSensorPosition(0) * (360.0 / 1024.0);
         double currentAngleMod = currentAngle % 360;
         if (currentAngleMod < 0)
             currentAngleMod += 360;
@@ -140,24 +140,24 @@ public class SwerveDriveModule extends SubsystemBase {
 
         targetAngle += currentAngle - currentAngleMod;
 
-        double currentError = mAngleMotor.getClosedLoopError(0);
+        final double currentError = mAngleMotor.getClosedLoopError(0);
         mLastError = currentError;
         targetAngle *= 1024.0 / 360.0;
         mAngleMotor.set(ControlMode.Position, targetAngle);
 
     }
 
-    public void setTargetDistance(double distance) { // inches NEED TO TEST
+    public void setTargetDistance(final double distance) { // inches NEED TO TEST
         // TalonFX’s integrated sensor has a native resolution of 2048 units per
         // rotation regardless of which class is used.
         mDriveMotor.set(ControlMode.Position, distance);
     }
 
-    public void setTargetSpeed(double speed) {
+    public void setTargetSpeed(final double speed) {
         mDriveMotor.set(TalonFXControlMode.PercentOutput, speed);
     }
 
-    public void setMeterSpeed(double speed) // in meters per sec
+    public void setMeterSpeed(final double speed) // in meters per sec
     {
         mDriveMotor.set(TalonFXControlMode.Velocity, speed / Autonomous.SPEEDCONSTANT);
     }
@@ -170,7 +170,7 @@ public class SwerveDriveModule extends SubsystemBase {
         return mLastTargetAngle;
     }
 
-    public double encoderTicksToInches(double ticks) {
+    public double encoderTicksToInches(final double ticks) {
         return ticks / 35.6;
     }
 
@@ -178,7 +178,7 @@ public class SwerveDriveModule extends SubsystemBase {
         return (double) mDriveMotor.getSelectedSensorPosition();
     }
 
-    public void setPIDSlot(int slot) {
+    public void setPIDSlot(final int slot) {
         mAngleMotor.selectProfileSlot(slot, 0);
     }
 
@@ -189,5 +189,4 @@ public class SwerveDriveModule extends SubsystemBase {
     public void printTick() {
         SmartDashboard.putNumber("Ticks" + mModuleNumber, mDriveMotor.getSelectedSensorPosition());
     }
-
 }

@@ -47,7 +47,7 @@ public class HolonomicDriveCommand extends CommandBase {
 
 		
 		mDrivetrain.swapPIDSlot(0);
-		mDrivetrain.holonomicDrive(forward, strafe, rotation);
+		mDrivetrain.holonomicDrive(forward, -strafe, rotation);
 	}
 
 	@Override

@@ -8,7 +8,6 @@
 package frc.robot.commands.controlpanel;
 
 import frc.robot.Constants;
-import frc.robot.Robot;
 
 import java.util.HashMap;
 import java.util.Map;

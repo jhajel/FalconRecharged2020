@@ -11,7 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -29,6 +29,8 @@ public class Intake extends SubsystemBase {
     leftSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID2, Constants.INTAKEREVERSE_SOLENOID2);
     leftSolenoid.set(DoubleSolenoid.Value.kReverse);
     rightSolenoid.set(DoubleSolenoid.Value.kReverse);
+    intakeController.setSmartCurrentLimit(30);
+
   }
 
   public void setSpeed(double speed){
@@ -50,6 +52,6 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //setDefaultCommand(new IntakeSpeed(-.5));
+    SmartDashboard.putNumber("Intake Current", intakeController.getOutputCurrent());
   }
 }

@@ -4,12 +4,8 @@ package frc.robot.subsystems.Color;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.ControlType;
 import com.revrobotics.EncoderType;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;

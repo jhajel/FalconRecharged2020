@@ -20,7 +20,7 @@ public class SemiAutoPullUp extends SequentialCommandGroup {
   public SemiAutoPullUp() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new MoveBothClimberArms(-15, RobotContainer.getContainer().getClimber().getUpperArm(), RobotContainer.getContainer().getClimber().getLowerArm()).withTimeout(5),
+    super(new MoveBothClimberArms(15, RobotContainer.getContainer().getClimber().getUpperArm(), RobotContainer.getContainer().getClimber().getLowerArm()).withTimeout(5),
           new ToggleClimberGearLock(RobotContainer.getContainer().getClimber()));
   }
 }

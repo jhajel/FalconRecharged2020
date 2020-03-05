@@ -10,11 +10,8 @@ package frc.robot;
 import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -73,7 +70,6 @@ public class RobotContainer {
     swerveDriveSubsystem.zeroGyro();
     colorPanelSpinner = new ColorPanelSpinner();
     colorSensor = new ColorSensor();
-
     mXboxController = new XboxController(0);
     mXboxController2 = new XboxController(1);
     limelight = new Limelight();
@@ -82,8 +78,9 @@ public class RobotContainer {
     shooterMotor = new Shooter();
     compressor = new Compressor();
     climber = new Climber();
-
     configureButtonBindings();
+    conveyor.setDefaultCommand(new SenseCell());
+    climber.setDefaultCommand(new ClimberArmSpeed());
   }
 
   public Shooter getShooterMotor() {
@@ -159,7 +156,7 @@ public class RobotContainer {
     
     buttonX.whileHeld(new IntakeSpeed(-1));
     buttonA.whenPressed(new ToggleIntake());
-    buttonY.whenPressed(new ConveyorSpeed(.5));
+    buttonY.whileHeld(new ConveyorSpeed(.5));
     buttonB.whileHeld(new IntakeSpeed(.5));
     leftBumper.whileHeld(new ConveyorSpeed(-.8));
     rightBumper.whileHeld(new SetShooterSpeed());
@@ -167,6 +164,9 @@ public class RobotContainer {
     
 
     buttonA_2.whenPressed(new ToggleIgnore());
+    buttonX_2.whenPressed(new ToggleClimberGearLock(climber));
+    buttonY_2.whenPressed(new SemiAutoClimb());
+    buttonB_2.whenPressed(new SemiAutoPullUp());
   }
 
   /**

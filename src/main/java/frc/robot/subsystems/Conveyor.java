@@ -36,23 +36,24 @@ public class Conveyor extends SubsystemBase {
     pidController.setP(.2);
     pidController.setI(.0001);
     ignore = false;
+    //indexer.setSmartCurrentLimit(20);
   }
 
   @Override
   public void periodic() {
     printStuff();
-    setDefaultCommand(new SenseCell());
   }
 
   private void printStuff() {
-    SmartDashboard.putBoolean("Sensor State", getDistance() < 4.2);
+    SmartDashboard.putBoolean("Sensor State", getStatus());
     SmartDashboard.putNumber("Ticks", encoder.getPosition());
     SmartDashboard.putNumber("Distance", getDistance());
     SmartDashboard.putBoolean("Ignored", isIgnored());
+    SmartDashboard.putNumber("Conveyor Current", indexer.getOutputCurrent());
   }
 
   public boolean getStatus() {
-    return getDistance() < 4.2;
+    return getDistance() < 5;
   }
 
   public boolean isIgnored() {
