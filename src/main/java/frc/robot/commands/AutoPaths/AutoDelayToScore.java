@@ -22,7 +22,7 @@ public class AutoDelayToScore extends SequentialCommandGroup {
   public AutoDelayToScore() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new WaitCommand(10),
-          new Autonomous(RobotContainer.getContainer().createMoveToPort().getTrajectory(), 0));
+    super(//new WaitCommand(10),
+          new Autonomous(RobotContainer.getContainer().createfrontScorePath().getTrajectory(), 0));
   }
 }

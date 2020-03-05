@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoPaths.AutoDelayToScore;
 import frc.robot.commands.AutoPaths.AutoPath1;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
@@ -174,7 +175,7 @@ public class RobotContainer {
     //buttonY.whenPressed(new SwitchPipeline());
     //buttonX.whenPressed(new SwitchLimelightMode());
     //buttonB.whenPressed(new ToggleIntake());
-    buttonX.whenPressed(new AutoPath1());
+    buttonX.whenPressed(new AutoDelayToScore());
 
     // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
      buttonB_2.whenPressed(new SemiAutoClimb());
