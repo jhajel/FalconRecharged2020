@@ -29,7 +29,6 @@ public class Intake extends SubsystemBase {
     leftSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID2, Constants.INTAKEREVERSE_SOLENOID2);
     leftSolenoid.set(DoubleSolenoid.Value.kReverse);
     rightSolenoid.set(DoubleSolenoid.Value.kReverse);
-    intakeController.setSmartCurrentLimit(30);
 
   }
 

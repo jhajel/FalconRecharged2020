@@ -53,7 +53,7 @@ public class Conveyor extends SubsystemBase {
   }
 
   public boolean getStatus() {
-    return getDistance() < 5;
+    return getDistance() < 5.5;
   }
 
   public boolean isIgnored() {

@@ -154,11 +154,11 @@ public class RobotContainer {
     JoystickButton leftBumper_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperLeft.value);
     JoystickButton rightBumper_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperRight.value);
     
-    buttonX.whileHeld(new IntakeSpeed(-1));
+    buttonX.whileHeld(new IntakeSpeed(-0.8));
     buttonA.whenPressed(new ToggleIntake());
     buttonY.whileHeld(new ConveyorSpeed(.5));
     buttonB.whileHeld(new IntakeSpeed(.5));
-    leftBumper.whileHeld(new ConveyorSpeed(-.8));
+    leftBumper.whileHeld(new ConveyorSpeed(-.7));
     rightBumper.whileHeld(new SetShooterSpeed());
     back.whileHeld(new ZeroNavX());
     

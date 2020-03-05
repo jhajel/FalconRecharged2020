@@ -31,7 +31,7 @@ public class Shooter extends SubsystemBase {
   
 
 
-  // The PID values below work for inner port at 3750 RPM <- Input Num
+  // The PID values below work for inner port at 3600 RPM <- Input Num
   // 3325 Works 1 Robot Back <- Input Actual RPM (3300)
 
 

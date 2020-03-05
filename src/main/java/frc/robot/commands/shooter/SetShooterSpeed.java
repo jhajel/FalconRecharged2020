@@ -28,7 +28,7 @@ public class SetShooterSpeed extends CommandBase {
   public SetShooterSpeed() {    
     
     SmartDashboard.putNumber("Current Shooter RPM", 0);
-    SmartDashboard.putNumber("Input Shooter RPM", SmartDashboard.getNumber("Input Shooter RPM", 3750));
+    SmartDashboard.putNumber("Input Shooter RPM", SmartDashboard.getNumber("Input Shooter RPM", 3600));
     SmartDashboard.putNumber("Input pidF", SmartDashboard.getNumber("Input pidF", 0.04928));
     SmartDashboard.putNumber("Input pidP", SmartDashboard.getNumber("Input pidP", 0.1));
     SmartDashboard.putNumber("Input pidI", SmartDashboard.getNumber("Input pidI", 0));
@@ -51,7 +51,7 @@ public class SetShooterSpeed extends CommandBase {
     //shooterMotor.setSpeed(mXboxController.getY(Hand.kRight));
     // if(RobotContainer.getContainer().getOperatorController().getXButtonPressed())
     // {
-      this.speed = SmartDashboard.getNumber("Input Shooter RPM", 3750);
+      this.speed = SmartDashboard.getNumber("Input Shooter RPM", 3600);
       shooter.setSpeed(-speed);
       this.pidF = SmartDashboard.getNumber("Input pidF", 0);
       this.pidP = SmartDashboard.getNumber("Input pidP", 0);
