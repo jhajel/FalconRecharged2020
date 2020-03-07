@@ -7,10 +7,14 @@
 
 package frc.robot.commands.climber;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class MoveBothClimberArms extends CommandBase {
@@ -18,13 +22,16 @@ public class MoveBothClimberArms extends CommandBase {
    * Creates a new MoveBothClimberArms.
    */
   private double distance;
-  private CANSparkMax masterArm;
-  private CANSparkMax slaveArm;
+  private TalonFX masterArm;
+  private TalonFX slaveArm;
+  // private CANSparkMax masterArm;
+  // private CANSparkMax slaveArm;
   private double initPos;
   private double targetPos;
-  public MoveBothClimberArms(double inch, CANSparkMax a1, CANSparkMax a2) {
+  
+  public MoveBothClimberArms(double inch, TalonFX a1, TalonFX a2) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getClimber());
+    addRequirements(RobotContainer.getContainer().getClimberT());
     masterArm = a1;
     slaveArm = a2;
     distance = inch;
@@ -33,10 +40,12 @@ public class MoveBothClimberArms extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    slaveArm.follow(masterArm,true);
-    initPos = masterArm.getEncoder().getPosition();
+    slaveArm.set(ControlMode.Follower, Constants.CLIMBER1_TALON);
+    // slaveArm.follow(masterArm,true);
+    initPos = masterArm.getSelectedSensorPosition();
     targetPos = initPos + (distance*36)/(1.9*Math.PI);
-    masterArm.getPIDController().setReference(targetPos,ControlType.kPosition);
+    masterArm.set(TalonFXControlMode.Position, targetPos);
+    //masterArm.getPIDController().setReference(targetPos,ControlType.kPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -52,6 +61,6 @@ public class MoveBothClimberArms extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(targetPos - masterArm.getEncoder().getPosition()) < 0.1;
+    return Math.abs(targetPos - masterArm.getSelectedSensorPosition()) < 0.1;
   }
 }

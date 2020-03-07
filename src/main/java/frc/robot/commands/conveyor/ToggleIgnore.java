@@ -16,12 +16,12 @@ import frc.robot.RobotContainer;
 public class ToggleIgnore extends InstantCommand {
   public ToggleIgnore() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getConveyor());
+    addRequirements(RobotContainer.getContainer().getConveyorT());
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.getContainer().getConveyor().toggleIgnore();
+    RobotContainer.getContainer().getConveyorT().toggleIgnore();
   }
 }

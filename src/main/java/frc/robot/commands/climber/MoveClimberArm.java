@@ -7,6 +7,8 @@
 
 package frc.robot.commands.climber;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 
@@ -19,21 +21,23 @@ public class MoveClimberArm extends CommandBase {
    */
   private double initPos;
   private double targetPosition;
-  private CANSparkMax arm;
+  private TalonFX arm;
+  //private CANSparkMax arm;
   private double inch;
-  public MoveClimberArm(double inches, CANSparkMax arm) {
+  public MoveClimberArm(double inches, TalonFX arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
     this.inch = inches;
-    addRequirements(RobotContainer.getContainer().getClimber());
+    addRequirements(RobotContainer.getContainer().getClimberT());
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    initPos = arm.getEncoder().getPosition();
+    initPos = arm.getSelectedSensorPosition();
     targetPosition = initPos + (inch*36)/(1.9*Math.PI); // 1 inch = 6.03 ticks
-    arm.getPIDController().setReference(targetPosition, ControlType.kPosition);
+    arm.set(TalonFXControlMode.Position, targetPosition);
+    //arm.getPIDController().setReference(targetPosition, ControlType.kPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -51,7 +55,7 @@ public class MoveClimberArm extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    return Math.abs(targetPosition - arm.getEncoder().getPosition()) < 0.1;
+    return Math.abs(targetPosition - arm.getSelectedSensorPosition()) < 0.1;
 
   }
 }

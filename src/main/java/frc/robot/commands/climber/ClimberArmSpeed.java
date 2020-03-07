@@ -31,8 +31,8 @@ public class ClimberArmSpeed extends CommandBase {
     double speed1 = MathUtils.deadband(RobotContainer.getContainer().getOperatorController().getRawAxis(1));
     double speed2 = MathUtils.deadband(RobotContainer.getContainer().getOperatorController().getRawAxis(5));
     // if(RobotContainer.getContainer().getClimbController().get)
-    RobotContainer.getContainer().getClimber().moveUpperArm(speed1);
-    RobotContainer.getContainer().getClimber().moveLowerArm(speed2);
+    RobotContainer.getContainer().getClimberT().moveUpperArm(speed1);
+    RobotContainer.getContainer().getClimberT().moveLowerArm(speed2);
   }
 
   // Called once the command ends or is interrupted.

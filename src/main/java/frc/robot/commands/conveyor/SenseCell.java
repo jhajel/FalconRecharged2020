@@ -17,7 +17,7 @@ public class SenseCell extends CommandBase {
   private boolean seen;
   public SenseCell() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getConveyor());
+    addRequirements(RobotContainer.getContainer().getConveyorT());
     seen = false;
   }
 
@@ -30,14 +30,14 @@ public class SenseCell extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    seen = RobotContainer.getContainer().getConveyor().getStatus() && !RobotContainer.getContainer().getConveyor().isIgnored();
+    seen = RobotContainer.getContainer().getConveyorT().getStatus() && !RobotContainer.getContainer().getConveyorT().isIgnored();
     if(seen)
     {
-      RobotContainer.getContainer().getConveyor().setConveyerSpeed(-.5);
+      RobotContainer.getContainer().getConveyorT().setConveyorSpeed(-.5);
     }
     else
     {
-      RobotContainer.getContainer().getConveyor().setConveyerSpeed(0);
+      RobotContainer.getContainer().getConveyorT().setConveyorSpeed(0);
     }
   }
 

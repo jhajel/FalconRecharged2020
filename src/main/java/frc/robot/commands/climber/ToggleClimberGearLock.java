@@ -8,14 +8,14 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberTalon;
 
 public class ToggleClimberGearLock extends InstantCommand {
   /**
    * Creates a new ToggleClimberGearLock.
    */
-  private Climber climber;
-  public ToggleClimberGearLock(Climber climber) {
+  private ClimberTalon climber;
+  public ToggleClimberGearLock(ClimberTalon climber) {
     this.climber = climber;
     addRequirements(climber);
     

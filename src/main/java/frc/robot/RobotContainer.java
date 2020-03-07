@@ -25,9 +25,11 @@ import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.SetShooterSpeed;
 import frc.robot.commands.swervedrive.*;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberTalon;
 import frc.robot.subsystems.Color.ColorPanelSpinner;
 import frc.robot.subsystems.Color.ColorSensor;
 import frc.robot.subsystems.Conveyor;
+import frc.robot.subsystems.ConveyorTalon;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
@@ -55,10 +57,12 @@ public class RobotContainer {
   private ColorSensor colorSensor;
   private Limelight limelight;
   private Conveyor conveyor;
+  private ConveyorTalon conveyorT;
   private Intake intake;
   private Shooter shooterMotor;
   private Compressor compressor;
   private Climber climber;
+  private ClimberTalon climberT;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -74,11 +78,15 @@ public class RobotContainer {
     mXboxController2 = new XboxController(1);
     limelight = new Limelight();
     conveyor = new Conveyor();
+    conveyorT = new ConveyorTalon();
     intake = new Intake();
     shooterMotor = new Shooter();
     compressor = new Compressor();
     climber = new Climber();
+    climberT = new ClimberTalon();
     configureButtonBindings();
+    conveyorT.setDefaultCommand(new SenseCell());
+    climberT.setDefaultCommand(new ClimberArmSpeed());
     conveyor.setDefaultCommand(new SenseCell());
     climber.setDefaultCommand(new ClimberArmSpeed());
   }
@@ -120,6 +128,10 @@ public class RobotContainer {
     return conveyor;
   }
 
+  public ConveyorTalon getConveyorT(){
+    return conveyorT;
+  }
+
   public Intake getIntake() {
     return intake;
   }
@@ -130,6 +142,10 @@ public class RobotContainer {
 
   public Climber getClimber() {
     return climber;
+  }
+
+  public ClimberTalon getClimberT() {
+    return climberT;
   }
 
   /**
@@ -147,12 +163,14 @@ public class RobotContainer {
     JoystickButton rightBumper = new JoystickButton(mXboxController, XboxController.Button.kBumperRight.value);
     JoystickButton back = new JoystickButton(mXboxController, XboxController.Button.kBack.value);
 
+
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2, XboxController.Button.kA.value);
     JoystickButton buttonX_2 = new JoystickButton(mXboxController2, XboxController.Button.kX.value);
     JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
     JoystickButton buttonY_2 = new JoystickButton(mXboxController2, XboxController.Button.kY.value);
     JoystickButton leftBumper_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperLeft.value);
     JoystickButton rightBumper_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperRight.value);
+    
     
     buttonX.whileHeld(new IntakeSpeed(-0.8));
     buttonA.whenPressed(new ToggleIntake());
@@ -167,7 +185,10 @@ public class RobotContainer {
     buttonX_2.whenPressed(new ToggleClimberGearLock(climber));
     buttonY_2.whenPressed(new SemiAutoClimb());
     buttonB_2.whenPressed(new SemiAutoPullUp());
+    
   }
+
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

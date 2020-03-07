@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.climber.ClimberArmSpeed;
+//import jdk.vm.ci.meta.Constant;
 
 public class Climber extends SubsystemBase {
   /**
@@ -76,7 +77,7 @@ public class Climber extends SubsystemBase {
     SmartDashboard.putBoolean("Right Limit", rightLimit.get());
     SmartDashboard.putNumber("Left Encoder Pos", upperArm.getEncoder().getPosition());
     SmartDashboard.putNumber("Right Encoder Pos", lowerArm.getEncoder().getPosition());
-  }
+   }
 
   public void moveLowerArm(double speed)
   {

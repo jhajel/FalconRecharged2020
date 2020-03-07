@@ -17,7 +17,7 @@ public class ConveyorSpeed extends CommandBase {
   private double speed;
   public ConveyorSpeed(double speed) {
     this.speed = speed;
-    addRequirements(RobotContainer.getContainer().getConveyor());
+    addRequirements(RobotContainer.getContainer().getConveyorT());
   }
 
   // Called when the command is initially scheduled.
@@ -28,13 +28,13 @@ public class ConveyorSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.getContainer().getConveyor().setConveyerSpeed(speed);
+    RobotContainer.getContainer().getConveyorT().setConveyorSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.getContainer().getConveyor().setConveyerSpeed(0);
+    RobotContainer.getContainer().getConveyorT().setConveyorSpeed(0);
   }
 
   // Returns true when the command should end.
