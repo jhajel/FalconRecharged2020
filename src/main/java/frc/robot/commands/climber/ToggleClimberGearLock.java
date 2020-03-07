@@ -26,4 +26,5 @@ public class ToggleClimberGearLock extends InstantCommand {
   public void initialize() {
     climber.toggleClimberGearLock();
   }
+  
 }

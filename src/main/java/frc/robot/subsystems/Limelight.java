@@ -11,43 +11,30 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight extends SubsystemBase  {
   /**
    * Creates a new Limelight.
    */
 
-  public static double intakeX;
-  public static double intakeY;
-  public static double intakeA;
-  public static double shooterX;
-  public static double shooterY;
-  public static double shooterA;
-  
-  private SendableChooser<Integer> intakeMode;
-
-  public NetworkTable intakeLL = NetworkTableInstance.getDefault().getTable("limelight-intake"); // 10.55.7.12
-  public NetworkTable shooterLL = NetworkTableInstance.getDefault().getTable("limelight-shooter"); // 10.55.7.11
-  public NetworkTableEntry inX = intakeLL.getEntry("tx");
-  public NetworkTableEntry inY = intakeLL.getEntry("ty");
-  public NetworkTableEntry inA = intakeLL.getEntry("ta");
-  public NetworkTableEntry shX = shooterLL.getEntry("tx");
-  public NetworkTableEntry shY = shooterLL.getEntry("ty");
-  public NetworkTableEntry shA = shooterLL.getEntry("ta");
+  public static double limelightx;
+  public static double limelighty;
+  public static double limelighta;
+  public NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-color");
+  public NetworkTableEntry tx = table.getEntry("tx");
+  public NetworkTableEntry ty = table.getEntry("ty");
+  public NetworkTableEntry ta = table.getEntry("ta");
+  public NetworkTableEntry tv = table.getEntry("tv");
+  private boolean isLEDMode;
+  private boolean isTapePipeline;
 
   public Limelight() {
-    intakeX = inX.getDouble(0.0);
-    intakeY = inY.getDouble(0.0);
-    intakeA = inA.getDouble(0.0);
-    shooterA = shA.getDouble(0.0);
-    shooterX = shX.getDouble(0.0);
-    shooterY = shY.getDouble(0.0);
-    intakeMode = new SendableChooser<Integer>();
-    intakeMode.setDefaultOption("Vison Mode", 0);
-    intakeMode.addOption("Cam Mode", 1);
-    SmartDashboard.putData(intakeMode);
+    limelightx = tx.getDouble(0.0);
+    limelighty = ty.getDouble(0.0);
+    limelighta = ta.getDouble(0.0);
+    isLEDMode = false;
+    isTapePipeline = true;
+    // setDefaultCommand(new ShowLimelight(this));
   }
 
   public void printInfo() {
@@ -57,23 +44,42 @@ public class Limelight extends SubsystemBase  {
     // SmartDashboard.putNumber("Current Pipeline", table.getEntry("pipeline").getDouble(-1));
   }
 
-  public void setIntakeCam(int x)
+  public void setLEDMode() {
+    table.getEntry("ledMode").setDouble(3);
+    table.getEntry("camMode").setDouble(0);
+  }
+
+  public void setCamMode() {
+    table.getEntry("camMode").setDouble(1);
+    table.getEntry("ledMode").setDouble(1);
+  }
+
+  public void switchLimeMode() {
+
+    if (!isLEDMode) {
+      setLEDMode();
+      isLEDMode = true;
+    } else {
+      setCamMode();
+      isLEDMode = false;
+    }
+  }
+
+  public void switchPipeline()
   {
-    if(x == 1)
-    {
-      intakeLL.getEntry("ledMode").setDouble(1);
-      intakeLL.getEntry("camMode").setDouble(x);
+    if(isTapePipeline) {
+      table.getEntry("pipeline").setDouble(1);
+      isTapePipeline = !isTapePipeline;
     }
-    else
-    {
-      intakeLL.getEntry("ledMode").setDouble(3);
-      intakeLL.getEntry("camMode").setDouble(x);
+    else{
+      table.getEntry("pipeline").setDouble(0);
+      isTapePipeline = !isTapePipeline;
     }
+    
   }
 
   @Override
   public void periodic() {
-    
-    setIntakeCam(intakeMode.getSelected());
+    printInfo();
   }
 }
