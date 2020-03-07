@@ -32,7 +32,7 @@ public class HolonomicDriveCommand extends CommandBase {
 	@Override
 	public void execute() {
 		mXboxController = RobotContainer.getContainer().getDriveController();
-		if(mDrivetrain.getIsAuto())
+		if(RobotContainer.getContainer().getHolonomicDrivetrain().getIsAuto())
 		{
 			mDrivetrain.setFieldOriented(false);
 		}

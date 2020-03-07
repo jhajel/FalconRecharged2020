@@ -178,7 +178,7 @@ public class RobotContainer {
     buttonX.whenPressed(new AutoDelayToScore());
 
     // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
-     buttonB_2.whenPressed(new SemiAutoClimb());
+    // buttonB_2.whenPressed(new SemiAutoClimb());
     // // buttonB_2.whenPressed(new MoveClimberArm(7, getClimber().getUpperArm()));
     // buttonX_2.whenPressed(new SemiAutoPullUp());
     // buttonX_2.whenPressed(new MoveClimberArm(-7, getClimber().getLowerArm()));
@@ -193,9 +193,9 @@ public class RobotContainer {
     // buttonA.whenPressed(new MoveConveyorDistance(-5));
     // buttonB.whenPressed(new ShooterSwitchArmMode());
 
-    buttonX_2.whenPressed(new SpinToPosition());
-    buttonY_2.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
-    buttonA_2.whenPressed(new ToggleSpinner(colorPanelSpinner));
+    // buttonX_2.whenPressed(new SpinToPosition());
+    // buttonY_2.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
+    // buttonA_2.whenPressed(new ToggleSpinner(colorPanelSpinner));
 
     // buttonX.whenPressed(new SwitchLimelightMode(limelight));
   }
@@ -211,7 +211,11 @@ public class RobotContainer {
 
   }
 
-  public TrajectoryMaker createfrontScorePath() //Test Path
+  public TrajectoryMaker createfrontScorePath() //Test Path neg for stage 1 pos for stage 2
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-3, 0, new Rotation2d(0)), true);
+  }
+  public TrajectoryMaker createScoreToInitLinePath() //Test Path
   {
     return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
   }
