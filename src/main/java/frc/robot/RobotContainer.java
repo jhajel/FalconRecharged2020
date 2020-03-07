@@ -182,7 +182,7 @@ public class RobotContainer {
     
 
     buttonA_2.whenPressed(new ToggleIgnore());
-    buttonX_2.whenPressed(new ToggleClimberGearLock(climber));
+    buttonX_2.whenPressed(new ToggleClimberGearLock(climberT));
     buttonY_2.whenPressed(new SemiAutoClimb());
     buttonB_2.whenPressed(new SemiAutoPullUp());
     
