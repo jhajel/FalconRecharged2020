@@ -29,7 +29,7 @@ public class AutoPath1 extends SequentialCommandGroup {
     // super( new Autonomous(RobotContainer.getContainer().createAutonomousPath().getTrajectory(), RobotContainer.getContainer().createAutonomousPath().getAngle()),
     //        new Autonomous(RobotContainer.getContainer().createAutonomousPath1().getTrajectory(), RobotContainer.getContainer().createAutonomousPath1().getAngle()),
     //        new Autonomous(RobotContainer.getContainer().createAutonomousPath2().getTrajectory(), RobotContainer.getContainer().createAutonomousPath2().getAngle())); 
-    super( new Autonomous(RobotContainer.getContainer().createfrontScorePath().getTrajectory(), RobotContainer.getContainer().createfrontScorePath().getAngle()));
+    super(); //new Autonomous(RobotContainer.getContainer().createfrontScorePath().getTrajectory(), RobotContainer.getContainer().createfrontScorePath().getAngle()));
           // new ConveyorSpeed(-1).withTimeout(1.5),
            //new Autonomous(RobotContainer.getContainer().createScoreToInitLinePath().getTrajectory(), RobotContainer.getContainer().createScoreToInitLinePath().getAngle()));
   }

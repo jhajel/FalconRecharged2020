@@ -19,10 +19,10 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 	private static final double WHEELBASE = 22.5; 
 	private static final double TRACKWIDTH = 22.5;	
 	private static final double RATIO = Math.sqrt(Math.pow(WHEELBASE, 2) + Math.pow(TRACKWIDTH, 2));
-	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 148); //2020: 70
-	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 290); //2020: 211
-	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), -80); //2020: 307
-	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 150); //2020: 150
+	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 254); //2020: 70
+	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 336); //2020: 211
+	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), 91); //2020: 307
+	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 214); //2020: 150
 	private boolean isAuto;
 
 	/*
@@ -183,6 +183,14 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		}
 	}
 
+	public void swapDrivePIDSlot(int slot)
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			mSwerveModules[i].setDrivePIDSlot(slot);
+		}
+	}
+
 	public void driveSidewaysDistance(double targetPos, double angle, double speed) {
 		double angleError = ((angle - mNavX.getYaw()) / 180)*10;
 		angleError = Math.min(angleError, 1);
@@ -210,6 +218,10 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		SmartDashboard.putBoolean("Mod 1 Motor Inversion", mSwerveModules[1].getDriveMotor().getInverted());
 		SmartDashboard.putBoolean("Mod 2 Motor Inversion", mSwerveModules[2].getDriveMotor().getInverted());
 		SmartDashboard.putBoolean("Mod 3 Motor Inversion", mSwerveModules[3].getDriveMotor().getInverted());
+		SmartDashboard.putNumber("Mod 0 Angle", m0.getCurrentAngle());
+		SmartDashboard.putNumber("Mod 1 Angle", m1.getCurrentAngle());
+		SmartDashboard.putNumber("Mod 2 Angle", m2.getCurrentAngle());
+		SmartDashboard.putNumber("Mod 3 Angle", m3.getCurrentAngle());
 	}
 }
 

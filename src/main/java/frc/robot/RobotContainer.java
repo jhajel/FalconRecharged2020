@@ -164,8 +164,8 @@ public class RobotContainer {
     JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2,XboxController.Button.kA.value);
     // buttonX.whenHeld(new IntakeSpeed(.5));
-    //buttonA.whenHeld(new IntakeSpeed(-1));
-    buttonA.whenHeld(new ConveyorSpeed(-1));
+    buttonA.whenHeld(new IntakeSpeed(-1));
+    //buttonA.whenHeld(new ConveyorSpeed(-1));
     //buttonB.whenPressed(new ToggleIntake());
     buttonY.whenPressed(new ZeroNavX());
     // buttonY.whileHeld(new IntakeSpeed(.5));
@@ -177,10 +177,11 @@ public class RobotContainer {
     //buttonB.whenPressed(new ToggleIntake());
     buttonX.whenPressed(new AutoDelayToScore());
 
+
     // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
-    // buttonB_2.whenPressed(new SemiAutoClimb());
+     buttonB_2.whenPressed(new SemiAutoClimb());
     // // buttonB_2.whenPressed(new MoveClimberArm(7, getClimber().getUpperArm()));
-    // buttonX_2.whenPressed(new SemiAutoPullUp());
+    // buttonX_2.whenPressed(new SemiAutoPullUp()); 
     // buttonX_2.whenPressed(new MoveClimberArm(-7, getClimber().getLowerArm()));
 
     // buttonB.whenPressed(new DriveForwardDistance(3, .3));
@@ -193,9 +194,10 @@ public class RobotContainer {
     // buttonA.whenPressed(new MoveConveyorDistance(-5));
     // buttonB.whenPressed(new ShooterSwitchArmMode());
 
-    // buttonX_2.whenPressed(new SpinToPosition());
-    // buttonY_2.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
-    // buttonA_2.whenPressed(new ToggleSpinner(colorPanelSpinner));
+    buttonX_2.whenPressed(new SpinToPosition());
+    buttonY_2.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
+    buttonA_2.whenPressed(new ToggleSpinner(colorPanelSpinner));
+
 
     // buttonX.whenPressed(new SwitchLimelightMode(limelight));
   }
@@ -211,13 +213,14 @@ public class RobotContainer {
 
   }
 
-  public TrajectoryMaker createfrontScorePath() //Test Path neg for stage 1 pos for stage 2
+  public TrajectoryMaker createSidePath() //Test Path
   {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-3, 0, new Rotation2d(0)), true);
+    //return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2.77, 0.2, new Rotation2d(0)), true);
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, -2, new Rotation2d(0)), true);
   }
-  public TrajectoryMaker createScoreToInitLinePath() //Test Path
+  public TrajectoryMaker createForwardPath() //Test Path
   {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-4.1, 0, new Rotation2d(0)), true);
   }
 
   public TrajectoryMaker createPortToFrontofTrench()

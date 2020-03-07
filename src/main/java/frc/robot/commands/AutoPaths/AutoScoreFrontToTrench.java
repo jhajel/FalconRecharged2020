@@ -22,18 +22,18 @@ public class AutoScoreFrontToTrench extends SequentialCommandGroup {
    * Creates a new AutoScoreFrontToTrench.
    */
   public AutoScoreFrontToTrench() {
+    super();
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new Autonomous(RobotContainer.getContainer().createfrontScorePath().getTrajectory(), RobotContainer.getContainer().createfrontScorePath().getAngle()), 
-          new ConveyorSpeed(-1).withTimeout(1.5), 
-          new Autonomous(RobotContainer.getContainer().createPortToFrontofTrench().getTrajectory(), 0.0),
-          new ToggleIntake(),
-          new IntakeSpeed(-0.8).raceWith(new Autonomous(RobotContainer.getContainer().createMoveDownTrench().getTrajectory(), RobotContainer.getContainer().createMoveDownTrench().getAngle()))
+    // super(new Autonomous(RobotContainer.getContainer().createfrontScorePath().getTrajectory(), RobotContainer.getContainer().createfrontScorePath().getAngle()), 
+    //       new ConveyorSpeed(-1).withTimeout(1.5), 
+    //       new Autonomous(RobotContainer.getContainer().createPortToFrontofTrench().getTrajectory(), 0.0),
+    //       new ToggleIntake(),
+    //       new IntakeSpeed(-0.8).raceWith(new Autonomous(RobotContainer.getContainer().createMoveDownTrench().getTrajectory(), RobotContainer.getContainer().createMoveDownTrench().getAngle()))
 
 
 
 
 
-    );
   }
 }
