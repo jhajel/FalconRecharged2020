@@ -21,8 +21,8 @@ public class SemiAutoClimb extends SequentialCommandGroup {
   public SemiAutoClimb() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new MoveClimberArm(-17.5, RobotContainer.getContainer().getClimberT().getUpperArm()), 
-          new MoveClimberArm(-17.5,RobotContainer.getContainer().getClimberT().getLowerArm()));
+    super(new MoveClimberArm(243438, RobotContainer.getContainer().getClimberT().getUpperArm()), 
+          new MoveClimberArm(-245639,RobotContainer.getContainer().getClimberT().getLowerArm()));
 
   }
 }

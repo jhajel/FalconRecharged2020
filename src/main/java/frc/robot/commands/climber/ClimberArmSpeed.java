@@ -17,7 +17,7 @@ public class ClimberArmSpeed extends CommandBase {
    */
   public  ClimberArmSpeed() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getClimber());
+    addRequirements(RobotContainer.getContainer().getClimberT());
   }
 
   // Called when the command is initially scheduled.
@@ -31,7 +31,7 @@ public class ClimberArmSpeed extends CommandBase {
     double speed1 = MathUtils.deadband(RobotContainer.getContainer().getOperatorController().getRawAxis(1));
     double speed2 = MathUtils.deadband(RobotContainer.getContainer().getOperatorController().getRawAxis(5));
     // if(RobotContainer.getContainer().getClimbController().get)
-    RobotContainer.getContainer().getClimberT().moveUpperArm(speed1);
+    RobotContainer.getContainer().getClimberT().moveUpperArm(-speed1);
     RobotContainer.getContainer().getClimberT().moveLowerArm(speed2);
   }
 

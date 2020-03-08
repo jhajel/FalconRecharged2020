@@ -23,11 +23,11 @@ public class MoveClimberArm extends CommandBase {
   private double targetPosition;
   private TalonFX arm;
   //private CANSparkMax arm;
-  private double inch;
-  public MoveClimberArm(double inches, TalonFX arm) {
+  private double ticks;
+  public MoveClimberArm(double ticks, TalonFX arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
-    this.inch = inches;
+    this.ticks = ticks;
     addRequirements(RobotContainer.getContainer().getClimberT());
   }
 
@@ -35,7 +35,7 @@ public class MoveClimberArm extends CommandBase {
   @Override
   public void initialize() {
     initPos = arm.getSelectedSensorPosition();
-    targetPosition = initPos + (inch*36)/(1.9*Math.PI); // 1 inch = 6.03 ticks
+    targetPosition = initPos + ticks; // 1 inch = 6.03 ticks
     arm.set(TalonFXControlMode.Position, targetPosition);
     //arm.getPIDController().setReference(targetPosition, ControlType.kPosition);
   }
@@ -43,6 +43,9 @@ public class MoveClimberArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("Actual Pos:" + this.arm.getSelectedSensorPosition());
+    System.out.println("Expected Pos:" + targetPosition);
+    System.out.println("Diff " + (targetPosition - this.arm.getSelectedSensorPosition()));
   }
 
 
@@ -55,7 +58,7 @@ public class MoveClimberArm extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    return Math.abs(targetPosition - arm.getSelectedSensorPosition()) < 0.1;
+    return Math.abs(targetPosition - arm.getSelectedSensorPosition()) < 500;
 
   }
 }

@@ -8,6 +8,7 @@
 package frc.robot.commands.climber;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
@@ -28,24 +29,23 @@ public class MoveBothClimberArms extends CommandBase {
   // private CANSparkMax slaveArm;
   private double initPos;
   private double targetPos;
-  
-  public MoveBothClimberArms(double inch, TalonFX a1, TalonFX a2) {
+
+  public MoveBothClimberArms(double ticks, TalonFX a1, TalonFX a2) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getContainer().getClimberT());
     masterArm = a1;
     slaveArm = a2;
-    distance = inch;
+    distance = ticks;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    slaveArm.setInverted(InvertType.OpposeMaster);
     slaveArm.set(ControlMode.Follower, Constants.CLIMBER1_TALON);
-    // slaveArm.follow(masterArm,true);
     initPos = masterArm.getSelectedSensorPosition();
-    targetPos = initPos + (distance*36)/(1.9*Math.PI);
+    targetPos = initPos + distance;
     masterArm.set(TalonFXControlMode.Position, targetPos);
-    //masterArm.getPIDController().setReference(targetPos,ControlType.kPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -61,6 +61,6 @@ public class MoveBothClimberArms extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(targetPos - masterArm.getSelectedSensorPosition()) < 0.1;
+    return Math.abs(targetPos - masterArm.getSelectedSensorPosition()) < 600;
   }
 }

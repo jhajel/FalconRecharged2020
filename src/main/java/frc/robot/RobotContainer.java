@@ -77,18 +77,18 @@ public class RobotContainer {
     mXboxController = new XboxController(0);
     mXboxController2 = new XboxController(1);
     limelight = new Limelight();
-    conveyor = new Conveyor();
+    //conveyor = new Conveyor();
     conveyorT = new ConveyorTalon();
     intake = new Intake();
     shooterMotor = new Shooter();
     compressor = new Compressor();
-    climber = new Climber();
+    //climber = new Climber();
     climberT = new ClimberTalon();
     configureButtonBindings();
     conveyorT.setDefaultCommand(new SenseCell());
     climberT.setDefaultCommand(new ClimberArmSpeed());
-    conveyor.setDefaultCommand(new SenseCell());
-    climber.setDefaultCommand(new ClimberArmSpeed());
+    //conveyor.setDefaultCommand(new SenseCell());
+    //climber.setDefaultCommand(new ClimberArmSpeed());
   }
 
   public Shooter getShooterMotor() {
@@ -124,9 +124,9 @@ public class RobotContainer {
     return limelight;
   }
 
-  public Conveyor getConveyor() {
-    return conveyor;
-  }
+  // public Conveyor getConveyor() {
+  //   return conveyor;
+  // }
 
   public ConveyorTalon getConveyorT(){
     return conveyorT;
@@ -140,9 +140,9 @@ public class RobotContainer {
     return compressor;
   }
 
-  public Climber getClimber() {
-    return climber;
-  }
+  // public Climber getClimber() {
+  //   return climber;
+  // }
 
   public ClimberTalon getClimberT() {
     return climberT;

@@ -28,24 +28,26 @@ public class ClimberTalon extends SubsystemBase {
   private DigitalInput rightLimit;
 
   public ClimberTalon() {
-    lowerArm = new TalonFX(Constants.CLIMBER1_TALON); 
-    upperArm = new TalonFX(Constants.CLIMBER2_TALON);
+    upperArm = new TalonFX(Constants.CLIMBER1_TALON); //left is upper
+    lowerArm = new TalonFX(Constants.CLIMBER2_TALON); //right lower
     climberGearLock = new DoubleSolenoid(Constants.CLIMBERFORWARD_SOLENOID,Constants.CLIMBERREVERSE_SOLENOID);
     leftLimit = new DigitalInput(1);
     rightLimit = new DigitalInput(2);
     climberGearLock.set(Value.kReverse);  
-    lowerArm.config_kP(0, .2, 0);
-    lowerArm.config_kI(0, 0, 0);
-    lowerArm.config_kD(0, .0002, 0);
-    upperArm.config_kP(0, .2, 0);
-    upperArm.config_kI(0, 0, 0);
-    upperArm.config_kD(0, .0002, 0);
+    lowerArm.config_kP(0, .08, 0);
+    lowerArm.config_kI(0, 0.00, 0);
+    lowerArm.config_kD(0, 0, 0);
+    lowerArm.config_kF(0, 0, 0);
+    upperArm.config_kP(0, .08, 0);
+    upperArm.config_kI(0, 0.000, 0);
+    upperArm.config_kD(0, 0, 0);
+    upperArm.config_kF(0, 0, 0);
 
-    lowerArm.configForwardSoftLimitThreshold(-2);
-    lowerArm.configReverseSoftLimitThreshold(-119);
+    lowerArm.configForwardSoftLimitThreshold(-8469); //8469
+    lowerArm.configReverseSoftLimitThreshold(-245639); //245639
 
-    upperArm.configForwardSoftLimitThreshold(-2);
-    upperArm.configReverseSoftLimitThreshold(-119);
+    upperArm.configForwardSoftLimitThreshold(243438);
+    upperArm.configReverseSoftLimitThreshold(10263);
 
     lowerArm.configForwardSoftLimitEnable(true);
     lowerArm.configReverseSoftLimitEnable(true);
@@ -83,7 +85,7 @@ public class ClimberTalon extends SubsystemBase {
   public void moveUpperArm(double speed){
     upperArm.set(ControlMode.PercentOutput, speed);
   }
-  
+
   public TalonFX getLowerArm(){
     return lowerArm;
   }

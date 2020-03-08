@@ -17,12 +17,12 @@ package frc.robot;
  */
 public final class Constants {
     public static final int CONVEYOR_SPARK = 8;
-    public static final int CONVEYOR_TALON = 0; //change id
+    public static final int CONVEYOR_TALON = 8; //change id
     public static final int INTAKE_SPARK = 9;
     public static final int CLIMBER1_SPARK = 10;
     public static final int CLIMBER2_SPARK = 11;
-    public static final int CLIMBER1_TALON = 0; //change id
-    public static final int CLIMBER2_TALON = 0; //change id
+    public static final int CLIMBER1_TALON = 11; //change id
+    public static final int CLIMBER2_TALON = 10; //change id
     public static final int ANGLE1_TALON = 1;
     public static final int ANGLE2_TALON = 3;
     public static final int ANGLE3_TALON = 7;
