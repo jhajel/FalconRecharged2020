@@ -114,7 +114,6 @@ public class SpinToColor extends CommandBase {
         //currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
         updateColor();
 
-
         SmartDashboard.putString("currentColor", currentColor);
         SmartDashboard.putString("previousColor", previousColor);
         SmartDashboard.putNumber("colorCount", colorCount);
