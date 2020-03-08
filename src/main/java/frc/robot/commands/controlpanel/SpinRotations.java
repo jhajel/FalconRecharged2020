@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SpinToPosition extends CommandBase {
+public class SpinRotations extends CommandBase {
     private String startColor;
     private int colorCount;
     private String previousColor;
@@ -31,7 +31,7 @@ public class SpinToPosition extends CommandBase {
     
     private Map<String, String> impossible;
 
-    public SpinToPosition() {
+    public SpinRotations() {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
         addRequirements(RobotContainer.getContainer().getColorPanelSpinner());
         impossible = new HashMap<String, String>();
