@@ -8,24 +8,27 @@
 package frc.robot.commands.AutoPaths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
 import frc.robot.commands.conveyor.ConveyorSpeed;
+import frc.robot.commands.intake.IntakeSpeed;
 import frc.robot.commands.swervedrive.Autonomous;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class AutoDelayToScore extends SequentialCommandGroup {
+public class AutoDumpAndPickup extends SequentialCommandGroup {
   /**
-   * Creates a new AutoDelayToScore.
+   * Creates a new AutoDumpAndPickup.
    */
-  public AutoDelayToScore() {
+  public AutoDumpAndPickup() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(//new WaitCommand(10),
-          new Autonomous(RobotContainer.getContainer().createSidePath().getTrajectory(), RobotContainer.getContainer().createSidePath().getAngle()),
-          new Autonomous(RobotContainer.getContainer().createForwardPath().getTrajectory(), RobotContainer.getContainer().createForwardPath().getAngle()),
-          new ConveyorSpeed(-1).withTimeout(2));
+    super(
+      new Autonomous(RobotContainer.getContainer().createForwardPath2().getTrajectory(), RobotContainer.getContainer().createForwardPath2().getAngle()),
+      new ConveyorSpeed(-1).withTimeout(2),
+      new Autonomous(RobotContainer.getContainer().createBackwardPath().getTrajectory(), RobotContainer.getContainer().createBackwardPath().getAngle()),
+      new Autonomous(RobotContainer.getContainer().createForwardPath3().getTrajectory(), RobotContainer.getContainer().createForwardPath3().getAngle()).raceWith(new IntakeSpeed(-1))
+
+    );
   }
 }

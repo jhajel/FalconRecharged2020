@@ -28,7 +28,9 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AutoPaths.AutoDelayToScore;
+import frc.robot.commands.AutoPaths.AutoRightToScore;
+import frc.robot.commands.AutoPaths.AutoDiagonal;
+import frc.robot.commands.AutoPaths.AutoDumpAndPickup;
 import frc.robot.commands.AutoPaths.AutoPath1;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
@@ -164,7 +166,8 @@ public class RobotContainer {
     JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2,XboxController.Button.kA.value);
     // buttonX.whenHeld(new IntakeSpeed(.5));
-    buttonA.whenHeld(new IntakeSpeed(-1));
+    //buttonA.whenHeld(new IntakeSpeed(-1));
+    //buttonB.whenHeld(new ConveyorSpeed(-1));
     //buttonA.whenHeld(new ConveyorSpeed(-1));
     //buttonB.whenPressed(new ToggleIntake());
     buttonY.whenPressed(new ZeroNavX());
@@ -175,7 +178,8 @@ public class RobotContainer {
     //buttonY.whenPressed(new SwitchPipeline());
     //buttonX.whenPressed(new SwitchLimelightMode());
     //buttonB.whenPressed(new ToggleIntake());
-    buttonX.whenPressed(new AutoDelayToScore());
+    //buttonX.whenPressed(new AutoDelayToScore());
+    buttonX.whenPressed(new AutoDumpAndPickup());
 
 
     // buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
@@ -222,6 +226,24 @@ public class RobotContainer {
   {
     return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-4.1, 0, new Rotation2d(0)), true);
   }
+  public TrajectoryMaker createDiagonalPath() //Test Path
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(1, 1, new Rotation2d(0)), true);
+  }
+  public TrajectoryMaker createForwardPath2() //Test Path
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-2.77, 0, new Rotation2d(0)), true);
+  }
+  public TrajectoryMaker createBackwardPath() //Test Path
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2.77, 0, new Rotation2d(0)), true);
+  }
+  public TrajectoryMaker createForwardPath3() //Test Path
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), true);
+  }
+  
+
 
   public TrajectoryMaker createPortToFrontofTrench()
     {
