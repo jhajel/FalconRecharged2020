@@ -9,6 +9,8 @@ package frc.robot;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.databind.ser.impl.FailingSerializer;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -22,13 +24,12 @@ import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
 import frc.robot.commands.conveyor.*;
 import frc.robot.commands.intake.*;
+import frc.robot.commands.shooter.AutoShoot;
 import frc.robot.commands.shooter.SetShooterSpeed;
 import frc.robot.commands.swervedrive.*;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ClimberTalon;
 import frc.robot.subsystems.Color.ColorPanelSpinner;
 import frc.robot.subsystems.Color.ColorSensor;
-import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.ConveyorTalon;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -56,12 +57,10 @@ public class RobotContainer {
   private ColorPanelSpinner colorPanelSpinner;
   private ColorSensor colorSensor;
   private Limelight limelight;
-  private Conveyor conveyor;
   private ConveyorTalon conveyorT;
   private Intake intake;
   private Shooter shooterMotor;
   private Compressor compressor;
-  private Climber climber;
   private ClimberTalon climberT;
 
   /**
@@ -77,18 +76,14 @@ public class RobotContainer {
     mXboxController = new XboxController(0);
     mXboxController2 = new XboxController(1);
     limelight = new Limelight();
-    //conveyor = new Conveyor();
     conveyorT = new ConveyorTalon();
     intake = new Intake();
     shooterMotor = new Shooter();
     compressor = new Compressor();
-    //climber = new Climber();
     climberT = new ClimberTalon();
     configureButtonBindings();
     conveyorT.setDefaultCommand(new SenseCell());
     climberT.setDefaultCommand(new ClimberArmSpeed());
-    //conveyor.setDefaultCommand(new SenseCell());
-    //climber.setDefaultCommand(new ClimberArmSpeed());
   }
 
   public Shooter getShooterMotor() {
@@ -124,10 +119,6 @@ public class RobotContainer {
     return limelight;
   }
 
-  // public Conveyor getConveyor() {
-  //   return conveyor;
-  // }
-
   public ConveyorTalon getConveyorT(){
     return conveyorT;
   }
@@ -139,11 +130,6 @@ public class RobotContainer {
   public Compressor getCompressor() {
     return compressor;
   }
-
-  // public Climber getClimber() {
-  //   return climber;
-  // }
-
   public ClimberTalon getClimberT() {
     return climberT;
   }
@@ -162,6 +148,7 @@ public class RobotContainer {
     JoystickButton leftBumper = new JoystickButton(mXboxController, XboxController.Button.kBumperLeft.value);
     JoystickButton rightBumper = new JoystickButton(mXboxController, XboxController.Button.kBumperRight.value);
     JoystickButton back = new JoystickButton(mXboxController, XboxController.Button.kBack.value);
+    JoystickButton start = new JoystickButton(mXboxController, XboxController.Button.kStart.value);
 
 
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2, XboxController.Button.kA.value);
@@ -179,6 +166,7 @@ public class RobotContainer {
     leftBumper.whileHeld(new ConveyorSpeed(-.7));
     rightBumper.whileHeld(new SetShooterSpeed());
     back.whileHeld(new ZeroNavX());
+    start.whenPressed(new AutoShoot());
     
 
     buttonA_2.whenPressed(new ToggleIgnore());

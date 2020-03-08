@@ -8,20 +8,47 @@
 package frc.robot.commands.conveyor;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class ToggleIgnore extends InstantCommand {
-  public ToggleIgnore() {
+  private String toggle;
+  public ToggleIgnore(boolean b) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getContainer().getConveyorT());
+    if(b)
+    {
+      toggle = "true";
+    }
+    else 
+    {
+      toggle = "false";
+    }
+    
   }
 
-  // Called when the command is initially scheduled.
+  public ToggleIgnore() {
+    toggle = "";
+}
+
+// Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.getContainer().getConveyorT().toggleIgnore();
+    if(toggle.equals("true"))
+    {
+      RobotContainer.getContainer().getConveyorT().toggleIgnore(true);
+    }
+    else if( toggle.equals("false"))
+    {
+      RobotContainer.getContainer().getConveyorT().toggleIgnore(false);
+    }
+    else 
+    {
+      RobotContainer.getContainer().getConveyorT().toggleIgnore(!RobotContainer.getContainer().getConveyorT().isIgnored());
+    }
+    
   }
 }

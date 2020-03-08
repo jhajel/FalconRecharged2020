@@ -57,9 +57,10 @@ public class ConveyorTalon extends SubsystemBase {
     return ignore;
   }
 
-  public void toggleIgnore()
+  public void toggleIgnore(boolean toggle)
   {
-    ignore = !ignore;
+    System.out.println(toggle);
+    ignore = toggle;
   }
 
   public double getDistance()
