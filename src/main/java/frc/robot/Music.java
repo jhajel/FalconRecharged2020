@@ -61,17 +61,24 @@ public class Music extends TimedRobot {
      * Shooter - motor2
      * SwerveDriveSubsystem - getSwerveModule[i] - getDriveMotor[0,1,2,3]
      */
-    TalonFX [] _fxes = {RobotContainer.getContainer().getClimberT().getLowerArm(), 
-                        RobotContainer.getContainer().getClimberT().getUpperArm(), 
-                        RobotContainer.getContainer().getConveyorT().getIndexer(), 
-                        RobotContainer.getContainer().getShooterMotor().getmotor1(),
-                        RobotContainer.getContainer().getShooterMotor().getmotor2(),
-                        RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(0).getDriveMotor(),
-                        RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(1).getDriveMotor(),
-                        RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(2).getDriveMotor(),
-                        RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(3).getDriveMotor()
+    // TalonFX [] _fxes = {RobotContainer.getContainer().getClimberT().getLowerArm(), 
+    //                     RobotContainer.getContainer().getClimberT().getUpperArm(), 
+    //                     RobotContainer.getContainer().getConveyorT().getIndexer(), 
+    //                     RobotContainer.getContainer().getShooterMotor().getmotor1(),
+    //                     RobotContainer.getContainer().getShooterMotor().getmotor2(),
+    //                     RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(0).getDriveMotor(),
+    //                     RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(1).getDriveMotor(),
+    //                     RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(2).getDriveMotor(),
+    //                     RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(3).getDriveMotor()
 
-    };
+    // };
+
+    TalonFX [] _fxes = { RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(0).getDriveMotor(),
+        RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(1).getDriveMotor(),
+        RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(2).getDriveMotor(),
+        RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(3).getDriveMotor()
+
+    }
 
     /* An array of songs that are available to be played, can you guess the song/artists? */
     String[] _songs = new String[] {
@@ -79,7 +86,8 @@ public class Music extends TimedRobot {
         "TheBox.chrp",
         "thanks.chrp",
         "Pinwheel.chrp",
-        "smileFlower.chrp"
+        "smileFlower.chrp",
+        "finalcountdown.chrp"
       };
 
     /* track which song is selected for play */
