@@ -5,36 +5,48 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.conveyor;
+package frc.robot.commands.controlpanel;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.RobotContainer;
 
-public class ConveyorSpeed extends CommandBase {
+public class SpinUnoWheel extends CommandBase {
   /**
-   * Creates a new Neo550TicksTest.
+   * Creates a new SpinUnoWheel.
    */
-  private double speed;
-  public ConveyorSpeed(double speed) {
-    this.speed = speed;
-    addRequirements(RobotContainer.getContainer().getConveyor());
+  private static int direction;
+  private CANEncoder encoder;
+  private CANSparkMax moto1;
+  public SpinUnoWheel(int direction) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.direction = direction;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    addRequirements(RobotContainer.getContainer().getColorPanelSpinner());
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.getContainer().getConveyor().setConveyerSpeed(speed);
+    if(direction == -1)
+    RobotContainer.getContainer().getColorPanelSpinner().spin(-0.5);
+    else if(direction == 1)
+    RobotContainer.getContainer().getColorPanelSpinner().spin(0.5);
+
+    SmartDashboard.putNumber("SpinUnoWheel" , RobotContainer.getContainer().getColorPanelSpinner().getPosition());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.getContainer().getConveyor().setConveyerSpeed(0);
   }
 
   // Returns true when the command should end.

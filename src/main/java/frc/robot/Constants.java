@@ -60,5 +60,7 @@ public final class Constants {
     public static final int COLORPANELFORWARD_SOLENOID = 4;
     public static final int COLORPANELREVERSE_SOLENOID = 5;
     public static boolean forward = true;
-    
+    public static final double SPINNER_POSITION_PERCENT = .6;
+    public static final double SPINNER_SPEED = 0.2; //only being used in SpinToMid right now
+
 }

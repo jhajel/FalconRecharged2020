@@ -5,46 +5,59 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.conveyor;
+package frc.robot.commands.controlpanel;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Color.ColorPanelSpinner;
 
-public class SenseCell extends CommandBase {
+public class SpinnerCommand extends CommandBase {
   /**
-   * Creates a new SenseCell.
+   * Creates a new SpinnerCommand.
    */
-  private boolean seen;
-  public SenseCell() {
+  private ColorPanelSpinner mColorPanelSpinner;
+  private XboxController mXboxController;
+  public SpinnerCommand(ColorPanelSpinner cps) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getConveyor());
-    seen = false;
+    this.mColorPanelSpinner = cps;
+    addRequirements(mColorPanelSpinner);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    seen = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    seen = RobotContainer.getContainer().getConveyor().getStatus();
-    if(seen)
+    mXboxController = RobotContainer.getContainer().getDriveController();
+    double rightTriggerSpeed = mXboxController.getTriggerAxis(Hand.kRight);
+    double leftTriggerSpeed = mXboxController.getTriggerAxis(Hand.kLeft);
+    if (leftTriggerSpeed >= 0.5 && rightTriggerSpeed <= 0.5)
     {
-      RobotContainer.getContainer().getConveyor().setConveyerSpeed(-.5);
+      mColorPanelSpinner.spin(0.25);
+      //leftTriggerSpeed = mXboxController.getTriggerAxis(Hand.kLeft);
+    }
+    else if (rightTriggerSpeed >= 0.5 && leftTriggerSpeed <= 0.5)
+    {
+      mColorPanelSpinner.spin(-0.25);
     }
     else
     {
-      RobotContainer.getContainer().getConveyor().setConveyerSpeed(0);
+      mColorPanelSpinner.spin(0);
     }
+
+
+   // mColorPanelSpinner.spin(leftTriggerSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    seen = false;
+    mColorPanelSpinner.spin(0);
   }
 
   // Returns true when the command should end.

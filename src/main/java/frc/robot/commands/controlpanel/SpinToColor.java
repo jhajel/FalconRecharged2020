@@ -29,26 +29,26 @@ public class SpinToColor extends CommandBase {
     private Map<String,Integer> colorDictionary;
     private String gameData;
     private String color;
+
+    private Map<String, String> impossible;
     
-    public SpinToColor(String data) {
+    public SpinToColor() {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
-        gameData = data;
+        addRequirements(RobotContainer.getContainer().getColorPanelSpinner());
+        //gameData = data;
+        impossible = new HashMap<String, String>();
+        impossible.put("Yellow", "Green");
+        impossible.put("Green", "Yellow");
+        impossible.put("Blue", "Red");
+        impossible.put("Red", "Blue");
     }
 
-    /**
-     * function name
-     * function description
-     * 
-     * @param
-     * 
-     * @ret 
-     */
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
 
         color = RobotContainer.getContainer().getColorSensor().getColor();
-        //gameData =  DriverStation.getInstance().getGameSpecificMessage();
+        gameData =  DriverStation.getInstance().getGameSpecificMessage();
         targetColorArray = new String[]{"Yellow", "Red", "Green", "Blue"};
         arraySize = targetColorArray.length;
      
@@ -74,16 +74,16 @@ public class SpinToColor extends CommandBase {
 
         if(gameData.length()>0){//sets target color based on game data(stage 3 control panel color)
 
-            if(gameData.charAt(0) == 'G'){
+            if(gameData.toUpperCase().charAt(0) == 'G'){
                 targetColor = "Yellow";
             }
-            else if(gameData.charAt(0) == 'B'){
+            else if(gameData.toUpperCase().charAt(0) == 'B'){
                 targetColor = "Red";
             }
-            else if(gameData.charAt(0) == 'Y'){
+            else if(gameData.toUpperCase().charAt(0) == 'Y'){
                 targetColor = "Green";
             }
-            else if(gameData.charAt(0) == 'R'){
+            else if(gameData.toUpperCase().charAt(0) == 'R'){
                 targetColor = "Blue";
             }
             else{
@@ -95,20 +95,31 @@ public class SpinToColor extends CommandBase {
         
     }
 
+    //If we see an impossible color, we don't change currentColor
+    public void updateColor() {  
+    
+        String wrongColor = impossible.get(currentColor);
+
+        String detected = RobotContainer.getContainer().getColorSensor().getColor();
+        if (!detected.equals(wrongColor)) {
+        currentColor = detected;
+        }
+    }
+
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
   
         RobotContainer.getContainer().getColorPanelSpinner().spin(0.2); //change the speed
-        currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
+        //currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
+        updateColor();
 
 
         SmartDashboard.putString("currentColor", currentColor);
         SmartDashboard.putString("previousColor", previousColor);
         SmartDashboard.putNumber("colorCount", colorCount);
         SmartDashboard.putString("targetColor", targetColor);
-        SmartDashboard.putString("startColor", startColor);
-    
+
 
         previousColor = currentColor;
     

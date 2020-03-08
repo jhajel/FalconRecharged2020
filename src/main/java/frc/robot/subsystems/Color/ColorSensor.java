@@ -8,6 +8,7 @@
 package frc.robot.subsystems.Color;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -22,16 +23,19 @@ public class ColorSensor extends SubsystemBase {
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
   private final ColorMatch m_colorMatcher = new ColorMatch();
 
-  private final Color kBlueTarget = ColorMatch.makeColor(0.127, 0.44, 0.43);
-  private final Color kGreenTarget = ColorMatch.makeColor(0.166, 0.59, 0.246);
-  private final Color kRedTarget = ColorMatch.makeColor(0.505 , 0.36, 0.135);
-  private final Color kYellowTarget = ColorMatch.makeColor(0.31, 0.57, 0.12);
+  private final Color kBlueTarget = ColorMatch.makeColor(0.112, 0.43, 0.455);
+  private final Color kGreenTarget = ColorMatch.makeColor(0.154, 0.597, 0.249);
+  private final Color kRedTarget = ColorMatch.makeColor(0.519, 0.350, 0.132);
+  private final Color kYellowTarget = ColorMatch.makeColor(0.307, 0.576, 0.117);
+  private ColorMatchResult match;
+
 
   public ColorSensor() {
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
     m_colorMatcher.addColorMatch(kYellowTarget);
+
   }
 
   
@@ -39,7 +43,7 @@ public class ColorSensor extends SubsystemBase {
     Color detectedColor = m_colorSensor.getColor();
 
     String colorString;
-    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+    match = m_colorMatcher.matchClosestColor(detectedColor);
 
     if (match.color == kBlueTarget) {
       colorString = "Blue";
@@ -61,6 +65,13 @@ public class ColorSensor extends SubsystemBase {
     
     return colorString;
   }
+
+  
+  public double getConfidence()
+  {
+      return match.confidence;
+  }
+
 
   @Override
   public void periodic() {

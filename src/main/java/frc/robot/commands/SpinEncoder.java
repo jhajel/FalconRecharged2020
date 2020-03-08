@@ -5,19 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.conveyor;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 
-public class ConveyorSpeed extends CommandBase {
+public class SpinEncoder extends CommandBase {
   /**
-   * Creates a new Neo550TicksTest.
+   * Creates a new SpinEncoder.
    */
-  private double speed;
-  public ConveyorSpeed(double speed) {
-    this.speed = speed;
-    addRequirements(RobotContainer.getContainer().getConveyor());
+  public SpinEncoder() {
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -28,13 +25,11 @@ public class ConveyorSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.getContainer().getConveyor().setConveyerSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.getContainer().getConveyor().setConveyerSpeed(0);
   }
 
   // Returns true when the command should end.

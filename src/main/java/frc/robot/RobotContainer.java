@@ -7,25 +7,20 @@
 
 package frc.robot;
 
-import java.sql.Driver;
 import java.util.ArrayList;
 
-import com.playingwithfusion.TimeOfFlight;
-
+import java.sql.Driver;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.controlpanel.SpinUnoWheel;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoPaths.AutoRightToScore;
@@ -35,15 +30,13 @@ import frc.robot.commands.AutoPaths.AutoPath1;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
 import frc.robot.commands.conveyor.*;
-import frc.robot.commands.intake.*;
-import frc.robot.commands.limelight.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.swervedrive.*;
+import frc.robot.commands.intake.*;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Color.ColorPanelSpinner;
 import frc.robot.subsystems.Color.ColorSensor;
 import frc.robot.subsystems.Conveyor;
-import frc.robot.subsystems.Drive.HolonomicDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ShooterMotor;
@@ -156,19 +149,46 @@ public class RobotContainer {
    * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+
   private void configureButtonBindings() {
     JoystickButton buttonA = new JoystickButton(mXboxController, XboxController.Button.kA.value);
     JoystickButton buttonX = new JoystickButton(mXboxController, XboxController.Button.kX.value);
     JoystickButton buttonB = new JoystickButton(mXboxController, XboxController.Button.kB.value);
     JoystickButton buttonY = new JoystickButton(mXboxController, XboxController.Button.kY.value);
+    JoystickButton buttonBack = new JoystickButton(mXboxController, XboxController.Button.kBack.value);
+    JoystickButton buttonStart = new JoystickButton(mXboxController, XboxController.Button.kStart.value);
+    JoystickButton buttonRB = new JoystickButton(mXboxController, XboxController.Button.kBumperRight.value);
+    JoystickButton buttonLB = new JoystickButton(mXboxController, XboxController.Button.kBumperLeft.value);
+    // JoystickButton buttonLT = new JoystickButton(mXboxController, XboxController.Axis.kLeftTrigger.value);
+    // JoystickButton buttonRT = new JoystickButton(mXboxController, XboxController.Axis.kRightTrigger.value);
+
     JoystickButton buttonY_2 = new JoystickButton(mXboxController2, XboxController.Button.kY.value);
     JoystickButton buttonX_2 = new JoystickButton(mXboxController2, XboxController.Button.kX.value);
     JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2,XboxController.Button.kA.value);
+    JoystickButton buttonBack_2 = new JoystickButton(mXboxController2, XboxController.Button.kBack.value);
+    JoystickButton buttonStart_2 = new JoystickButton(mXboxController2, XboxController.Button.kStart.value);
+    JoystickButton buttonRB_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperRight.value);
+    JoystickButton buttonLB_2 = new JoystickButton(mXboxController, XboxController.Button.kBumperLeft.value);
+    // JoystickButton buttonLT_2 = new JoystickButton(mXboxController2, XboxController.Axis.kLeftTrigger.value);
+    // JoystickButton buttonRT_2 = new JoystickButton(mXboxController2, XboxController.Axis.kRightTrigger.value);
+    
+    buttonRB.whenPressed(new SpinToMidColor());
+    buttonLB.whenPressed(new SpinToPosition());
+    buttonA.whileHeld(new SpinUnoWheel(-1));
+    buttonB.whileHeld(new SpinUnoWheel(1));
+
+
     // buttonX.whenHeld(new IntakeSpeed(.5));
     //buttonA.whenHeld(new IntakeSpeed(-1));
     //buttonB.whenHeld(new ConveyorSpeed(-1));
     //buttonA.whenHeld(new ConveyorSpeed(-1));
+   // buttonB.whenPressed(new ToggleIntake());
+  //  buttonY.whenPressed(new ZeroNavX());
+    // buttonY.whileHeld(new IntakeSpeed(.5));
+    //buttonY.whenPressed(new SwitchPipeline());
+   // buttonX.whileHeld(new ConveyorSpeed(-1));
+    buttonA.whenHeld(new ConveyorSpeed(-1));
     //buttonB.whenPressed(new ToggleIntake());
     buttonY.whenPressed(new ZeroNavX());
     buttonA.whenHeld(new IntakeSpeed(-1));
@@ -188,7 +208,7 @@ public class RobotContainer {
     // buttonX_2.whenPressed(new SemiAutoPullUp()); 
     // buttonX_2.whenPressed(new MoveClimberArm(-7, getClimber().getLowerArm()));
 
-    // buttonB.whenPressed(new DriveForwardDistance(3, .3));
+    // buttonB.whenPressed(new DriveForwardDistance(3, .3git));
 
     // buttonX.whenPressed(new WheelsDriveForwardTest(-100, 0).withTimeout(5));
 
@@ -198,14 +218,21 @@ public class RobotContainer {
     // buttonA.whenPressed(new MoveConveyorDistance(-5));
     // buttonB.whenPressed(new ShooterSwitchArmMode());
 
-    buttonX_2.whenPressed(new SpinToPosition());
-    buttonY_2.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
-    buttonA_2.whenPressed(new ToggleSpinner(colorPanelSpinner));
+    // buttonB.whileHeld(new SpinUnoRotation());
+    // buttonB.whileHeld(new SpinUnoWheel());
+    // // buttonB.whenPressed(new GameData(DriverStation.getInstance().getGameSpecificMessage()));
+    // buttonX.whenPressed(new SpinToColor());
+    // buttonY.whenPressed(new SpinToMidColor().withTimeout(7));
+    // buttonA.whenPressed(new SpinToPosition());
+
+    //buttonA.whenPressed(new ToggleSpinner(colorPanelSpinner));
 
     conveyor.setDefaultCommand(new SenseCell());
 
 
     // buttonX.whenPressed(new SwitchLimelightMode(limelight));
+
+    
   }
 
   /**

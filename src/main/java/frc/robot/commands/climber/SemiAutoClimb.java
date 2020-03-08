@@ -7,11 +7,6 @@
 
 package frc.robot.commands.climber;
 
-import com.revrobotics.CANSparkMax;
-
-import edu.wpi.first.wpilibj.CAN;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 
