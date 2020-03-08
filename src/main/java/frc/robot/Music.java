@@ -75,7 +75,11 @@ public class Music extends TimedRobot {
 
     /* An array of songs that are available to be played, can you guess the song/artists? */
     String[] _songs = new String[] {
-        "mulan.chrp"
+        "mulan.chrp",
+        "TheBox.chrp",
+        "thanks.chrp",
+        "Pinwheel.chrp",
+        "smileFlower.chrp"
       };
 
     /* track which song is selected for play */
