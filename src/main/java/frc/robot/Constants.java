@@ -44,8 +44,8 @@ public final class Constants {
     public static final int INTAKE_SPARK = 9;
     public static final int CLIMBER1_SPARK = 10;
     public static final int CLIMBER2_SPARK = 11;
-    public static final int ANGLE1_TALON = 1;
-    public static final int ANGLE2_TALON = 3;
+    public static final int ANGLE2_TALON = 1;
+    public static final int ANGLE1_TALON = 3;
     public static final int ANGLE3_TALON = 7;
     public static final int ANGLE4_TALON = 5;
     public static final int DRIVE1_TALON = 0;

@@ -27,10 +27,10 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 214); //2020: 150
 	*/
 	//phase 2
-	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 167); //2020: 70
-	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 174); //2020: 211
-	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), 290); //2020: 307
-	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 30); //2020: 150
+	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 169); //2020: 70
+	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 176); //2020: 211
+	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), 292); //2020: 307
+	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 28); //2020: 150
 	private boolean isAuto;
 
 	/*
