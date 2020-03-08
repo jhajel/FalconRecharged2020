@@ -48,6 +48,14 @@ public class Autonomous extends CommandBase {
     drivetrain = RobotContainer.getContainer().getHolonomicDrivetrain();
     this.trajectory = trajectory;
     addRequirements(drivetrain);
+    time = new Timer();
+    initPos = new double[4];
+    this.angle = angle;
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
     controller = new RamseteController(2.5, 1);
     if(Math.abs(angle) <=45) {
       kinematics = new SwerveDriveKinematics(
@@ -77,16 +85,7 @@ public class Autonomous extends CommandBase {
       new Translation2d(0.28575, -0.28575), //(-,-)
       new Translation2d(-0.28575, -0.28575));
     }
-    
     odometry = new SwerveDriveOdometry(kinematics,new Rotation2d(Math.toRadians(0)));
-    time = new Timer();
-    initPos = new double[4];
-    this.angle = angle;
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
     odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(0)), new Rotation2d(Math.toRadians(0)));
     time.start();
     drivetrain.setFieldOriented(false);
