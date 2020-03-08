@@ -10,8 +10,10 @@ package frc.robot.commands.AutoPaths;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.commands.conveyor.ConveyorSpeed;
+import frc.robot.commands.conveyor.SenseCell;
 import frc.robot.commands.intake.IntakeSpeed;
 import frc.robot.commands.swervedrive.Autonomous;
+import frc.robot.utility.TrajectoryMaker;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -23,12 +25,20 @@ public class AutoDumpAndPickup extends SequentialCommandGroup {
   public AutoDumpAndPickup() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(
-      new Autonomous(RobotContainer.getContainer().createForwardPath2().getTrajectory(), RobotContainer.getContainer().createForwardPath2().getAngle()),
-      new ConveyorSpeed(-1).withTimeout(2),
-      new Autonomous(RobotContainer.getContainer().createBackwardPath().getTrajectory(), RobotContainer.getContainer().createBackwardPath().getAngle()),
-      new Autonomous(RobotContainer.getContainer().createForwardPath3().getTrajectory(), RobotContainer.getContainer().createForwardPath3().getAngle()).raceWith(new IntakeSpeed(-1))
-
-    );
+    TrajectoryMaker forwardPath = RobotContainer.getContainer().createForwardPath3();
+    TrajectoryMaker forwardScorePath = RobotContainer.getContainer().createForwardPath2();
+    TrajectoryMaker backPath = RobotContainer.getContainer().createBackwardPath();
+    TrajectoryMaker forwardPath2 = RobotContainer.getContainer().createForwardPath4();
+    addCommands(
+      new Autonomous(forwardScorePath.getTrajectory(), forwardScorePath.getAngle()),
+      new ConveyorSpeed(-1).withTimeout(1),
+      new Autonomous(backPath.getTrajectory(), backPath.getAngle()),
+      new Autonomous(forwardPath.getTrajectory(), 
+        forwardPath.getAngle()).alongWith(new IntakeSpeed(-1), new SenseCell().andThen(new SenseCell(),new SenseCell())).withTimeout(3),
+      new Autonomous(forwardPath2.getTrajectory(), forwardPath2.getAngle()),
+      new ConveyorSpeed(-1).withTimeout(1)
+      
+      );
+      
   }
 }

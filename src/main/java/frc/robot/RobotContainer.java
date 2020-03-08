@@ -202,6 +202,8 @@ public class RobotContainer {
     buttonY_2.whenPressed(new SpinToMidColor(DriverStation.getInstance().getGameSpecificMessage()));
     buttonA_2.whenPressed(new ToggleSpinner(colorPanelSpinner));
 
+    conveyor.setDefaultCommand(new SenseCell());
+
 
     // buttonX.whenPressed(new SwitchLimelightMode(limelight));
   }
@@ -242,7 +244,10 @@ public class RobotContainer {
   {
     return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), true);
   }
-  
+  public TrajectoryMaker createForwardPath4() //Test Path
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-4.75, 0, new Rotation2d(0)), true);
+  }
 
 
   public TrajectoryMaker createPortToFrontofTrench()
