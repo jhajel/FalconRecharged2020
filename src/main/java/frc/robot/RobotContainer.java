@@ -171,7 +171,7 @@ public class RobotContainer {
     //buttonA.whenHeld(new ConveyorSpeed(-1));
     //buttonB.whenPressed(new ToggleIntake());
     buttonY.whenPressed(new ZeroNavX());
-    // buttonY.whileHeld(new IntakeSpeed(.5));
+    buttonA.whenHeld(new IntakeSpeed(-1));
     //buttonY.whenPressed(new SwitchPipeline());
     //buttonX.whileHeld(new ConveyorSpeed(-1));
     // buttonA.whenPressed(new DriveForward(.2));
