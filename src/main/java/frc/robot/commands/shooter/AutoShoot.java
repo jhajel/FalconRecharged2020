@@ -25,8 +25,9 @@ public class AutoShoot extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super( new ToggleIgnore(true), 
-    new ConveyorSpeed(.5).withTimeout(.5), 
+    new ConveyorSpeed(.5).withTimeout(.4), 
     new SetShooterSpeed().withTimeout(.2) , 
-    new ParallelCommandGroup(new ConveyorSpeed(-0.8), new SetShooterSpeed()).withTimeout(3));
+    new ParallelCommandGroup(new ConveyorSpeed(-0.8), new SetShooterSpeed()).withTimeout(3),
+    new ToggleIgnore(false));
   }
 }

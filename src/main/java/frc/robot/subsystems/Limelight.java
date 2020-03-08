@@ -8,6 +8,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
+
+import java.util.ArrayList;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -37,6 +41,12 @@ public class Limelight extends SubsystemBase  {
   public NetworkTableEntry shY = shooterLL.getEntry("ty");
   public NetworkTableEntry shA = shooterLL.getEntry("ta");
 
+  private double xErr;
+  private double rErr;
+
+  private double prevXErr;
+  private double prevRErr;
+
   public Limelight() {
     intakeX = inX.getDouble(0.0);
     intakeY = inY.getDouble(0.0);
@@ -48,13 +58,10 @@ public class Limelight extends SubsystemBase  {
     intakeMode.setDefaultOption("Vison Mode", 0);
     intakeMode.addOption("Cam Mode", 1);
     SmartDashboard.putData(intakeMode);
-  }
-
-  public void printInfo() {
-    // SmartDashboard.putNumber("Limelight X", limelightx);
-    // SmartDashboard.putNumber("Limelight Y", limelighty);
-    // SmartDashboard.putNumber("Limelight A", limelighta);
-    // SmartDashboard.putNumber("Current Pipeline", table.getEntry("pipeline").getDouble(-1));
+    xErr = Double.MIN_VALUE;
+    rErr = Double.MIN_VALUE;
+    prevXErr = Double.MIN_VALUE;
+    prevRErr = Double.MIN_VALUE;
   }
 
   public void setIntakeCam(int x)
@@ -69,6 +76,77 @@ public class Limelight extends SubsystemBase  {
       intakeLL.getEntry("ledMode").setDouble(3);
       intakeLL.getEntry("camMode").setDouble(x);
     }
+  }
+
+  public void resetErrs()
+  {
+    xErr = Double.MIN_VALUE;
+    rErr = Double.MIN_VALUE;
+    prevXErr = Double.MIN_VALUE;
+    prevRErr = Double.MIN_VALUE;
+  }
+
+  public void align()
+  {
+    updateErrors();
+    double strafe = (xErr * .15);
+    double rotation = (rErr * .05);
+  // private double kP = 0.05; // .06
+  // private double kI = 0.00138; 
+  // private double kD = 0.001;
+  // private double rkP = 0.0038;
+    if(!isAligned())
+    {
+      RobotContainer.getContainer().getHolonomicDrivetrain().holonomicDrive(0, strafe, rotation); 
+    }
+    else
+    {
+      RobotContainer.getContainer().getHolonomicDrivetrain().holonomicDrive(0, 0, 0); 
+    }
+      
+  }
+
+  private void updateErrors() {
+    prevRErr = rErr;
+    prevXErr = xErr;
+    rErr = getAngleErr();
+    xErr = shooterX;
+  }
+
+  public boolean isAligned()
+  {
+      return angleAligned() && strafeAligned();
+  }
+
+  private boolean strafeAligned() {
+    return Math.abs(shooterX) < 1;
+  }
+
+  private boolean angleAligned() {
+    return getAngleErr() < 1;
+  }
+
+  public double getAngleErr() {
+    double angleErr;
+    double moddedGyro = (RobotContainer.getContainer().getHolonomicDrivetrain().getGyroAngle() % 360);
+    if(moddedGyro < 0) {
+      if(Math.abs((0 - moddedGyro - 360)) < Math.abs((0 - moddedGyro))) {
+        angleErr = (0 - moddedGyro - 360);
+      }
+      else {
+        angleErr = 0 - moddedGyro;
+      }
+    }
+    else {
+      if(Math.abs((0 - moddedGyro + 360)) < Math.abs((0 - moddedGyro))) {
+        angleErr = (0 - moddedGyro + 360);
+      }
+      else {
+        angleErr = 0 - moddedGyro;
+      }
+    }
+    SmartDashboard.putNumber("Absolute Angle", angleErr);
+    return angleErr;
   }
 
   @Override
