@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   private SendableChooser<Command> autoChooser;
   
+  private Music musicPlayer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
     autoChooser = new SendableChooser<Command>();
     m_robotContainer.getHolonomicDrivetrain().zeroGyro();
 
+    musicPlayer = new Music();
 
 
     // autoChooser.addOption("Move Forward 1", new Autonomous(m_robotContainer.createAutonomousPath()));
@@ -104,6 +106,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    musicPlayer.LoadMusicSelection(0);
   }
 
   /**
@@ -111,6 +115,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    musicPlayer.songControls();
   }
 
   @Override
