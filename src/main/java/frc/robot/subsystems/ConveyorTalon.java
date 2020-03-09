@@ -50,7 +50,7 @@ public class ConveyorTalon extends SubsystemBase {
   }
 
   public boolean getStatus() {
-    return getDistance() < 5.5;
+    return getDistance() < 5.3;
   }
 
   public boolean isIgnored() {
