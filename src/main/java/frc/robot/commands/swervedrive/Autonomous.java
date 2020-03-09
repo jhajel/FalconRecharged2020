@@ -17,8 +17,12 @@ import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import javax.lang.model.util.ElementScanner6;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 
@@ -44,13 +48,6 @@ public class Autonomous extends CommandBase {
     drivetrain = RobotContainer.getContainer().getHolonomicDrivetrain();
     this.trajectory = trajectory;
     addRequirements(drivetrain);
-    controller = new RamseteController(2.5, 1);
-    kinematics = new SwerveDriveKinematics(
-      new Translation2d(0.28575, 0.28575), //(+,+)
-      new Translation2d(0.28575, -0.28575), //(+,-)
-      new Translation2d(-0.28575, -0.28575), //(-,-)
-      new Translation2d(-0.28575, 0.28575)); //(-,+)
-    odometry = new SwerveDriveOdometry(kinematics,new Rotation2d(Math.toRadians(0)));
     time = new Timer();
     initPos = new double[4];
     this.angle = angle;
@@ -59,15 +56,46 @@ public class Autonomous extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    controller = new RamseteController(2.5, 1);
+    if(Math.abs(angle) <=45) {
+      kinematics = new SwerveDriveKinematics(
+      new Translation2d(0.28575, 0.28575), //(+,+)
+      new Translation2d(0.28575, -0.28575), //(+,-)
+      new Translation2d(-0.28575, -0.28575), //(-,-)
+      new Translation2d(-0.28575, 0.28575)); //(-,+)\
+    }
+    else if(Math.abs(angle - 180) <= 45)  {
+      kinematics = new SwerveDriveKinematics(
+      new Translation2d(-0.28575, -0.28575), //(+,+)
+      new Translation2d(-0.28575, 0.28575), //(+,-)
+      new Translation2d(0.28575, 0.28575), //(-,-)
+      new Translation2d(0.28575, -0.28575));
+    }
+    else if(Math.abs(angle - 90) <= 45)  {
+      kinematics = new SwerveDriveKinematics(
+      new Translation2d(0.28575, -0.28575), //(+,+)
+      new Translation2d(-0.28575, -0.28575), //(+,-)
+      new Translation2d(-0.28575, 0.28575), //(-,-)
+      new Translation2d(0.28575, 0.28575));
+    }
+    else if(Math.abs(angle-270) <= 45) {
+      kinematics = new SwerveDriveKinematics(
+      new Translation2d(-0.28575, 0.28575), //(+,+)
+      new Translation2d(0.28575, 0.28575), //(+,-)
+      new Translation2d(0.28575, -0.28575), //(-,-)
+      new Translation2d(-0.28575, -0.28575));
+    }
+    odometry = new SwerveDriveOdometry(kinematics,new Rotation2d(Math.toRadians(0)));
     odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(0)), new Rotation2d(Math.toRadians(0)));
     time.start();
     drivetrain.setFieldOriented(false);
     drivetrain.setIsAuto(true);
     drivetrain.swapPIDSlot(1);
-    drivetrain.getSwerveModule(0).setTargetAngle(0+angle);
-    drivetrain.getSwerveModule(1).setTargetAngle(0+angle);
+    drivetrain.swapDrivePIDSlot(1);
+    drivetrain.getSwerveModule(0).setTargetAngle(angle);
+    drivetrain.getSwerveModule(1).setTargetAngle(angle);
     drivetrain.getSwerveModule(2).setTargetAngle(180+angle);
-    drivetrain.getSwerveModule(3).setTargetAngle(0+angle);
+    drivetrain.getSwerveModule(3).setTargetAngle(angle);
     drivetrain.getSwerveModule(0).getDriveMotor().setInverted(true);
     drivetrain.getSwerveModule(1).getDriveMotor().setInverted(true);
     drivetrain.getSwerveModule(2).getDriveMotor().setInverted(true);
@@ -76,8 +104,9 @@ public class Autonomous extends CommandBase {
     initPos[1] = angle;
     initPos[2] = angle;
     initPos[3] = angle;
+    RobotContainer.getContainer().getHolonomicDrivetrain().zeroGyro();
     initGyro = drivetrain.getGyroAngle();
-    
+    SmartDashboard.putNumber("Init Gyro", initGyro);
 
   }
 
@@ -92,8 +121,9 @@ public class Autonomous extends CommandBase {
       new SwerveModuleState(10*drivetrain.getSwerveModule(1).getDriveMotor().getSelectedSensorVelocity()*SPEEDCONSTANT, new Rotation2d(Math.toRadians(drivetrain.getSwerveModule(1).getCurrentAngle()-initPos[1]))),
       new SwerveModuleState(10*drivetrain.getSwerveModule(2).getDriveMotor().getSelectedSensorVelocity()*SPEEDCONSTANT, new Rotation2d(Math.toRadians(drivetrain.getSwerveModule(2).getCurrentAngle()-initPos[2]))),
       new SwerveModuleState(10*drivetrain.getSwerveModule(3).getDriveMotor().getSelectedSensorVelocity()*SPEEDCONSTANT, new Rotation2d(Math.toRadians(drivetrain.getSwerveModule(3).getCurrentAngle()-initPos[3]))));
-    System.out.println("after odometry update");
-      Trajectory.State goal = trajectory.sample(time.get()); // sample the trajectory at 3.4 seconds from the beginning
+    SmartDashboard.putNumber("gyro - init", drivetrain.getGyroAngle()-initGyro);
+    Trajectory.State goal = trajectory.sample(time.get()); // sample the trajectory at 3.4 seconds from the beginning
+    SmartDashboard.putString("current Goal", goal.poseMeters.toString());
     ChassisSpeeds adjustedSpeeds = controller.calculate(odometry.getPoseMeters(), goal);
     SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(adjustedSpeeds);
     drivetrain.getSwerveModule(0).setMeterSpeed(moduleStates[0].speedMetersPerSecond);
@@ -124,6 +154,7 @@ public class Autonomous extends CommandBase {
   public void end(boolean interrupted) {
     System.out.println(trajectory.getTotalTimeSeconds());
     drivetrain.swapPIDSlot(0);
+    drivetrain.swapDrivePIDSlot(0);
     drivetrain.setFieldOriented(true);
     drivetrain.setIsAuto(false);
     time.reset();
@@ -138,10 +169,12 @@ public class Autonomous extends CommandBase {
     Pose2d tarPos = trajectory.getStates().get(trajectory.getStates().size()-1).poseMeters;
     double posDif = currPos.getTranslation().getDistance(tarPos.getTranslation());
     double rotDif = Math.abs((currPos.getRotation().minus(tarPos.getRotation())).getDegrees());
+    SmartDashboard.putString("StartPos", trajectory.getStates().get(0).poseMeters.toString());
     SmartDashboard.putString("CurPos", currPos.toString());
     SmartDashboard.putString("tarPos", tarPos.toString());
+    SmartDashboard.putNumber("posDif", posDif);
+    SmartDashboard.putNumber("rotDif", rotDif);
 
-    System.out.println("Pos diff " + posDif + "          Rot Diff" + rotDif);
-    return (posDif <= .5 && rotDif <= 10) || (trajectory.getTotalTimeSeconds() < time.get()); // review -Riley "Change once we account for slip.""
+    return trajectory.getTotalTimeSeconds() < time.get(); // review -Riley "Change once we account for slip.""
   }
 }

@@ -8,6 +8,7 @@
 package frc.robot.commands.AutoPaths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.commands.conveyor.ConveyorSpeed;
 import frc.robot.commands.intake.IntakeSpeed;
@@ -23,13 +24,11 @@ public class AutoPath1 extends SequentialCommandGroup {
   /**
    * Creates a new AutoPath1.
    */
-  public AutoPath1() {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    // super( new Autonomous(RobotContainer.getContainer().createAutonomousPath().getTrajectory(), RobotContainer.getContainer().createAutonomousPath().getAngle()),
-    //        new Autonomous(RobotContainer.getContainer().createAutonomousPath1().getTrajectory(), RobotContainer.getContainer().createAutonomousPath1().getAngle()),
-    //        new Autonomous(RobotContainer.getContainer().createAutonomousPath2().getTrajectory(), RobotContainer.getContainer().createAutonomousPath2().getAngle())); 
-    super();
+  public AutoPath1() {  // test forward path
+   
+    super(
+      new Autonomous(RobotContainer.getContainer().createForwardPath().getTrajectory(), RobotContainer.getContainer().createForwardPath().getAngle())
+    );
   }
   
 }

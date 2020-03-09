@@ -159,20 +159,21 @@ public class RobotContainer {
     JoystickButton rightBumper_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperRight.value);
     
     
-    buttonX.whileHeld(new IntakeSpeed(-0.8));
-    buttonA.whenPressed(new ToggleIntake());
-    buttonY.whileHeld(new ConveyorSpeed(.5));
-    buttonB.whileHeld(new IntakeSpeed(.5));
-    leftBumper.whileHeld(new ConveyorSpeed(-.7));
-    rightBumper.whileHeld(new SetShooterSpeed());
+    //buttonX.whileHeld(new IntakeSpeed(-0.8));
+    //buttonA.whenPressed(new ToggleIntake());
+    //buttonY.whileHeld(new ConveyorSpeed(.5));
+    //buttonB.whileHeld(new IntakeSpeed(.5));
+   // leftBumper.whileHeld(new ConveyorSpeed(-.7));
+    //rightBumper.whileHeld(new SetShooterSpeed());
     back.whileHeld(new ZeroNavX());
-    start.whenPressed(new AutoShoot());
+    //start.whenPressed(new AutoShoot());
+    buttonX.whenPressed(new AutoPath1());
     
 
-    buttonA_2.whenPressed(new ToggleIgnore());
-    buttonX_2.whenPressed(new ToggleClimberGearLock(climberT));
-    buttonY_2.whenPressed(new SemiAutoClimb());
-    buttonB_2.whenPressed(new SemiAutoPullUp());
+    // buttonA_2.whenPressed(new ToggleIgnore());
+    // buttonX_2.whenPressed(new ToggleClimberGearLock(climberT));
+    // buttonY_2.whenPressed(new SemiAutoClimb());
+    // buttonB_2.whenPressed(new SemiAutoPullUp());
     
   }
 
@@ -192,6 +193,10 @@ public class RobotContainer {
   public TrajectoryMaker createfrontScorePath() //Test Path
   {
     return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
+  }
+  public TrajectoryMaker createForwardPath() //Test Path
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(1, 0, new Rotation2d(0)), true);
   }
 
   public TrajectoryMaker createPortToFrontofTrench()

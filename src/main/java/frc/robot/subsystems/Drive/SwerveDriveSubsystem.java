@@ -179,6 +179,13 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 			mSwerveModules[i].setPIDSlot(slot);
 		}
 	}
+	public void swapDrivePIDSlot(int slot)
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			mSwerveModules[i].setDrivePIDSlot(slot);
+		}
+	}
 
 	public void driveSidewaysDistance(double targetPos, double angle, double speed) {
 		double angleError = ((angle - mNavX.getYaw()) / 180)*10;

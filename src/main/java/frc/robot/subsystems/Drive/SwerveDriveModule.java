@@ -47,6 +47,12 @@ public class SwerveDriveModule extends SubsystemBase {
         angleMotor.config_kP(0, 19.0, 0);   // 20.2
         angleMotor.config_kI(0, 0.04, 0);  //0.001
         angleMotor.config_kD(0, 60, 0);     //60
+
+        angleMotor.config_kP(1, 19, 0);
+        angleMotor.config_kI(1, 0.04, 0);
+        angleMotor.config_kD(1, 60, 0);
+
+        
         angleMotor.setNeutralMode(NeutralMode.Brake);
         angleMotor.set(ControlMode.Position, 0);
         angleMotor.configNeutralDeadband(0.07);
@@ -57,6 +63,11 @@ public class SwerveDriveModule extends SubsystemBase {
         driveMotor.config_kP(0, 0.001, 0); // 0.02 //0.001-Auto
         driveMotor.config_kI(0, 0, 0); // 0.000001
         driveMotor.config_kD(0, 0, 0); // 0.0065
+
+        driveMotor.config_kF(1, 0.0, 0); //0.0018
+        driveMotor.config_kP(1, 0.0021, 0); // 0.02 //0.001-Auto
+        driveMotor.config_kI(1, 0, 0); // 0.000001
+        driveMotor.config_kD(1, 0, 0);
 
         // Set amperage limits
         angleMotor.configContinuousCurrentLimit(30, 0);
@@ -180,6 +191,9 @@ public class SwerveDriveModule extends SubsystemBase {
 
     public void setPIDSlot(final int slot) {
         mAngleMotor.selectProfileSlot(slot, 0);
+    }
+    public void setDrivePIDSlot(int slot)   {
+        mDriveMotor.selectProfileSlot(slot, 0);
     }
 
     public double getInches() {

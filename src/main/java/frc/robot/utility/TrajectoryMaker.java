@@ -36,7 +36,7 @@ public TrajectoryMaker(Pose2d start, Pose2d end, boolean isHyp) {
     this.end = end;
     this.isHyp = isHyp;
     angle = 0;
-    config = new TrajectoryConfig(2, 1);
+    config = new TrajectoryConfig(4, 2);
     config.setStartVelocity(0);
     config.setEndVelocity(0);
     config.setReversed(false);
