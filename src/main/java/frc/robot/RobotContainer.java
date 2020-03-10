@@ -190,13 +190,30 @@ public class RobotContainer {
 
   }
 
-  public TrajectoryMaker createfrontScorePath() //Test Path
+  public TrajectoryMaker createfrontScorePath() 
   {
     return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
   }
-  public TrajectoryMaker createForwardPath() //Test Path
+  public TrajectoryMaker createTrenchToTargetDiagonal() 
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(8, -1.6, new Rotation2d(0)), true);
+  }
+  public TrajectoryMaker createTargetToFrontOfTrench() 
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-4.2, 1.6, new Rotation2d(0)), true);
+  }
+  public TrajectoryMaker createTrenchForward() //Assuming facing forward
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), true);
+  }
+  
+  public TrajectoryMaker createForwardPath() //For Testing Purposes
   {
     return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(1, 0, new Rotation2d(0)), true);
+  }
+  public TrajectoryMaker createToPortPath() //For Testing Purposes
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
   }
 
   public TrajectoryMaker createPortToFrontofTrench()

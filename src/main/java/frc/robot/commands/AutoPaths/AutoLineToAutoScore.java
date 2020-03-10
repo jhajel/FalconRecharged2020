@@ -10,19 +10,22 @@ package frc.robot.commands.AutoPaths;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
+import frc.robot.commands.shooter.AutoShoot;
 import frc.robot.commands.swervedrive.Autonomous;
+import frc.robot.utility.TrajectoryMaker;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class AutoDelayToScore extends SequentialCommandGroup {
+public class AutoLineToAutoScore extends SequentialCommandGroup {
   /**
    * Creates a new AutoDelayToScore.
    */
-  public AutoDelayToScore() {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new WaitCommand(10),
-          new Autonomous(RobotContainer.getContainer().createMoveToPort().getTrajectory(), 0));
+  public AutoLineToAutoScore() {
+    TrajectoryMaker trajMaker = RobotContainer.getContainer().createToPortPath();
+    addCommands(
+      new Autonomous(trajMaker.getTrajectory(), trajMaker.getAngle()),
+      new AutoShoot() // Assuming Auto Shoot Ends
+    );
   }
 }
