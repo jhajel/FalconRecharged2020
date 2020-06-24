@@ -15,7 +15,7 @@ import frc.robot.RobotContainer;
 public class SpinShooterMotor extends CommandBase {
   private XboxController mXboxController;
   /**
-   * Creates a new SpinShooterMotot.
+   * Creates a new SpinShooterMotor.
    */
   public SpinShooterMotor() {
     // Use addRequirements() here to declare subsystem dependencies.

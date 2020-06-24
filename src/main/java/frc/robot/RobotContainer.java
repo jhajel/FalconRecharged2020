@@ -165,11 +165,14 @@ public class RobotContainer {
     JoystickButton buttonX_2 = new JoystickButton(mXboxController2, XboxController.Button.kX.value);
     JoystickButton buttonB_2 = new JoystickButton(mXboxController2, XboxController.Button.kB.value);
     JoystickButton buttonA_2 = new JoystickButton(mXboxController2,XboxController.Button.kA.value);
-    JoystickButton buttonLB_2 = new JoystickButton(mXboxController, XboxController.Button.kBumperLeft.value);
+    JoystickButton buttonLB_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperLeft.value);
     JoystickButton buttonRB_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperRight.value);
     JoystickButton buttonBack_2 = new JoystickButton(mXboxController2, XboxController.Button.kBack.value);
     JoystickButton buttonStart_2 = new JoystickButton(mXboxController2, XboxController.Button.kStart.value);
     
+
+    //experiment with inline command -- JMH
+    //test
     buttonA.whenPressed(new ToggleIntake());
     buttonB.whileHeld(new IntakeSpeed(-1));
     buttonX.whileHeld(new IntakeSpeed(.5));

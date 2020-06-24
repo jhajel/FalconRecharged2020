@@ -20,6 +20,7 @@ public class ToggleIntake extends InstantCommand {
   }
 
   // Called when the command is initially scheduled.
+  //what does this do?  Raise the intake?  -- JMH
   @Override
   public void initialize() {
     RobotContainer.getContainer().getIntake().toggleIntakeSolenoidMode();
